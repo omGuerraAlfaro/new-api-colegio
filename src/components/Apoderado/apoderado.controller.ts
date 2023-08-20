@@ -24,14 +24,14 @@ export class ApoderadoController {
   // }
 
   @Post()
-async createApoderado(@Body() apoderadoDto: ApoderadoDTO): Promise<any> {
+  async createApoderado(@Body() apoderadoDto: ApoderadoDTO): Promise<any> {
     try {
-        apoderadoDto.fecha_nacimiento = new Date(apoderadoDto.fecha_nacimiento);
-        return this.apoderadoService.createApoderado(apoderadoDto);
+      apoderadoDto.fecha_nacimiento = new Date(apoderadoDto.fecha_nacimiento);
+      return this.apoderadoService.createApoderado(apoderadoDto);
     } catch (error) {
-        throw new HttpException('Failed to create Apoderado', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Failed to create Apoderado', HttpStatus.BAD_REQUEST);
     }
-}
+  }
 
 
   @Get()

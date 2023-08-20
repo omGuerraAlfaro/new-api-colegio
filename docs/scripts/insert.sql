@@ -188,7 +188,10 @@ VALUES
 ('Avenida Cuarta', '1121', '9C', '56792', 33),
 ('Calle Quinta', '3141', '2D', '56793', 28);
 
-
+INSERT INTO colegio.apoderado_direccion (apoderado_id, direccion_id, tipo_direccion)
+VALUES
+(1, 1, 'Domicilio'),
+(2, 2, 'Domicilio');
 -- --------------------------------------------------------
 INSERT INTO
     `estado_boleta` (`descripcion`)
