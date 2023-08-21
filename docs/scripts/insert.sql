@@ -179,19 +179,22 @@ VALUES
     ('Vitacura', 16);
 
 -- --------------------------------------------------------
-
-INSERT INTO `direccion` (`calle`, `numero`, `departamento`, `codigo_postal`, `ciudad_id`) 
-VALUES 
-('Calle Principal', '1234', '5A', '56789', 4),
-('Avenida Secundaria', '5678', '3B', '56790', 2),
-('Calle Tercera', '9101', NULL, '56791', 55),
-('Avenida Cuarta', '1121', '9C', '56792', 33),
-('Calle Quinta', '3141', '2D', '56793', 28);
-
-INSERT INTO colegio.apoderado_direccion (apoderado_id, direccion_id, tipo_direccion)
+INSERT INTO
+    `direccion` (
+        `calle`,
+        `numero`,
+        `departamento`,
+        `codigo_postal`,
+        `ciudad_id`
+    )
 VALUES
-(1, 1, 'Domicilio'),
-(2, 2, 'Domicilio');
+    ('Calle Principal', '1234', '5A', '56789', 4),
+    ('Avenida Secundaria', '5678', '3B', '56790', 2),
+    ('Calle Tercera', '9101', NULL, '56791', 55),
+    ('Avenida Cuarta', '1121', '9C', '56792', 33),
+    ('Calle Quinta', '3141', '2D', '56793', 28);
+
+
 -- --------------------------------------------------------
 INSERT INTO
     `estado_boleta` (`descripcion`)
@@ -210,65 +213,348 @@ VALUES
     ('Cheque');
 
 -- --------------------------------------------------------
-
 -- Insertar roles
-INSERT INTO `roles` (`nombre`, `descripcion`) VALUES 
-('ADMIN', 'Administrador del sistema'),
-('APODERADO', 'Apoderado de un estudiante'),
-('PROFESOR', 'Profesor del colegio');
+INSERT INTO
+    `roles` (`nombre`, `descripcion`)
+VALUES
+    ('ADMIN', 'Administrador del sistema'),
+    ('APODERADO', 'Apoderado de un estudiante'),
+    ('PROFESOR', 'Profesor del colegio');
 
 -- --------------------------------------------------------
-
 -- Insertar profesores
-INSERT INTO `profesor` (`primer_nombre`, `primer_apellido`, `rut`, `dv`, `correo_electronico`) VALUES
-('Juan', 'Perez', '12345678', '9', 'juan.perez@example.com'),
-('María', 'Rojas', '87654321', '0', 'maria.rojas@example.com');
+INSERT INTO
+    `profesor` (
+        `primer_nombre`,
+        `segundo_nombre`,
+        `primer_apellido`,
+        `segundo_apellido`,
+        `rut`,
+        `dv`,
+        `telefono`,
+        `especialidad`,
+        `correo_electronico`
+    )
+VALUES
+    (
+        'Juan',
+        NULL,
+        'Perez',
+        NULL,
+        '12345678',
+        '9',
+        NULL,
+        NULL,
+        'juan.perez@example.com'
+    ),
+    (
+        'María',
+        NULL,
+        'Rojas',
+        NULL,
+        '87654321',
+        '0',
+        NULL,
+        NULL,
+        'maria.rojas@example.com'
+    ),
+    (
+        'Juan',
+        'Carlos',
+        'Pérez',
+        'Gómez',
+        '12345679',
+        '8',
+        '+56001234567',
+        'Matemáticas',
+        'juan.carlos.perez@example.com'
+    ),
+    (
+        'Penelope',
+        'Ignacia',
+        'Perez',
+        'López',
+        '12345680',
+        '7',
+        '+56001234568',
+        'Historia',
+        'penelope.perez@example.com'
+    ),
+    (
+        'Felipe',
+        'Andres',
+        'Rodríguez',
+        'López',
+        '12345681',
+        '6',
+        '+56001234569',
+        'Historia',
+        'felipe.rodriguez@example.com'
+    ),
+    (
+        'Antonio',
+        NULL,
+        'Zapata',
+        'Muñoz',
+        '12345682',
+        '5',
+        '+56001234570',
+        'Lenguaje',
+        'antonio.zapata@example.com'
+    ),
+    (
+        'Roberto',
+        'Manuel',
+        'Salinas',
+        'Ortega',
+        '12345683',
+        '4',
+        '+56001234571',
+        'Física',
+        'roberto.salinas@example.com'
+    ),
+    (
+        'Isidora',
+        'Alejandra',
+        'Morales',
+        'Urrutia',
+        '12345684',
+        '3',
+        '+56001234572',
+        'Biología',
+        'isidora.morales@example.com'
+    ),
+    (
+        'Gabriel',
+        'Oscar',
+        'Herrera',
+        'Pino',
+        '12345685',
+        '2',
+        '+56001234573',
+        'Química',
+        'gabriel.herrera@example.com'
+    ),
+    (
+        'Constanza',
+        'Andrea',
+        'Valdés',
+        'Cifuentes',
+        '12345686',
+        '1',
+        '+56001234574',
+        'Artes',
+        'constanza.valdes@example.com'
+    );
 
 -- --------------------------------------------------------
-
 -- Insertar apoderados
-INSERT INTO `apoderado` (`primer_nombre`, `primer_apellido`, `rut`, `dv`, `correo_electronico`, `fecha_nacimiento`) VALUES
-('Carlos', 'Gomez', '23456789', '8', 'carlos.gomez@example.com', '1980-01-15'),
-('Ana', 'Martinez', '98765432', '7', 'ana.martinez@example.com', '1982-05-25');
+INSERT INTO
+    `apoderado` (
+        `primer_nombre`,
+        `primer_apellido`,
+        `rut`,
+        `dv`,
+        `correo_electronico`,
+        `fecha_nacimiento`
+    )
+VALUES
+    (
+        'Carlos',
+        'Gomez',
+        '23456789',
+        '8',
+        'carlos.gomez@example.com',
+        '1980-01-15'
+    ),
+    (
+        'Ana',
+        'Martinez',
+        '98765432',
+        '7',
+        'ana.martinez@example.com',
+        '1982-05-25'
+    );
 
+
+INSERT INTO
+     `apoderado_direccion` (`apoderado_id`, `direccion_id`, `tipo_direccion`)
+VALUES
+    (1, 1, 'Domicilio'),
+    (2, 2, 'Domicilio');
 -- --------------------------------------------------------
-
-INSERT INTO `usuarios` (`username`, `password`, `correo_electronico`, `apoderado_id`, `profesor_id`) VALUES
-('juanp', 'password1', 'juan.perez@example.com', NULL, 1),
-('mariar', 'password2', 'maria.rojas@example.com', NULL, 2),
-('carlosg', 'password3', 'carlos.gomez@example.com', 1, NULL),
-('anam', 'password4', 'ana.martinez@example.com', 2, NULL),
-('omarg', 'password', 'om.guerra@example.com', NULL, NULL);
+INSERT INTO
+    `usuarios` (
+        `username`,
+        `password`,
+        `correo_electronico`,
+        `apoderado_id`,
+        `profesor_id`
+    )
+VALUES
+    (
+        'juanp',
+        'password1',
+        'juan.perez@example.com',
+        NULL,
+        1
+    ),
+    (
+        'mariar',
+        'password2',
+        'maria.rojas@example.com',
+        NULL,
+        2
+    ),
+    (
+        'carlosg',
+        'password3',
+        'carlos.gomez@example.com',
+        1,
+        NULL
+    ),
+    (
+        'anam',
+        'password4',
+        'ana.martinez@example.com',
+        2,
+        NULL
+    ),
+    (
+        'omarg',
+        'password',
+        'om.guerra@example.com',
+        NULL,
+        NULL
+    );
 
 -- Asignar roles a usuarios
 -- Juan es un profesor
-INSERT INTO `usuario_roles` (`usuario_id`, `role_id`) VALUES (1, 3);
--- María es un profesor
-INSERT INTO `usuario_roles` (`usuario_id`, `role_id`) VALUES (2, 3);
--- Carlos es un apoderado
-INSERT INTO `usuario_roles` (`usuario_id`, `role_id`) VALUES (3, 2);
--- Ana es un apoderado
-INSERT INTO `usuario_roles` (`usuario_id`, `role_id`) VALUES (4, 2);
--- omarg es un administrador
-INSERT INTO `usuario_roles` (`usuario_id`, `role_id`) VALUES (5, 1);
+INSERT INTO
+    `usuario_roles` (`usuario_id`, `role_id`)
+VALUES
+    (1, 3);
 
+-- María es un profesor
+INSERT INTO
+    `usuario_roles` (`usuario_id`, `role_id`)
+VALUES
+    (2, 3);
+
+-- Carlos es un apoderado
+INSERT INTO
+    `usuario_roles` (`usuario_id`, `role_id`)
+VALUES
+    (3, 2);
+
+-- Ana es un apoderado
+INSERT INTO
+    `usuario_roles` (`usuario_id`, `role_id`)
+VALUES
+    (4, 2);
+
+-- omarg es un administrador
+INSERT INTO
+    `usuario_roles` (`usuario_id`, `role_id`)
+VALUES
+    (5, 1);
 
 -- --------------------------------------------------------
 -- Insertar dos estudiantes
-INSERT INTO `estudiante` (
-    `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, 
-    `fecha_nacimiento`, `rut`, `dv`, `telefono_contacto`, `genero`, 
-    `alergico`, `vive_con`, `enfermedad_cronica`
-) VALUES 
-('Juan', 'Pablo', 'González', 'Pérez', '2005-04-15', '12345678', '9', '123456789', 'Masculino', 'Polen', 'Padres', 'Asma'),
-('María', 'Isabel', 'Rodríguez', 'Vargas', '2006-08-22', '12345679', 'K', '987654321', 'Femenino', 'Ninguna', 'Padres', NULL);
-('Juan2', 'Pablo2', 'González2', 'Pérez2', '2005-04-15', '12345678', '9', '123456789', 'Masculino', 'Polen', 'Padres', 'Asma'),
-('María2', 'Isabel2', 'Rodríguez2', 'Vargas2', '2006-08-22', '12345679', 'K', '987654321', 'Femenino', 'Ninguna', 'Padres', NULL);
+INSERT INTO
+    `estudiante` (
+        `primer_nombre`,
+        `segundo_nombre`,
+        `primer_apellido`,
+        `segundo_apellido`,
+        `fecha_nacimiento`,
+        `rut`,
+        `dv`,
+        `telefono_contacto`,
+        `genero`,
+        `alergico`,
+        `vive_con`,
+        `enfermedad_cronica`
+    )
+VALUES
+    (
+        'Juan',
+        'Pablo',
+        'González',
+        'Pérez',
+        '2005-04-15',
+        '12345678',
+        '9',
+        '123456789',
+        'Masculino',
+        'Polen',
+        'Padres',
+        'Asma'
+    ),
+    (
+        'María',
+        'Isabel',
+        'Rodríguez',
+        'Vargas',
+        '2006-08-22',
+        '12345679',
+        'K',
+        '987654321',
+        'Femenino',
+        'Ninguna',
+        'Padres',
+        NULL
+    ),
+    (
+        'Juan2',
+        'Pablo2',
+        'González2',
+        'Pérez2',
+        '2005-04-15',
+        '12345678',
+        '9',
+        '123456789',
+        'Masculino',
+        'Polen',
+        'Padres',
+        'Asma'
+    ),
+    (
+        'María2',
+        'Isabel2',
+        'Rodríguez2',
+        'Vargas2',
+        '2006-08-22',
+        '12345679',
+        'K',
+        '987654321',
+        'Femenino',
+        'Ninguna',
+        'Padres',
+        NULL
+    );
 
 -- Relacionar a los estudiantes con el apoderado con id 1
 -- Suponiendo que los IDs de los estudiantes insertados son 1 y 2
-INSERT INTO `apoderado_estudiante` (`apoderado_id`, `estudiante_id`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(2, 4);
+INSERT INTO
+    `apoderado_estudiante` (`apoderado_id`, `estudiante_id`)
+VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 4);
+
+
+
+
+    INSERT INTO `curso` (`nombre`, `descripcion`, `nivel_grado`, `profesor_id`) VALUES
+('Pre-Kinder', 'Curso de nivelación inicial', 'Pre-Kinder', 1),
+('Kinder', 'Curso de nivelación inicial', 'Kinder', 2),
+('1ero Básico', 'Curso de educación básica', '1ero Básico', 3),
+('2do Básico', 'Curso de educación básica', '2do Básico', 4),
+('3ero Básico', 'Curso de educación básica', '3ero Básico', 5),
+('4to Básico', 'Curso de educación básica', '4to Básico', 6),
+('5to Básico', 'Curso de educación básica', '5to Básico', 7),
+('6to Básico', 'Curso de educación básica', '6to Básico', 8),
+('7mo Básico', 'Curso de educación básica', '7mo Básico', 9),
+('8vo Básico', 'Curso de educación básica', '8vo Básico', 10);

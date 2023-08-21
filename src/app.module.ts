@@ -6,7 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { entities } from './models';
 
-import { ApoderadoModule, EstudianteModule } from './components';
+import { ApoderadoModule, EstudianteModule, ProfesorModule } from './components';
 
 
 @Module({
@@ -14,6 +14,7 @@ import { ApoderadoModule, EstudianteModule } from './components';
     ConfigModule.forRoot({ isGlobal: true }),
     ApoderadoModule,
     EstudianteModule,
+    ProfesorModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

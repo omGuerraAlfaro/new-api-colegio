@@ -6,10 +6,12 @@ import { ApoderadoDireccion } from './ApoderadoDireccion.entity';
 import { Direccion } from './Direccion.entity';
 import { Ciudad } from './Ciudad.entity';
 import { Region } from './Region.entity';
+import { Profesor } from './Profesor.entity';
+import { Curso } from './Curso.entity';
 
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
-                        Estudiante, 
+                        Estudiante, Profesor, Curso,
                         Direccion, Ciudad, Region
                         ];
 
