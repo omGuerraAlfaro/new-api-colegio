@@ -194,7 +194,6 @@ VALUES
     ('Avenida Cuarta', '1121', '9C', '56792', 33),
     ('Calle Quinta', '3141', '2D', '56793', 28);
 
-
 -- --------------------------------------------------------
 INSERT INTO
     `estado_boleta` (`descripcion`)
@@ -237,114 +236,180 @@ INSERT INTO
     )
 VALUES
     (
-        'Juan',
-        NULL,
-        'Perez',
-        NULL,
-        '12345678',
-        '9',
-        NULL,
-        NULL,
-        'juan.perez@example.com'
-    ),
-    (
-        'María',
-        NULL,
-        'Rojas',
-        NULL,
-        '87654321',
-        '0',
-        NULL,
-        NULL,
-        'maria.rojas@example.com'
-    ),
-    (
-        'Juan',
-        'Carlos',
-        'Pérez',
-        'Gómez',
-        '12345679',
-        '8',
-        '+56001234567',
-        'Matemáticas',
-        'juan.carlos.perez@example.com'
-    ),
-    (
-        'Penelope',
-        'Ignacia',
-        'Perez',
-        'López',
-        '12345680',
+        'Maria',
+        'Olga',
+        'Bravo',
+        'Caceres',
+        '15818487',
         '7',
-        '+56001234568',
-        'Historia',
-        'penelope.perez@example.com'
-    ),
-    (
-        'Felipe',
-        'Andres',
-        'Rodríguez',
-        'López',
-        '12345681',
-        '6',
-        '+56001234569',
-        'Historia',
-        'felipe.rodriguez@example.com'
-    ),
-    (
-        'Antonio',
-        NULL,
-        'Zapata',
-        'Muñoz',
-        '12345682',
-        '5',
-        '+56001234570',
+        '966886435',
         'Lenguaje',
-        'antonio.zapata@example.com'
+        'mariaolgabravo.cach@gmail.com'
     ),
     (
-        'Roberto',
-        'Manuel',
-        'Salinas',
-        'Ortega',
-        '12345683',
-        '4',
-        '+56001234571',
-        'Física',
-        'roberto.salinas@example.com'
+        'Fabiola',
+        'Solange',
+        'Cabrera',
+        'Moreno',
+        '13981434',
+        '7',
+        '996317819',
+        'Lenguaje',
+        'fabinstructora35@gmail.com'
     ),
     (
-        'Isidora',
-        'Alejandra',
-        'Morales',
-        'Urrutia',
-        '12345684',
+        'Erika',
+        'Marcela',
+        'Donoso',
+        'Arancibia',
+        '13751619',
+        '5',
+        '977692341',
+        'Matemáticas',
+        'erikamdonoso@gmail.com'
+    ),
+    (
+        'Elwin',
+        'Alexis',
+        'Fernandez',
+        'Varas',
+        '11944261',
         '3',
-        '+56001234572',
-        'Biología',
-        'isidora.morales@example.com'
+        '942457883',
+        'CS. Sociales',
+        'elwinfernandez.cach@gmail.com'
     ),
     (
-        'Gabriel',
-        'Oscar',
-        'Herrera',
-        'Pino',
-        '12345685',
-        '2',
-        '+56001234573',
-        'Química',
-        'gabriel.herrera@example.com'
+        'Gema',
+        'De Las Mercedes',
+        'Guzman',
+        'Rodriguez',
+        '13351869',
+        'k',
+        '981565478',
+        'Ingles',
+        'gemita24@gmail.com'
     ),
     (
-        'Constanza',
+        'Maria',
+        'Victoria',
+        'Lizana',
+        'Quijanes',
+        '17468364',
+        '6',
+        '933791121',
+        'Lenguaje',
+        'mlizanaquijanes@gmail.com'
+    ),
+    (
+        'Daniela',
+        'Alexandra',
+        'Moncada',
+        'Serey',
+        '16305624',
+        '0',
+        '962790577',
+        'CS. Naturales',
+        'danielamoncadaserey23@gmail.com'
+    ),
+    (
+        'Viviana',
+        'Karina',
+        'Montenegro',
+        'Escobar',
+        '15065403',
+        '3',
+        '993643381',
+        'Educadora',
+        'vivianamontenegro.cach@gmail.com'
+    ),
+    (
+        'Paula',
         'Andrea',
-        'Valdés',
-        'Cifuentes',
-        '12345686',
-        '1',
-        '+56001234574',
-        'Artes',
-        'constanza.valdes@example.com'
+        'Muñoz',
+        'Milla',
+        '17972195',
+        '3',
+        '944863629',
+        'Ingles',
+        'englishprofepau@gmail.com'
+    ),
+    (
+        'Javiera',
+        'Isidora',
+        'Muñoz',
+        'Villarroel',
+        '19887868',
+        '5',
+        '988209314',
+        'Ed. Fisica',
+        'j28122012@gmail.com'
+    ),
+    (
+        'Maria',
+        'Paz',
+        'Navea',
+        'Reinoso',
+        '17163932',
+        '8',
+        '953449607',
+        'Educadora',
+        'mariapaznavea.cach@gmail.com'
+    ),
+    (
+        'Juan',
+        'Francisco',
+        'Palacios',
+        'Bugueño',
+        '18680585',
+        '2',
+        '964148933',
+        'Ed. Fisica',
+        'juanfraa.pb@gmail.com'
+    ),
+    (
+        'Marlenne',
+        'Tamara',
+        'Rodriguez',
+        'Banda',
+        '18561960',
+        '5',
+        '981212560',
+        'Matemáticas',
+        'marlennerodriguez.cach@hotmail.com'
+    ),
+    (
+        'Valeria',
+        'Isabel',
+        'Toledo',
+        'Soto',
+        '16951350',
+        '3',
+        '934331816',
+        'Educadora',
+        'valeriatoledo.cach@gmail.com'
+    ),
+    (
+        'Maria',
+        'Ines',
+        'Trigo',
+        'Ossandon',
+        '8271586',
+        'k',
+        '971019610',
+        'Matematicas',
+        'manetrigo@hotmail.com'
+    ),
+    (
+        'Ricxi',
+        'Andrea',
+        'Vasquez',
+        'Montenegro',
+        '17468736',
+        '6',
+        '984269939',
+        'Lenguaje',
+        'ricxivm@gmail.com'
     );
 
 -- --------------------------------------------------------
@@ -376,12 +441,12 @@ VALUES
         '1982-05-25'
     );
 
-
 INSERT INTO
-     `apoderado_direccion` (`apoderado_id`, `direccion_id`, `tipo_direccion`)
+    `apoderado_direccion` (`apoderado_id`, `direccion_id`, `tipo_direccion`)
 VALUES
     (1, 1, 'Domicilio'),
     (2, 2, 'Domicilio');
+
 -- --------------------------------------------------------
 INSERT INTO
     `usuarios` (
@@ -544,17 +609,95 @@ VALUES
     (1, 3),
     (2, 4);
 
-
-
-
-    INSERT INTO `curso` (`nombre`, `descripcion`, `nivel_grado`, `profesor_id`) VALUES
-('Pre-Kinder', 'Curso de nivelación inicial', 'Pre-Kinder', 1),
-('Kinder', 'Curso de nivelación inicial', 'Kinder', 2),
-('1ero Básico', 'Curso de educación básica', '1ero Básico', 3),
-('2do Básico', 'Curso de educación básica', '2do Básico', 4),
-('3ero Básico', 'Curso de educación básica', '3ero Básico', 5),
-('4to Básico', 'Curso de educación básica', '4to Básico', 6),
-('5to Básico', 'Curso de educación básica', '5to Básico', 7),
-('6to Básico', 'Curso de educación básica', '6to Básico', 8),
-('7mo Básico', 'Curso de educación básica', '7mo Básico', 9),
-('8vo Básico', 'Curso de educación básica', '8vo Básico', 10);
+INSERT INTO
+    `curso` (
+        `nombre`,
+        `descripcion`,
+        `nivel_grado`,
+        `profesor_id`
+    )
+VALUES
+    (
+        'Pre-Kinder',
+        'Curso de nivelación inicial',
+        'Pre-Kinder',
+        8
+    ),
+    (
+        'Kinder',
+        'Curso de nivelación inicial',
+        'Kinder',
+        11
+    ),
+    (
+        '1ero Básico',
+        'Curso de educación básica',
+        '1ero Básico',
+        14
+    ),
+    (
+        '2do Básico',
+        'Curso de educación básica',
+        '2do Básico',
+        16
+    ),
+    (
+        '3ero Básico A',
+        'Curso de educación básica',
+        '3ero Básico',
+        1
+    ),
+    (
+        '3ero Básico B',
+        'Curso de educación básica',
+        '3ero Básico',
+        7
+    ),
+    (
+        '4to Básico A',
+        'Curso de educación básica',
+        '4to Básico',
+        13
+    ),
+    (
+        '4to Básico B',
+        'Curso de educación básica',
+        '4to Básico',
+        3
+    ),
+    (
+        '5to Básico',
+        'Curso de educación básica',
+        '5to Básico',
+        9
+    ),
+    (
+        '6to Básico A',
+        'Curso de educación básica',
+        '6to Básico',
+        15
+    ),
+    (
+        '6to Básico B',
+        'Curso de educación básica',
+        '6to Básico',
+        10
+    ),
+    (
+        '7mo Básico A',
+        'Curso de educación básica',
+        '7mo Básico',
+        6
+    ),
+    (
+        '7mo Básico B',
+        'Curso de educación básica',
+        '7mo Básico',
+        4
+    ),
+    (
+        '8vo Básico',
+        'Curso de educación básica',
+        '8vo Básico',
+        5
+    );
