@@ -8,10 +8,12 @@ import { Ciudad } from './Ciudad.entity';
 import { Region } from './Region.entity';
 import { Profesor } from './Profesor.entity';
 import { Curso } from './Curso.entity';
+import { EstudianteCurso } from './CursoEstudiante.entity';
+import { Usuarios } from './User.entity';
 
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
-                        Estudiante, Profesor, Curso,
+                        Estudiante, Profesor, Curso, EstudianteCurso, Usuarios,
                         Direccion, Ciudad, Region
                         ];
 

@@ -5,6 +5,7 @@ import {
     OneToMany,
 } from 'typeorm';
 import { ApoderadoEstudiante } from './ApoderadoEstudiante.entity';
+import { EstudianteCurso } from './CursoEstudiante.entity';
 
 @Entity()
 export class Estudiante {
@@ -49,4 +50,7 @@ export class Estudiante {
 
     @OneToMany(() => ApoderadoEstudiante, apoderadoEstudiante => apoderadoEstudiante.estudiante)
     apoderadosConnection: ApoderadoEstudiante[];
+
+    @OneToMany(() => EstudianteCurso, cursoEstudiante => cursoEstudiante.estudiante)
+    cursoConnection: EstudianteCurso[];
 }

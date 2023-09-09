@@ -9,11 +9,11 @@ import { Estudiante } from 'src/models/Estudiante.entity';
   imports: [
     TypeOrmModule.forFeature([
       Apoderado,
-      ApoderadoController,
       Estudiante,
     ]),
   ],
   controllers: [ApoderadoController],
   providers: [ApoderadoService],
+  exports: [TypeOrmModule],
 })
 export class ApoderadoModule {}

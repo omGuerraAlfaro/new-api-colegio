@@ -5,11 +5,8 @@ import {
     OneToMany,
     OneToOne,
 } from 'typeorm';
-import { ApoderadoEstudiante } from './ApoderadoEstudiante.entity';
-import { Estudiante } from './Estudiante.entity';
-import { ApoderadoDireccion } from './ApoderadoDireccion.entity';
-import { Direccion } from './Direccion.entity';
 import { Curso } from './Curso.entity';
+import { Usuarios } from './User.entity';
 
 @Entity()
 export class Profesor {
@@ -42,6 +39,8 @@ export class Profesor {
 
     @OneToMany(() => Curso, curso => curso.profesorConnection)
     cursoConnection: Curso[];
-    
+
+    @OneToOne(() => Usuarios, usuario => usuario.profesor)
+    usuario: Usuarios;
 
 }

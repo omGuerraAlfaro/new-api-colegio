@@ -7,6 +7,8 @@ import {
     JoinColumn,
 } from 'typeorm';
 import { Profesor } from './Profesor.entity';
+import { EstudianteCurso } from './CursoEstudiante.entity';
+import { Estudiante } from './Estudiante.entity';
 @Entity()
 export class Curso {
 
@@ -26,19 +28,15 @@ export class Curso {
     @JoinColumn({ name: 'profesor_id' })
     profesorConnection: Profesor;
 
+    @OneToMany(() => EstudianteCurso, cursoEstudiante => cursoEstudiante.curso)
+    cursoConnection: EstudianteCurso[];
 
-   
+
+    addStudent(student: Estudiante) {
+        const connection = new EstudianteCurso();
+        connection.curso = this;
+        connection.estudiante = student;
+        this.cursoConnection.push(connection);
+    }
+
 }
-    // addStudent(student: Estudiante) {
-    //     const connection = new ApoderadoEstudiante();
-    //     connection.apoderado = this;
-    //     connection.estudiante = student;
-    //     this.estudiantesConnection.push(connection);
-    // }
-
-    // addAddress(address: Direccion) {
-    //     const connection = new ApoderadoDireccion();
-    //     connection.apoderado = this;
-    //     connection.direccion = address;
-    //     this.direccionConnection.push(connection);
-    // }

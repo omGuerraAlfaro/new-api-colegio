@@ -27,10 +27,6 @@ export class ProfesorController {
     return await this.profesorService.findOne(id);
   }
 
-  @Get('with-cursos')
-  async findProfesoresWithCursos() {
-    return await this.profesorService.findProfesoresWithCursos();
-  }
   
 }
 

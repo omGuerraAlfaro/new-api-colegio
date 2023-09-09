@@ -3,11 +3,13 @@ import {
     PrimaryGeneratedColumn,
     Column,
     OneToMany,
+    OneToOne,
 } from 'typeorm';
 import { ApoderadoEstudiante } from './ApoderadoEstudiante.entity';
 import { Estudiante } from './Estudiante.entity';
 import { ApoderadoDireccion } from './ApoderadoDireccion.entity';
 import { Direccion } from './Direccion.entity';
+import { Usuarios } from './User.entity';
 
 @Entity()
 export class Apoderado {
@@ -59,6 +61,9 @@ export class Apoderado {
     @OneToMany(() => ApoderadoDireccion, apoderadoDireccion => apoderadoDireccion.direccion)
     direccionConnection: ApoderadoDireccion[];
 
+    @OneToOne(() => Usuarios, usuario => usuario.apoderado)
+    usuario: Usuarios;
+
     addStudent(student: Estudiante) {
         const connection = new ApoderadoEstudiante();
         connection.apoderado = this;
@@ -72,5 +77,5 @@ export class Apoderado {
         connection.direccion = address;
         this.direccionConnection.push(connection);
     }
-    
+    estudiantes?: Estudiante[];
 }
