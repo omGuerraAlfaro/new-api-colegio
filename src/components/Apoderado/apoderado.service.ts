@@ -2,24 +2,52 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApoderadoDTO } from 'src/dto/apoderado.dto';
 import { Apoderado } from 'src/models/Apoderado.entity';
+import { ApoderadoEstudiante } from 'src/models/ApoderadoEstudiante.entity';
+import { EstudianteCurso } from 'src/models/CursoEstudiante.entity';
+import { Estudiante } from 'src/models/Estudiante.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class ApoderadoService {
   constructor(
     @InjectRepository(Apoderado)
-    private readonly apoderadoRepository: Repository<Apoderado>
+    private readonly apoderadoRepository: Repository<Apoderado>,
+    @InjectRepository(Estudiante)
+    private readonly estudianteRepository: Repository<Estudiante>,
+    @InjectRepository(ApoderadoEstudiante)
+    private readonly apoderadoEstudianteRepository: Repository<ApoderadoEstudiante>,
+    @InjectRepository(EstudianteCurso)
+    private readonly estudianteCursoRepository: Repository<EstudianteCurso>
+
   ) { }
 
-  async createApoderado(data: ApoderadoDTO): Promise<Apoderado> {
-    try {
-      const apoderado = this.apoderadoRepository.create(data);
-      return await this.apoderadoRepository.save(apoderado);
-    } catch (error) {
-      throw new InternalServerErrorException('Error saving the apoderado.');
-    }
-  }
 
+  async createApoderadoWithEstudiantes(apoderadoData: ApoderadoDTO): Promise<any> {
+    const apoderado = this.apoderadoRepository.create(apoderadoData);
+    const savedApoderado = await this.apoderadoRepository.save(apoderado);
+
+    const savedEstudiantes = [];
+    for (const estudianteData of apoderadoData.estudiantes) {
+      const estudiante = this.estudianteRepository.create(estudianteData);
+      const savedEstudiante = await this.estudianteRepository.save(estudiante);
+      savedEstudiantes.push(savedEstudiante);
+
+      const apoderadoEstudiante = new ApoderadoEstudiante();
+      apoderadoEstudiante.apoderado_id = savedApoderado.id;
+      apoderadoEstudiante.estudiante_id = savedEstudiante.id;
+      await this.apoderadoEstudianteRepository.save(apoderadoEstudiante);
+
+      const estudianteCurso = new EstudianteCurso();
+      estudianteCurso.curso_id = estudianteData.cursoId;
+      estudianteCurso.estudiante_id = savedEstudiante.id;
+      await this.estudianteCursoRepository.save(estudianteCurso);
+    }
+
+    return {
+      apoderado: savedApoderado,
+      estudiantes: savedEstudiantes
+    };
+  }
 
   async findAll() {
     return await this.apoderadoRepository.find();
@@ -100,18 +128,6 @@ export class ApoderadoService {
   }
 
 
-  // async createApoderadoWithStudents(apoderadoData: ApoderadoDTO, studentIds: number[]) {
-  //   const apoderado = this.apoderadoRepository.create(apoderadoData);
-
-  //   for (let id of studentIds) {
-  //       const student = await this.estudianteRepository.findOne({ where: { id: id } });
-  //       if (student) {
-  //           apoderado.addStudent(student);
-  //       }
-  //   }
-
-  //   return await this.apoderadoRepository.save(apoderado);
-  // }
 
 
 }

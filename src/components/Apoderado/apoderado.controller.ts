@@ -18,19 +18,9 @@ import { ApoderadoDTO } from 'src/dto/apoderado.dto';
 export class ApoderadoController {
   constructor(private readonly apoderadoService: ApoderadoService) { }
 
-  // @Post()
-  // async create(@Body() apoderadoDTO: ApoderadoDTO) {
-  //   return await this.apoderadoService.createApoderadoWithStudents(apoderadoDTO, apoderadoDTO.studentIds);
-  // }
-
   @Post()
-  async createApoderado(@Body() apoderadoDto: ApoderadoDTO): Promise<any> {
-    try {
-      apoderadoDto.fecha_nacimiento = new Date(apoderadoDto.fecha_nacimiento);
-      return this.apoderadoService.createApoderado(apoderadoDto);
-    } catch (error) {
-      throw new HttpException('Failed to create Apoderado', HttpStatus.BAD_REQUEST);
-    }
+  async createApoderadoWithEstudiantes(@Body() apoderadoData: ApoderadoDTO) {
+      return this.apoderadoService.createApoderadoWithEstudiantes(apoderadoData);
   }
 
 
