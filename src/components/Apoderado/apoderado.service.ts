@@ -128,7 +128,47 @@ export class ApoderadoService {
   }
 
 
+  /* ************************************************************ */
 
+  async createApoderadoWithEstudiantes2(apoderadoData: ApoderadoDTO): Promise<any> {
+    const apoderado = this.apoderadoRepository.create(apoderadoData);
+    const savedApoderado = await this.apoderadoRepository.save(apoderado);
+
+    const savedEstudiantes = [];
+    for (const estudianteData of apoderadoData.estudiantes) {
+      const estudiante = this.estudianteRepository.create(estudianteData);
+      const savedEstudiante = await this.estudianteRepository.save(estudiante);
+      savedEstudiantes.push(savedEstudiante);
+
+      const apoderadoEstudiante = new ApoderadoEstudiante();
+      apoderadoEstudiante.apoderado_id = savedApoderado.id;
+      apoderadoEstudiante.estudiante_id = savedEstudiante.id;
+      await this.apoderadoEstudianteRepository.save(apoderadoEstudiante);
+
+      const estudianteCurso = new EstudianteCurso();
+      estudianteCurso.curso_id = estudianteData.cursoId;
+      estudianteCurso.estudiante_id = savedEstudiante.id;
+      await this.estudianteCursoRepository.save(estudianteCurso);
+    }
+
+    return {
+      apoderado: savedApoderado,
+      estudiantes: savedEstudiantes
+    };
+  }
+
+  async saveAllApoderadosWithEstudiantes(data: { apoderados: ApoderadoDTO[] }): Promise<any[]> {
+    const results = [];
+
+    for (const apoderadoData of data.apoderados) {
+      const result = await this.createApoderadoWithEstudiantes2(apoderadoData);
+      results.push(result);
+    }
+
+    return results;
+  }
+
+  /* ************************************************************ */
 
 }
 

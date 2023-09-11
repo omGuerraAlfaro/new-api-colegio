@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   HttpException,
   HttpStatus,
   InternalServerErrorException,
@@ -19,10 +20,16 @@ export class ApoderadoController {
   constructor(private readonly apoderadoService: ApoderadoService) { }
 
   @Post()
+  @HttpCode(201)
   async createApoderadoWithEstudiantes(@Body() apoderadoData: ApoderadoDTO) {
       return this.apoderadoService.createApoderadoWithEstudiantes(apoderadoData);
   }
 
+  @Post('array-object')
+  @HttpCode(201)
+  async saveAllApoderadosWithEstudiantes(@Body() data: { apoderados: ApoderadoDTO[] }) {
+    return this.apoderadoService.saveAllApoderadosWithEstudiantes(data);
+  }
 
   @Get()
   async getApoderados() {
