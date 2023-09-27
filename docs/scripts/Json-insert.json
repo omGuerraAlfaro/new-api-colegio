@@ -1,7 +1,7 @@
 {
   "cursos": [
     {
-      "apoderados": [
+      "prekinder": [
         {
           "primer_nombre": "Jeniffer",
           "segundo_nombre": "",
@@ -306,7 +306,7 @@
       ]
     },
     {
-      "apoderados": [
+      "kinder": [
         {
           "primer_nombre": "Carlos",
           "segundo_nombre": "Martin",
@@ -720,6 +720,277 @@
           ]
         },
         {
+          "primer_nombre": "Alba",
+          "segundo_nombre": "Alicia",
+          "primer_apellido": "Arcaya",
+          "segundo_apellido": "Villafaña",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "17117947",
+          "dv": "5",
+          "telefono": "982701894",
+          "correo_electronico": "alba.ar.villaf@gmail.com",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "Josefa",
+              "segundo_nombre": "Antonia",
+              "primer_apellido": "Parra",
+              "segundo_apellido": "Arcaya",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "25794597",
+              "dv": "9",
+              "telefono_contacto": "982701894",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 2
+            },
+            {
+              "primer_nombre": "Jose",
+              "segundo_nombre": "Tomás",
+              "primer_apellido": "Parra",
+              "segundo_apellido": "Arcaya",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "23144981",
+              "dv": "7",
+              "telefono_contacto": "982701894",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 14
+            }
+          ]
+        },
+        {
+          "primer_nombre": "Claudia",
+          "segundo_nombre": "",
+          "primer_apellido": "Contreras",
+          "segundo_apellido": "Pulgar",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "16306096",
+          "dv": "5",
+          "telefono": "977974802",
+          "correo_electronico": "claudia.c.p.1986@gmail.com",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "Agustina",
+              "segundo_nombre": "",
+              "primer_apellido": "Rojas",
+              "segundo_apellido": "Contreras",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "xx.xxx.xxx",
+              "dv": "x",
+              "telefono_contacto": "977974802",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 2
+            },
+            {
+              "primer_nombre": "Florencia",
+              "segundo_nombre": "Anaís",
+              "primer_apellido": "Rojas",
+              "segundo_apellido": "Contreras",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "16306296",
+              "dv": "5",
+              "telefono_contacto": "977974802",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 9
+            }
+          ]
+        },
+        {
+          "primer_nombre": "Francisca",
+          "segundo_nombre": "",
+          "primer_apellido": "Fredes",
+          "segundo_apellido": "Castro",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "12051001",
+          "dv": "0",
+          "telefono": "962728058",
+          "correo_electronico": "fvfredes@hotmail.com",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "Fernanda",
+              "segundo_nombre": "Isabella",
+              "primer_apellido": "Valenzuela",
+              "segundo_apellido": "Fredes",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "xx.xxx.xxx",
+              "dv": "x",
+              "telefono_contacto": "962728058",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 2
+            },
+            {
+              "primer_nombre": "Sofía",
+              "segundo_nombre": "Isidora",
+              "primer_apellido": "Valenzuela",
+              "segundo_apellido": "Fredes",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "xx.xxx.xxx",
+              "dv": "x",
+              "telefono_contacto": "962728058",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 9
+            }
+          ]
+        },
+        {
+          "primer_nombre": "Andrea",
+          "segundo_nombre": "",
+          "primer_apellido": "Nuñez",
+          "segundo_apellido": "Tapia",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "18112990",
+          "dv": "5",
+          "telefono": "956386278",
+          "correo_electronico": "nandreapaz@gmail.com",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "Catalina",
+              "segundo_nombre": "Andrea",
+              "primer_apellido": "Vega",
+              "segundo_apellido": "Nuñez",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "25755757",
+              "dv": "k",
+              "telefono_contacto": "956386278",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 2
+            },
+            {
+              "primer_nombre": "Josefina",
+              "segundo_nombre": "Ignacia",
+              "primer_apellido": "Vega",
+              "segundo_apellido": "Nuñez",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "24311256",
+              "dv": "7",
+              "telefono_contacto": "956386278",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 7
+            }
+          ]
+        },
+        {
+          "primer_nombre": "Ambar",
+          "segundo_nombre": "Denisse",
+          "primer_apellido": "Vicencio",
+          "segundo_apellido": "Bustamante",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "13827782",
+          "dv": "8",
+          "telefono": "986027264",
+          "correo_electronico": "ambarvb@hotmail.com",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "Ignacia",
+              "segundo_nombre": "Denisse",
+              "primer_apellido": "Villarroel",
+              "segundo_apellido": "Vicencio",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "25979787",
+              "dv": "k",
+              "telefono_contacto": "986027264",
+              "genero": "F",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 2
+            },
+            {
+              "primer_nombre": "Renato",
+              "segundo_nombre": "",
+              "primer_apellido": "Villarroel",
+              "segundo_apellido": "Vicencio",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "23715056",
+              "dv": "k",
+              "telefono_contacto": "986027264",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 11
+            }
+          ]
+        }      
+      ]
+    },
+    {
+      "primero": [
+        {
+          "primer_nombre": "Fernanda",
+          "segundo_nombre": "Marion",
+          "primer_apellido": "Ugaldes",
+          "segundo_apellido": "ValdeBenito",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "17164380",
+          "dv": "5",
+          "telefono": "982100239",
+          "correo_electronico": "fernandaugaldes@gmail.com",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "Mateo",
+              "segundo_nombre": "Augusto",
+              "primer_apellido": "Aguilera",
+              "segundo_apellido": "Ugaldes",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "982100239",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
           "primer_nombre": "",
           "segundo_nombre": "",
           "primer_apellido": "",
@@ -747,8 +1018,25 @@
               "alergico": "Ninguno",
               "vive_con": "Padres",
               "enfermedad_cronica": "",
-              "cursoId": 2
-            },
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
             {
               "primer_nombre": "",
               "segundo_nombre": "",
@@ -758,11 +1046,267 @@
               "rut": "",
               "dv": "",
               "telefono_contacto": "",
-              "genero": "F",
+              "genero": "M",
               "alergico": "Ninguno",
               "vive_con": "Padres",
               "enfermedad_cronica": "",
-              "cursoId": 2
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
+            }
+          ]
+        },    
+        {
+          "primer_nombre": "",
+          "segundo_nombre": "",
+          "primer_apellido": "",
+          "segundo_apellido": "",
+          "fecha_nacimiento": "2012-04-25",
+          "rut": "",
+          "dv": "",
+          "telefono": "",
+          "correo_electronico": "",
+          "estado_civil": "sin datos",
+          "nacionalidad": "Chilena",
+          "actividad": "sin datos",
+          "escolaridad": "sin datos",
+          "estudiantes": [
+            {
+              "primer_nombre": "",
+              "segundo_nombre": "",
+              "primer_apellido": "",
+              "segundo_apellido": "",
+              "fecha_nacimiento": "2012-04-25",
+              "rut": "",
+              "dv": "",
+              "telefono_contacto": "",
+              "genero": "M",
+              "alergico": "Ninguno",
+              "vive_con": "Padres",
+              "enfermedad_cronica": "",
+              "cursoId": 3
             }
           ]
         }
