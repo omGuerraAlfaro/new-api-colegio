@@ -5,7 +5,6 @@ import { compare, hash } from "bcrypt";
 import { v4 as uuidv4 } from 'uuid';
 
 import { Usuarios } from "../../models/user.entity";
-// import { Roles } from "src/models/roles.entity";
 
 import { LoginDto, RegisterDto } from "src/dto/login.dto";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
@@ -63,9 +62,9 @@ export class AuthService {
 
     async login(userObject: LoginDto) {
         try {
-            const { name_user, password } = userObject;
-
-            const user = await this.userRepository.findOne({ where: { username: name_user } });
+            const { username, password } = userObject;
+            
+            const user = await this.userRepository.findOne({ where: { username: username } });
 
             if (!user) throw new HttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND);
 

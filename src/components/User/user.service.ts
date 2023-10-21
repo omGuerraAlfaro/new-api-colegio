@@ -72,7 +72,7 @@ export class UsuarioService {
     for (const apoderado of apoderados) {
       const username = this.generateUsername(apoderado.primer_nombre, apoderado.primer_apellido);
       const plainPassword = apoderado.rut;
-      const hashedPassword = await hash(plainPassword, 10); // Hash the password
+      const hashedPassword = await hash(plainPassword, 5); // Hash the password
 
       const existingUser = await this.usuarioRepository.findOne({ where: { username } });
       if (existingUser) {
@@ -83,8 +83,8 @@ export class UsuarioService {
       const usuario = new Usuarios();
       usuario.username = username;
       usuario.password = hashedPassword; // Store the hashed password
-      usuario.correo_electronico = apoderado.correo_electronico; // Assuming that the field is named correo_electronico in apoderado
-      usuario.apoderado_id = apoderado.id; // Assuming that the field is named id in apoderado
+      usuario.correo_electronico = apoderado.correo_electronico; 
+      usuario.apoderado_id = apoderado.id;
 
       const savedUser = await this.usuarioRepository.save(usuario);
       createdUsers.push(savedUser);
