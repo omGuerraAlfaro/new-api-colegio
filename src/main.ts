@@ -20,6 +20,12 @@ async function bootstrap() {
     .setTitle('API COLEGIO')
     .setDescription('ENDPOINTS COLEGIO')
     .setVersion('1.0')
+    .addTag('Auth')
+    .addTag('Usuarios')
+    .addTag('Apoderados')
+    .addTag('Estudiantes')
+    .addTag('Profesores')
+    .addTag('Cursos')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

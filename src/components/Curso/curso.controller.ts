@@ -13,7 +13,9 @@ import {
 } from '@nestjs/common';
 import { CursoService } from './curso.service';
 import { log } from 'console';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Cursos')
 @Controller('curso')
 export class CursoController {
   constructor(private readonly cursoService: CursoService) { }

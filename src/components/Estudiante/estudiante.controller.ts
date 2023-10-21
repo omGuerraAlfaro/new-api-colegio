@@ -12,7 +12,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { EstudianteService } from './estudiante.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Estudiantes')
 @Controller('estudiante')
 export class EstudianteController {
   constructor(private readonly estudianteService: EstudianteService) { }

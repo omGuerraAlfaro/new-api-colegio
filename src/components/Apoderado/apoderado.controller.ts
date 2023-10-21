@@ -14,7 +14,9 @@ import {
 } from '@nestjs/common';
 import { ApoderadoService } from './apoderado.service';
 import { ApoderadoDTO } from 'src/dto/apoderado.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Apoderados')
 @Controller('apoderado')
 export class ApoderadoController {
   constructor(private readonly apoderadoService: ApoderadoService) { }
