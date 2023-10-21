@@ -25,7 +25,7 @@ export class UsuarioController {
   }
 
   @Post('/create-for-all-apoderados')
-  async createUsersForAllApoderados(@Response() res): Promise<void> {
+  async createUsersForAllApoderados(@Response() res: any): Promise<void> {
     try {
       const createdUsers = await this.usuarioService.createUsersForAllApoderados();
       res.status(201).json({

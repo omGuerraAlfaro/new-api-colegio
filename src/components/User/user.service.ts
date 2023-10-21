@@ -4,6 +4,7 @@ import { Apoderado } from 'src/models/Apoderado.entity';
 import { Profesor } from 'src/models/Profesor.entity';
 import { Usuarios } from 'src/models/User.entity';
 import { Repository } from 'typeorm';
+import { hash } from "bcrypt";
 
 @Injectable()
 export class UsuarioService {
@@ -70,7 +71,8 @@ export class UsuarioService {
 
     for (const apoderado of apoderados) {
       const username = this.generateUsername(apoderado.primer_nombre, apoderado.primer_apellido);
-      const password = apoderado.rut;
+      const plainPassword = apoderado.rut;
+      const hashedPassword = await hash(plainPassword, 10); // Hash the password
 
       const existingUser = await this.usuarioRepository.findOne({ where: { username } });
       if (existingUser) {
@@ -80,9 +82,9 @@ export class UsuarioService {
 
       const usuario = new Usuarios();
       usuario.username = username;
-      usuario.password = password;
-      usuario.correo_electronico = apoderado.correo_electronico; // Asumiendo que el campo se llama correo_electronico en apoderado
-      usuario.apoderado_id = apoderado.id; // Asumiendo que el campo se llama id en apoderado
+      usuario.password = hashedPassword; // Store the hashed password
+      usuario.correo_electronico = apoderado.correo_electronico; // Assuming that the field is named correo_electronico in apoderado
+      usuario.apoderado_id = apoderado.id; // Assuming that the field is named id in apoderado
 
       const savedUser = await this.usuarioRepository.save(usuario);
       createdUsers.push(savedUser);
