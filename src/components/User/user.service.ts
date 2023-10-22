@@ -85,6 +85,8 @@ export class UsuarioService {
       usuario.password = hashedPassword; // Store the hashed password
       usuario.correo_electronico = apoderado.correo_electronico; 
       usuario.apoderado_id = apoderado.id;
+      usuario.rut = apoderado.rut;
+      
 
       const savedUser = await this.usuarioRepository.save(usuario);
       createdUsers.push(savedUser);

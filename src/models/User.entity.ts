@@ -23,6 +23,9 @@ export class Usuarios {
     @Column({ type: 'varchar', length: 255 })
     correo_electronico: string;
 
+    @Column({ type: 'varchar', length: 255 })
+    rut: string;
+
     @Column({ name: 'apoderado_id', nullable: true })
     apoderado_id: number;
 

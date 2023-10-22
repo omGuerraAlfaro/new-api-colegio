@@ -24,7 +24,7 @@ export class ApoderadoController {
   @Post()
   @HttpCode(201)
   async createApoderadoWithEstudiantes(@Body() apoderadoData: ApoderadoDTO) {
-      return this.apoderadoService.createApoderadoWithEstudiantes(apoderadoData);
+    return this.apoderadoService.createApoderadoWithEstudiantes(apoderadoData);
   }
 
   @Post('array-object')
@@ -48,9 +48,9 @@ export class ApoderadoController {
     return await this.apoderadoService.findStudentsByApoderadoId(id);
   }
 
-  @Get(':id/with-estudents')
-  async getStudentsWithApoderadoId(@Param('id') id: number) {
-    return await this.apoderadoService.findStudentsWithApoderadoId(id);
+  @Get(':rut/with-estudents')
+  async getStudentsWithApoderadoId(@Param('rut') rut: string) {
+    return await this.apoderadoService.findStudentsWithApoderadoId(rut);
   }
 
   @Get(':id/with-address')

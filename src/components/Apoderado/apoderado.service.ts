@@ -85,12 +85,12 @@ export class ApoderadoService {
     return null;
   }
 
-  async findStudentsWithApoderadoId(apoderadoId: number) {
+  async findStudentsWithApoderadoId(apoderadoRut: string) {
     const result = await this.apoderadoRepository
       .createQueryBuilder("apoderado")
       .leftJoinAndSelect("apoderado.estudiantesConnection", "apoderadoEstudiante")
       .leftJoinAndSelect("apoderadoEstudiante.estudiante", "estudiante")
-      .where("apoderado.id = :apoderadoId", { apoderadoId })
+      .where("apoderado.rut = :apoderadoRut", { apoderadoRut })
       .getOne();
 
     if (result) {
