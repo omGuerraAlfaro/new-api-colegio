@@ -4,10 +4,10 @@ import { JwtService } from "@nestjs/jwt";
 import { compare, hash } from "bcrypt";
 import { v4 as uuidv4 } from 'uuid';
 
-import { Usuarios } from "../../models/user.entity";
 
 import { LoginDto, RegisterDto } from "src/dto/login.dto";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Usuarios } from "src/models/User.entity";
 
 @Injectable()
 export class AuthService {
@@ -63,7 +63,7 @@ export class AuthService {
     async login(userObject: LoginDto) {
         try {
             const { username, password } = userObject;
-            
+
             const user = await this.userRepository.findOne({ where: { username: username } });
 
             if (!user) throw new HttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND);
