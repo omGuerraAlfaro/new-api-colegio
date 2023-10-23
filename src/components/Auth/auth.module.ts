@@ -4,11 +4,11 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { Usuarios } from 'src/models/user.entity';
 import { JwtStrategy } from './jwt.strategy';
 import { ConfigService, ConfigModule } from '@nestjs/config';
-import { Apoderado } from 'src/models/Apoderado.entity';
+import { Apoderado } from '../../models/Apoderado.entity';
 import { Profesor } from 'src/models/Profesor.entity';
+import { Usuarios } from 'src/models/User.entity';
 
 
 @Module({
