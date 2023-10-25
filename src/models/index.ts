@@ -10,10 +10,11 @@ import { Profesor } from './Profesor.entity';
 import { Curso } from './Curso.entity';
 import { EstudianteCurso } from './CursoEstudiante.entity';
 import { Usuarios } from './User.entity';
+import { NoticiasColegio, NoticiasImages } from './Noticias.entity';
 
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
                         Estudiante, Profesor, Curso, EstudianteCurso, Usuarios,
-                        Direccion, Ciudad, Region
+                        Direccion, Ciudad, Region, NoticiasColegio, NoticiasImages
                         ];
 
