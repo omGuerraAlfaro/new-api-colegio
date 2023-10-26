@@ -19,5 +19,10 @@ export class NoticiasController {
         }
     }
 
+    @Get()
+    findAll(): Promise<NoticiasColegio[]> {
+        return this.noticiasService.getAllNoticias();
+    }
+
     
 }

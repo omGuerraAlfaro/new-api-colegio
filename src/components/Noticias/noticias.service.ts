@@ -35,19 +35,16 @@ export class NoticiasService {
     }
 
 
-
-   
-
-    async getAllNoticias(): Promise < NoticiasColegio[] > {
-    return await this.noticiasRepository.find();
-}
-
-    async getNoticiaById(id: number): Promise < NoticiasColegio > {
-    const noticia = await this.noticiasRepository.findOne({ where: { id } });
-    if(!noticia) {
-        throw new NotFoundException(`Noticia with ID ${id} not found`);
+    async getAllNoticias(): Promise<NoticiasColegio[]> {
+        return await this.noticiasRepository.find();
     }
+
+    async getNoticiaById(id: number): Promise<NoticiasColegio> {
+        const noticia = await this.noticiasRepository.findOne({ where: { id } });
+        if (!noticia) {
+            throw new NotFoundException(`Noticia with ID ${id} not found`);
+        }
         return noticia;
-}
+    }
 
 }

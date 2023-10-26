@@ -21,11 +21,11 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
     NoticiasModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '44.207.168.60',
+      host: 'localhost',
       port: 3306,
-      username: 'colegioa_omarignacio',
-      password: '068gJOWTJ@@k',
-      database: 'colegioa_colegioandeschile',
+      username: 'root',
+      password: '',
+      database: 'colegio',
       entities,
     }),
   ],
@@ -33,3 +33,10 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
   providers: [AppService],
 })
 export class AppModule { }
+
+// type: 'mysql',
+//       host: '44.207.168.60',
+//       port: 3306,
+//       username: 'colegioa_omarignacio',
+//       password: '068gJOWTJ@@k',
+//       database: 'colegioa_colegioandeschile',
