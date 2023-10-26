@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NoticiasColegio } from '../../../src/models/Noticias.entity';
 import { NoticiasImages } from '../../../src/models/Noticias.entity';
-import { CreateFullNoticiaDto, CreateNoticiaDto } from '../../../src/dto/noticia.dto';
-import { CreateImageDto } from '../../../src/dto/noticia.dto';
+import { CreateFullNoticiaDto, } from '../../../src/dto/noticia.dto';
 
 @Injectable()
 export class NoticiasService {
@@ -34,7 +33,7 @@ export class NoticiasService {
     async getAllNoticias(): Promise<NoticiasColegio[]> {
         return await this.noticiasRepository.find({ relations: ["images"] });
     }
-
+    
 
     async getNoticiaById(noticiaId: number): Promise<NoticiasColegio> {
         const noticia = await this.noticiasRepository.findOne({
@@ -46,7 +45,7 @@ export class NoticiasService {
         }
         return noticia;
     }
-
-
+    
+    
 
 }

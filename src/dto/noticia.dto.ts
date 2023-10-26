@@ -1,5 +1,4 @@
 export class CreateNoticiaDto {
-    src: string;
     fecha: Date;
     titulo: string;
     description: string;

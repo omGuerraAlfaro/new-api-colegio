@@ -10,7 +10,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
   app.enableCors({
-    origin: ['http://localhost', 'http://localhost:8200', 'http://localhost:8100', '*'],
+    origin: ['https://www.colegioandeschile.cl/', 'http://localhost', 'http://localhost:8200', 'http://localhost:8100', '*'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept',
     credentials: true,
