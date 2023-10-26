@@ -6,5 +6,6 @@ import { CursoModule } from "./Curso/curso.module";
 import { UsuarioModule } from "./User/user.module";
 import { AuthModule } from "./Auth/auth.module";
 import { NoticiasModule } from "./Noticias/noticias.module";
+import { CorreoModule } from "./Correo/correo.module";
 
-export { ApoderadoModule, EstudianteModule, ProfesorModule, PaymentModule, CursoModule, UsuarioModule, AuthModule, NoticiasModule }
+export { ApoderadoModule, EstudianteModule, ProfesorModule, PaymentModule, CursoModule, UsuarioModule, AuthModule, NoticiasModule, CorreoModule }
