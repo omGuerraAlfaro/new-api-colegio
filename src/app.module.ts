@@ -27,6 +27,7 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
       password: '',
       database: 'colegio',
       entities,
+      synchronize: true
     }),
   ],
   controllers: [AppController],

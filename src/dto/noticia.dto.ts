@@ -6,7 +6,7 @@ export class CreateNoticiaDto {
 }
 
 export class CreateImageDto {
-    imageData: Buffer;
+    imageData: string;
 }
 
 export class CreateFullNoticiaDto {

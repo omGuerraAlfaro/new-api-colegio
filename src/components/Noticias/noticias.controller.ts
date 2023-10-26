@@ -7,22 +7,30 @@ import { NoticiasColegio } from 'src/models/Noticias.entity';
 @Controller('noticias')
 export class NoticiasController {
     constructor(private readonly noticiasService: NoticiasService) { }
-    
+
     @Post()
-    create(@Body() createFullNoticiaDto: CreateFullNoticiaDto): Promise<NoticiasColegio> {
+    async create(@Body() createFullNoticiaDto: CreateFullNoticiaDto): Promise<NoticiasColegio> {
         console.log('Función create llamada con data:', createFullNoticiaDto);
-        
+
         try {
-            return this.noticiasService.createNoticiaWithImages(createFullNoticiaDto);            
+            return await this.noticiasService.createNoticiaWithImages(createFullNoticiaDto);
         } catch (error) {
+            console.error("Error:", error);  // Log del error para debug
             throw new HttpException('Error al crear noticia', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+
     @Get()
-    findAll(): Promise<NoticiasColegio[]> {
-        return this.noticiasService.getAllNoticias();
+    async getAllNoticias(): Promise<NoticiasColegio[]> {
+        return await this.noticiasService.getAllNoticias();
     }
 
-    
+    @Get(':id')
+    async getNoticiaById(@Param('id') id: number): Promise<NoticiasColegio> {
+        return await this.noticiasService.getNoticiaById(id);
+    }
 }
+
+
+

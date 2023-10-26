@@ -24,8 +24,8 @@ export class Estudiante {
     @Column({ type: 'varchar', length: 50, nullable: true })
     segundo_apellido: string;
 
-    @Column()
-    fecha_nacimiento: Date;
+    // @Column()
+    // fecha_nacimiento: Date;
 
     @Column({ type: 'varchar', length: 10 })
     rut: string;

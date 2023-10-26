@@ -1,22 +1,21 @@
--- Primero, la tabla principal noticias_colegio (suponiendo que ya tienes una estructura para esta):
 CREATE TABLE `noticias_colegio` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `src` varchar(255) NOT NULL,
-  `fecha` date NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `likes_count` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `src` VARCHAR(255) NOT NULL,
+    `fecha` DATE NOT NULL,
+    `titulo` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `likes_count` INT DEFAULT 0
+);
 
--- Luego, la tabla secundaria para las imágenes:
 CREATE TABLE `noticias_images` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `noticia_id` int(11) NOT NULL,
-  `image_data` MEDIUMBLOB,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`noticia_id`) REFERENCES `noticias_colegio`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `image_data` MEDIUMBLOB NOT NULL,
+    `noticiaId` INT,
+    FOREIGN KEY (`noticiaId`) REFERENCES `noticias_colegio`(`id`) ON DELETE CASCADE
+);
+
+-- Opcional: índice para mejorar el rendimiento de las consultas relacionadas con noticiaId
+CREATE INDEX `idx_noticiaId` ON `noticias_images`(`noticiaId`);
 
 
 
