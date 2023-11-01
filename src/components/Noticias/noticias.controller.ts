@@ -30,6 +30,11 @@ export class NoticiasController {
     async getNoticiaById(@Param('id') id: number): Promise<NoticiasColegio> {
         return await this.noticiasService.getNoticiaById(id);
     }
+
+    @Post(':id/like')
+    async likeNoticia(@Param('id') noticiaId: number): Promise<NoticiasColegio> {
+        return this.noticiasService.likeNoticia(noticiaId);
+    }
 }
 
 

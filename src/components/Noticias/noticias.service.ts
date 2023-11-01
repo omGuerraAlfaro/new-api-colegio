@@ -33,7 +33,7 @@ export class NoticiasService {
     async getAllNoticias(): Promise<NoticiasColegio[]> {
         return await this.noticiasRepository.find({ relations: ["images"] });
     }
-    
+
 
     async getNoticiaById(noticiaId: number): Promise<NoticiasColegio> {
         const noticia = await this.noticiasRepository.findOne({
@@ -45,7 +45,19 @@ export class NoticiasService {
         }
         return noticia;
     }
-    
-    
+
+
+    async likeNoticia(noticiaId: number): Promise<NoticiasColegio> {
+        const noticia = await this.noticiasRepository.findOne({ where: { noticiaId: noticiaId } });
+
+        if (!noticia) {
+            throw new Error('Noticia not found');
+        }
+
+        noticia.likes_count += 1;
+
+        return this.noticiasRepository.save(noticia);
+    }
+
 
 }
