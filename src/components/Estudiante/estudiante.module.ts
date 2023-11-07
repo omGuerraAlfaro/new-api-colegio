@@ -3,12 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EstudianteController } from './estudiante.controller';
 import { EstudianteService } from './estudiante.service';
 import { Estudiante } from 'src/models/Estudiante.entity';
+import { Curso } from 'src/models/Curso.entity';
+import { CursoModule } from '../Curso/curso.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Estudiante,
+      Estudiante
     ]),
+    CursoModule,
   ],
   controllers: [EstudianteController],
   providers: [EstudianteService],

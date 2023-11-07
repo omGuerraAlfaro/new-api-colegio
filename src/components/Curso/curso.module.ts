@@ -10,6 +10,7 @@ import { Curso } from 'src/models/Curso.entity';
       Curso,
     ]),
   ],
+  exports: [TypeOrmModule],
   controllers: [CursoController],
   providers: [CursoService],
 })

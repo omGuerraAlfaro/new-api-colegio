@@ -24,9 +24,9 @@ export class EstudianteController {
     return await this.estudianteService.findAll();
   }
 
-  @Get(':id')
-  async getEstudiante(@Param('id') id: number) {
-    return await this.estudianteService.findOne(id);
+  @Get('/rut/:rut')
+  async getByRut(@Param('rut') rut: string) {
+    return await this.estudianteService.findByRut(rut);
   }
 }
 

@@ -1,5 +1,6 @@
 import { Get, Injectable, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Curso } from 'src/models/Curso.entity';
 import { Estudiante } from 'src/models/Estudiante.entity';
 import { Repository } from 'typeorm';
 
@@ -7,7 +8,9 @@ import { Repository } from 'typeorm';
 export class EstudianteService {
   constructor(
     @InjectRepository(Estudiante)
-    private readonly estudianteRepository: Repository<Estudiante>
+    private readonly estudianteRepository: Repository<Estudiante>,
+    @InjectRepository(Curso)
+    private cursoRepository: Repository<Curso>,
   ) { }
 
  
@@ -15,9 +18,23 @@ export class EstudianteService {
     return await this.estudianteRepository.find();
   }
 
-  async findOne(id: number) {
-    return await this.estudianteRepository.findOne({ where: { id: id } });
+  async findByRut(rut: string) {
+    const estudiante = await this.estudianteRepository.findOne({
+      where: { rut: rut },
+      relations: ['cursoConnection', 'cursoConnection.curso'],
+    });
+  
+    if (estudiante) {
+      // Rename cursoConnection to curso
+      const { cursoConnection, ...rest } = estudiante;
+      return {
+        ...rest,
+        curso: cursoConnection.map(conn => conn.curso),
+      };
+    }  
+    return null;
   }
+  
 
 }
 
