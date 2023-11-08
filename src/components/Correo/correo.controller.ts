@@ -1,6 +1,5 @@
 import { Controller, Post, Body, UsePipes, ValidationPipe, Inject } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { EnviarCorreoDto } from '../../dto/enviar-correo.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Controller('correo')
@@ -20,7 +19,7 @@ export class CorreoController {
       const transporter = nodemailer.createTransport({
         host: 'mail.colegioandeschile.cl',
         port: 465,
-        secure: true, 
+        secure: true,
         auth: {
           user: emailUser,
           pass: emailPass
@@ -29,6 +28,7 @@ export class CorreoController {
 
       // Construye el cuerpo del correo con los datos del formulario
       const correoHtml = `
+        <h4><strong>Formulario Admisión 2024</strong></h4>
         <p><strong>Nombre completo del postulante:</strong> ${formData.pupilo}</p>
         <p><strong>Nombre completo del apoderado:</strong> ${formData.apoderado}</p>
         <p><strong>Curso al que postula:</strong> ${formData.cursoPostula}</p>
@@ -68,7 +68,7 @@ export class CorreoController {
       const transporter = nodemailer.createTransport({
         host: 'mail.colegioandeschile.cl',
         port: 465,
-        secure: true, 
+        secure: true,
         auth: {
           user: emailUser,
           pass: emailPass
@@ -77,9 +77,10 @@ export class CorreoController {
 
       // Construye el cuerpo del correo con los datos del formulario
       const correoHtml = `
+        <h4><strong>Formulario Escuela de Verano</strong></h4>
         <p><strong>Nombre completo del postulante:</strong> ${formData.pupilo}</p>
         <p><strong>Nombre completo del apoderado:</strong> ${formData.apoderado}</p>
-        <p><strong>Curso al que postula:</strong> ${formData.direccion}</p>
+        <p><strong>Dirección:</strong> ${formData.direccion}</p>
         <p><strong>Teléfono:</strong> ${formData.telefono}</p>
         <p><strong>Email:</strong> ${formData.email}</p>
         <p><strong>Consentimiento:</strong> ${formData.consentimiento ? 'Sí' : 'No'}</p>
@@ -89,7 +90,7 @@ export class CorreoController {
       const mailOptions = {
         from: emailUser,
         to: 'omar.guerra@outlook.cl',
-        subject: 'Postulación Escueda de Verano Colegio Andes de Chile',
+        subject: 'Postulación Escuela de Verano Colegio Andes de Chile',
         html: correoHtml,
       };
 
