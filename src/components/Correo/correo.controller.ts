@@ -89,7 +89,7 @@ export class CorreoController {
       const mailOptions = {
         from: emailUser,
         to: 'omar.guerra@outlook.cl',
-        subject: 'Postulación Colegio Andes de Chile',
+        subject: 'Postulación Escueda de Verano Colegio Andes de Chile',
         html: correoHtml,
       };
 
