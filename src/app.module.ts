@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 import { entities } from './models';
-
 import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, UsuarioModule, AuthModule, NoticiasModule, CorreoModule } from './components';
 
 

@@ -1,8 +1,8 @@
 import { Get, Injectable, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { Curso } from 'src/models/Curso.entity';
 import { Estudiante } from 'src/models/Estudiante.entity';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class EstudianteService {
