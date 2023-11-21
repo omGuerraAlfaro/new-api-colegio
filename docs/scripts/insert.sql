@@ -2,25 +2,21 @@
 INSERT INTO
     `region` (`nombre`)
 VALUES
-    ('Arica y Parinacota'),
-    ('Tarapacá'),
-    ('Antofagasta'),
-    ('Atacama'),
-    ('Coquimbo'),
-    ('Valparaíso'),
-    (
-        'Región del Libertador General Bernardo O’Higgins'
-    ),
+    ('Región de Arica'),
+    ('Región deTarapacá'),
+    ('Región de Antofagasta'),
+    ('Región de Atacama'),
+    ('Región de Coquimbo'),
+    ('Región de Valparaíso'),
+    ('Región de O’Higgins'),
     ('Región del Maule'),
     ('Región de Ñuble'),
     ('Región del Biobío'),
     ('Región de La Araucanía'),
     ('Región de Los Ríos'),
     ('Región de Los Lagos'),
-    (
-        'Región de Aysén del General Carlos Ibáñez del Campo'
-    ),
-    ('Región de Magallanes y de la Antártica Chilena'),
+    ('Región de Aysén'),
+    ('Región de Magallanes'),
     ('Región Metropolitana de Santiago');
 
 -- --------------------------------------------------------
