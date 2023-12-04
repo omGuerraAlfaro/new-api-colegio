@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
@@ -21,21 +19,19 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
     CorreoModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '44.207.168.60',
+      host: 'localhost',
       port: 3306,
-      username: 'colegioa_omarignacio',
-      password: '068gJOWTJ@@k',
+      username: 'root',
+      password: '',
       database: 'colegioa_colegioandeschile',
       entities,
       synchronize: true
     }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule { }
 
-// type: 'mysql',
+//       type: 'mysql',
 //       host: '44.207.168.60',
 //       port: 3306,
 //       username: 'colegioa_omarignacio',

@@ -11,11 +11,13 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApoderadoService } from './apoderado.service';
 import { ApoderadoDTO } from 'src/dto/apoderado.dto';
-import { ApiTags } from '@nestjs/swagger';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../Auth/jwt-auth.guard';
+@ApiBearerAuth()
 @ApiTags('Apoderados')
 @Controller('apoderado')
 export class ApoderadoController {
@@ -43,6 +45,7 @@ export class ApoderadoController {
     return await this.apoderadoService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id/only-estudents')
   async getStudentsByApoderadoId(@Param('id') id: number) {
     return await this.apoderadoService.findStudentsByApoderadoId(id);

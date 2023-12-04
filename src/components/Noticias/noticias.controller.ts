@@ -25,7 +25,7 @@ export class NoticiasController {
     async getAllNoticias(): Promise<NoticiasColegio[]> {
         return await this.noticiasService.getAllNoticias();
     }
-
+    
     @Get(':id')
     async getNoticiaById(@Param('id') id: number): Promise<NoticiasColegio> {
         return await this.noticiasService.getNoticiaById(id);
