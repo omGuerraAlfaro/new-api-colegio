@@ -40,16 +40,17 @@ export class ApoderadoController {
     return await this.apoderadoService.findAll();
   }
 
+  @Get('/rut')
+  async getRutApoderados() {
+    return await this.apoderadoService.findAllRut();
+  }
+
   @Get(':id')
   async getApoderado(@Param('id') id: number) {
     return await this.apoderadoService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get(':id/only-estudents')
-  async getStudentsByApoderadoId(@Param('id') id: number) {
-    return await this.apoderadoService.findStudentsByApoderadoId(id);
-  }
+  //@UseGuards(JwtAuthGuard)
 
   @Get(':rut/with-estudents')
   async getStudentsWithApoderadoId(@Param('rut') rut: string) {

@@ -53,36 +53,12 @@ export class ApoderadoService {
     return await this.apoderadoRepository.find();
   }
 
+  async findAllRut() {
+    return await this.apoderadoRepository.find({select: ['rut']});
+  }
+
   async findOne(id: number) {
     return await this.apoderadoRepository.findOne({ where: { id: id } });
-  }
-
-  async findStudentsByApoderadoId(apoderadoId: number) {
-    return await this.apoderadoRepository
-      .createQueryBuilder("apoderado")
-      .innerJoin("apoderado_estudiante", "ae", "apoderado.id = ae.apoderado_id")
-      .innerJoinAndSelect("estudiante", "estudiante", "estudiante.id = ae.estudiante_id")
-      .where("apoderado.id = :apoderadoId", { apoderadoId })
-      .select("estudiante.*")
-      .getRawMany();
-  }
-
-  //desuso por el momento
-  async findStudentsWithApoderadoIdRelation(apoderadoId: number) {
-    const apoderadoWithEstudiantes = await this.apoderadoRepository
-      .createQueryBuilder("apoderado")
-      .leftJoinAndSelect("apoderado.estudiantesConnection", "apoderadoEstudiante")
-      .leftJoinAndSelect("apoderadoEstudiante.estudiante", "estudiante")
-      .where("apoderado.id = :apoderadoId", { apoderadoId })
-      .getOne();
-
-    if (apoderadoWithEstudiantes) {
-      return {
-        ...apoderadoWithEstudiantes,
-        estudiantes: apoderadoWithEstudiantes.estudiantesConnection.map(conn => conn.estudiante)
-      };
-    }
-    return null;
   }
 
   async findStudentsWithApoderadoId(apoderadoRut: string) {

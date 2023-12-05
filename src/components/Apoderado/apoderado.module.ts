@@ -18,6 +18,6 @@ import { EstudianteCurso } from 'src/models/CursoEstudiante.entity';
   ],
   controllers: [ApoderadoController],
   providers: [ApoderadoService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, ApoderadoService],
 })
 export class ApoderadoModule {}
