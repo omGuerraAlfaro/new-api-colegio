@@ -77,6 +77,8 @@ export class BoletaService {
         continue; // Si no hay estudiantes, continúa con el siguiente RUT
       }
 
+      const rutEstudiante = apoderado.estudiantes[0].rut;
+      
       for (const mes of meses) {
         const boleta = this.boletaRepository.create({
           apoderado: apoderado,

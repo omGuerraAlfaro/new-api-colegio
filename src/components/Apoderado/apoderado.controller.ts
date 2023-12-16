@@ -40,6 +40,7 @@ export class ApoderadoController {
     return await this.apoderadoService.findAll();
   }
 
+  // @UseGuards(JwtAuthGuard)
   @Get('/rut')
   async getRutApoderados() {
     return await this.apoderadoService.findAllRut();
@@ -49,8 +50,6 @@ export class ApoderadoController {
   async getApoderado(@Param('id') id: number) {
     return await this.apoderadoService.findOne(id);
   }
-
-  //@UseGuards(JwtAuthGuard)
 
   @Get(':rut/with-estudents')
   async getStudentsWithApoderadoId(@Param('rut') rut: string) {
