@@ -24,9 +24,9 @@ export class BoletaController {
         return await this.boletaService.findAll();
     }
 
-    @Get(':id')
-    async getBoleta(@Param('id') id: number) {
-        return await this.boletaService.findOne(id);
+    @Get(':rut')
+    async getBoleta(@Param('rut') rut: string) {
+        return await this.boletaService.findBoletas(rut);
     }
 
     @Get('conteoEstudiante/:rut')

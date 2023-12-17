@@ -10,6 +10,12 @@ export class Boleta {
     @Column()
     apoderado_id: number;
 
+    @Column()
+    rut_estudiante: string;
+
+    @Column()
+    rut_apoderado: string;
+
     @Column({ nullable: true })
     pago_id: number;
 
