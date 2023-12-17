@@ -66,7 +66,7 @@ export class BoletaService {
           total: 119, // Total incluyendo el IVA, ajusta según tu lógica
           descuento: 0, // Aplica descuento si es necesario
           nota: `Generada automáticamente para el mes de ${mes}`,
-          fecha: new Date(), // Fecha actual, puedes ajustarla para que coincida con el mes de la boleta si es necesario
+          fecha_vencimiento: new Date(), // Fecha actual, puedes ajustarla para que coincida con el mes de la boleta si es necesario
         });
 
         // Guarda la boleta en la base de datos
@@ -83,7 +83,7 @@ export class BoletaService {
     // Obtén un arreglo de todos los RUTs de apoderados
     const arrayRuts = await this.apoderadoService.findAllRut();
 
-    const meses = ['marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre', 'matricula'];
+    const meses = ['matricula', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     const boletas = [];
 
     for (const rut of arrayRuts) {
@@ -94,11 +94,30 @@ export class BoletaService {
       }
 
       const rutApoderado = apoderado.rut;
+      //trae de apoderado un descuento y este despues se calcula el subtotal con el descuento => total.
 
       for (const estudiante of apoderado.estudiantes) {
         const rutEstudiante = estudiante.rut;
 
         for (const mes of meses) {
+          const fechaActual = new Date();
+          let anio = fechaActual.getFullYear() + 1;
+          let mesIndex = meses.indexOf(mes);
+          let subtotal = 190000;
+          let total = 0;
+
+          if (mes === 'matricula') {
+            mesIndex = fechaActual.getMonth();
+            subtotal = 1000000;
+            total = subtotal;
+          } else {
+            mesIndex += 2;
+            subtotal = 190000;  
+            total = subtotal;
+          }
+
+          const fechaVencimiento = new Date(anio, mesIndex, 5);
+
           const boleta = this.boletaRepository.create({
             apoderado: apoderado,
             rut_estudiante: rutEstudiante,
@@ -106,12 +125,12 @@ export class BoletaService {
             // pago_id: , // ESTE CAMPO SE MODIFICA AL MOMENTO DE PAGAR
             estado_id: 1, // 1 es 'Pendiente'
             detalle: `Boleta de ${mes}`,
-            subtotal: 100, // lógica para el subtotal
+            subtotal: subtotal, // lógica para el subtotal
             iva: 19, // lógica para el IVA
-            total: 119, // Total incluyendo el IVA, ajustar lógica
+            total: total, // Total incluyendo el IVA, ajustar lógica
             descuento: 0, // Aplica descuento. CASE para mensualidades.
             nota: `Generada automáticamente para el mes de ${mes}`,
-            fecha: new Date(), // Fecha actual, ¿ajustarla para que coincida con el mes de la boleta si es necesario?
+            fecha_vencimiento: fechaVencimiento,
           });
 
           // Guarda la boleta en la base de datos

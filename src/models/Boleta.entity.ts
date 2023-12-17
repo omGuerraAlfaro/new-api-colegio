@@ -26,7 +26,7 @@ export class Boleta {
     detalle: string;
 
     @Column({ nullable: true })
-    fecha: Date;
+    fecha_vencimiento: Date;
 
     @Column('decimal', { precision: 10, scale: 2 })
     subtotal: number;
