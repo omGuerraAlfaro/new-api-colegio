@@ -10,6 +10,7 @@ import { Estudiante } from './Estudiante.entity';
 import { ApoderadoDireccion } from './ApoderadoDireccion.entity';
 import { Direccion } from './Direccion.entity';
 import { Usuarios } from './User.entity';
+import { Boleta } from './Boleta.entity';
 
 @Entity()
 export class Apoderado {
@@ -54,6 +55,9 @@ export class Apoderado {
 
     @Column({ type: 'varchar', length: 50, nullable: true })
     escolaridad: string;
+
+    @OneToMany(() => Boleta, boleta => boleta.apoderado)
+    boletas: Boleta[];
 
     @OneToMany(() => ApoderadoEstudiante, apoderadoEstudiante => apoderadoEstudiante.apoderado)
     estudiantesConnection: ApoderadoEstudiante[];

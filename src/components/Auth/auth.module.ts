@@ -13,7 +13,7 @@ import { Usuarios } from 'src/models/User.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Usuarios, Apoderado, Profesor]),
+    TypeOrmModule.forFeature([Usuarios]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({

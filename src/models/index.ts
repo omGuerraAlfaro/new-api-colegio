@@ -11,10 +11,15 @@ import { Curso } from './Curso.entity';
 import { EstudianteCurso } from './CursoEstudiante.entity';
 import { Usuarios } from './User.entity';
 import { NoticiasColegio, NoticiasImages } from './Noticias.entity';
+import { Boleta } from './Boleta.entity';
+import { Transacciones } from './Transacciones.entity';
+import { EstadoTransaccion } from './EstadoTransaccion.entity';
+import { EstadoBoleta } from './EstadoBoleta.entity';
 
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
-                        Estudiante, Profesor, Curso, EstudianteCurso, Usuarios,
+                        Estudiante, Profesor, Curso, EstudianteCurso, Usuarios, 
+                        Boleta, EstadoBoleta, Transacciones, EstadoTransaccion,
                         Direccion, Ciudad, Region, NoticiasColegio, NoticiasImages
                         ];
 
