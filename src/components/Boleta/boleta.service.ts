@@ -1,7 +1,7 @@
 import { Get, Injectable, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Boleta } from 'src/models/Boleta.entity';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Apoderado } from 'src/models/Apoderado.entity';
 import { ApoderadoService } from '../Apoderado/apoderado.service';
 
@@ -94,6 +94,7 @@ export class BoletaService {
       }
 
       const rutApoderado = apoderado.rut;
+      const descuentoApoderdado = apoderado.descuento_asignado;
       //trae de apoderado un descuento y este despues se calcula el subtotal con el descuento => total.
 
       for (const estudiante of apoderado.estudiantes) {
@@ -113,7 +114,7 @@ export class BoletaService {
           } else {
             mesIndex += 2;
             subtotal = 190000;  
-            total = subtotal;
+            total = subtotal - (subtotal * descuentoApoderdado) / 100;
           }
 
           const fechaVencimiento = new Date(anio, mesIndex, 5);
@@ -128,7 +129,7 @@ export class BoletaService {
             subtotal: subtotal, // lógica para el subtotal
             iva: 19, // lógica para el IVA
             total: total, // Total incluyendo el IVA, ajustar lógica
-            descuento: 0, // Aplica descuento. CASE para mensualidades.
+            descuento: descuentoApoderdado, // Aplica descuento. CASE para mensualidades.
             nota: `Generada automáticamente para el mes de ${mes}`,
             fecha_vencimiento: fechaVencimiento,
           });
@@ -143,6 +144,57 @@ export class BoletaService {
     // Retorna las boletas creadas
     return boletas;
   }
+
+  async repactarBoleta(boletaId: number, meses: number): Promise<Boleta[]> {
+    if (meses < 1 || meses > 2) {
+      throw new Error('La repactación puede ser solo de 1 o 2 meses después del actual.');
+    }
+  
+    const boletaActual = await this.boletaRepository.findOne({ where: { id: boletaId } });
+    if (!boletaActual) {
+      throw new Error('Boleta no encontrada.');
+    }
+  
+    if (boletaActual.estado_id !== 1) { // Asumiendo que 1 es 'Pendiente'
+      throw new Error('Solo se pueden repactar boletas que estén pendientes.');
+    }
+  
+    // Encuentra las boletas de los meses siguientes
+    const fechaVencimientoOriginal = boletaActual.fecha_vencimiento;
+    const boletasFuturas = await this.boletaRepository.find({
+      where: {
+        rut_estudiante: boletaActual.rut_estudiante,
+        fecha_vencimiento: MoreThan(fechaVencimientoOriginal)
+      },
+      order: {
+        fecha_vencimiento: 'ASC'
+      },
+      take: meses
+    });
+  
+    if (boletasFuturas.length < meses) {
+      throw new Error('No hay suficientes boletas futuras para repactar.');
+    }
+  
+    const montoPorMes = boletaActual.subtotal / meses;
+  
+    for (const [index, boletaFutura] of boletasFuturas.entries()) {
+      const subtotalActualizado = Number(boletaFutura.subtotal) + montoPorMes;
+    
+      boletaFutura.subtotal = subtotalActualizado;
+      const subSubtotal = subtotalActualizado - (subtotalActualizado * boletaActual.descuento) / 100;
+      boletaFutura.total = subSubtotal;
+      boletaFutura.nota += ` Incluye repactación de la boleta actual - Cuota ${index + 1}.`;
+      await this.boletaRepository.save(boletaFutura);
+    }
+  
+    // Cambiar estado de la boleta actual a 'Repactada'
+    boletaActual.estado_id = 4; // Asumiendo que 4 es 'Repactada'
+    await this.boletaRepository.save(boletaActual);
+  
+    return boletasFuturas;
+  }
+  
 
 
 }
