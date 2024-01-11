@@ -39,4 +39,24 @@ export class BoletaController {
         return await this.boletaService.createAnnualBoletasForMultipleApoderados();
     }
 
+    @Post('repactar/:id/:meses')
+    async repactarBoleta(
+        @Param('id') boletaId: number,
+        @Param('meses') meses: number
+    ): Promise<any> {
+        try {
+            if (isNaN(meses) || meses < 1 || meses > 3) {
+                throw new HttpException('Número de meses inválido. Debe ser 1, 2 o 3.', HttpStatus.BAD_REQUEST);
+            }
+
+            const boletasRepactadas = await this.boletaService.repactarBoleta(boletaId, meses);
+            return {
+                message: 'Repactación realizada con éxito.',
+                boletasRepactadas: boletasRepactadas
+            };
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

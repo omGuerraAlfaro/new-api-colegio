@@ -56,6 +56,9 @@ export class Apoderado {
     @Column({ type: 'varchar', length: 50, nullable: true })
     escolaridad: string;
 
+    @Column({ type: 'double', nullable: true })
+    descuento_asignado: number;
+
     @OneToMany(() => Boleta, boleta => boleta.apoderado)
     boletas: Boleta[];
 
