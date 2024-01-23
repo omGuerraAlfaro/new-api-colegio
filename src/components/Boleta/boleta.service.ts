@@ -16,7 +16,6 @@ export class BoletaService {
     private readonly apoderadoService: ApoderadoService,
   ) { }
 
-
   async findBoletas(rut_apoderado: string) {
     const boletas = await this.boletaRepository.find({ where: { rut_apoderado: rut_apoderado } });
 

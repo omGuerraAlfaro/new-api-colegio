@@ -5,6 +5,7 @@ import { Profesor } from 'src/models/Profesor.entity';
 import { Usuarios } from 'src/models/User.entity';
 import { Repository } from 'typeorm';
 import { hash } from "bcrypt";
+import { Administrador } from 'src/models/Administrador.entity';
 
 @Injectable()
 export class UsuarioService {
@@ -15,10 +16,16 @@ export class UsuarioService {
     private readonly apoderadoRepository: Repository<Apoderado>,
     @InjectRepository(Profesor)
     private readonly profesorRepository: Repository<Profesor>,
+    @InjectRepository(Administrador)
+    private readonly administradorRepository: Repository<Administrador>,
   ) { }
 
   async findAll(): Promise<Usuarios[]> {
     return this.usuarioRepository.find();
+  }
+
+  async findOne(id: number): Promise<Usuarios[]> {
+    return this.usuarioRepository.find({where: {id: id}});
   }
 
   async findUserWithApoderadoAndAlumnos(userId: number): Promise<Usuarios> {
@@ -102,7 +109,8 @@ export class UsuarioService {
 
     for (const profesor of profesores) {
       const username = this.generateUsername(profesor.primer_nombre, profesor.primer_apellido);
-      const password = profesor.rut;
+      const plainPassword = profesor.rut;
+      const hashedPassword = await hash(plainPassword, 5);
 
       const existingUser = await this.usuarioRepository.findOne({ where: { username } });
       if (existingUser) {
@@ -112,7 +120,7 @@ export class UsuarioService {
 
       const usuario = new Usuarios();
       usuario.username = username;
-      usuario.password = password;
+      usuario.password = hashedPassword;
       usuario.correo_electronico = profesor.correo_electronico; // Asumiendo que el campo se llama correo_electronico en profesor
       usuario.profesor_id = profesor.id; // Asumiendo que el campo se llama id en profesor
 
@@ -122,6 +130,33 @@ export class UsuarioService {
 
     return createdUsers;
   }
+
+  async createUsersForAllAdministradores(): Promise<Usuarios[]> {
+    const administradores = await this.administradorRepository.find();
+    const createdUsers: Usuarios[] = [];
+
+    for (const administrador of administradores) {
+      const username = this.generateUsername(administrador.primer_nombre, administrador.primer_apellido);
+      const plainPassword = administrador.rut;
+      const hashedPassword = await hash(plainPassword, 5);
+
+      const existingUser = await this.usuarioRepository.findOne({ where: { username } });
+      if (existingUser) {
+        continue;
+      }
+
+      const usuario = new Usuarios();
+      usuario.username = username;
+      usuario.password = hashedPassword;
+      usuario.correo_electronico = administrador.correo_electronico; 
+      usuario.administrador_id = administrador.id;
+
+      const savedUser = await this.usuarioRepository.save(usuario);
+      createdUsers.push(savedUser);
+    }
+
+    return createdUsers;
+}
 
 
   private generateUsername(primerNombre: string, primerApellido: string): string {

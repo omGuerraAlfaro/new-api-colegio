@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Apoderado } from './Apoderado.entity';
 import { Profesor } from './Profesor.entity';
+import { Administrador } from './Administrador.entity';
 
 @Entity()
 export class Usuarios {
@@ -39,4 +40,11 @@ export class Usuarios {
     @ManyToOne(() => Profesor, profesor => profesor.usuario)
     @JoinColumn({ name: 'profesor_id' })
     profesor: Profesor;
+
+    @Column({ name: 'administrador_id', nullable: true })
+    administrador_id: number;
+
+    @ManyToOne(() => Administrador, administrador => administrador.usuario)
+    @JoinColumn({ name: 'administrador_id' })
+    administrador: Administrador;
 }
