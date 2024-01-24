@@ -41,6 +41,21 @@ export class BoletaService {
     return await this.boletaRepository.find();
   }
 
+  async findAllBoletasApoderado() {
+    const boletas = await this.boletaRepository.find();
+  
+    const boletasConApoderado = await Promise.all(boletas.map(async (boleta) => {
+      const apoderado = await this.apoderadoRepository.findOne({
+        where: { rut: boleta.rut_apoderado }
+      });
+  
+      return { ...boleta, apoderado };
+    }));
+  
+    return boletasConApoderado;
+  }
+  
+
   async createAnnualBoletasForApoderadoRut(rut: string) {
     // Obtén los estudiantes asociados al apoderado
     const apoderado = await this.apoderadoService.findStudentsWithApoderadoId(rut);
