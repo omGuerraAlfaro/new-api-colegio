@@ -16,7 +16,7 @@ async function bootstrap() {
         'http://localhost:8200',
         'http://localhost:8100',
         'http://localhost:4200',
-        'http://192.168.2.103:8100'
+        'http://192.168.2.103:8080'
       ];
       // Permitir con una lista blanca o para cualquier origen en modo desarrollo
       if (!origin || allowedOrigins.includes(origin)) {
