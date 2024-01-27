@@ -10,26 +10,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
   app.enableCors({
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        'https://www.colegioandeschile.cl',
-        'http://localhost:8200',
-        'http://localhost:8100',
-        'http://localhost:4200',
-        'http://192.168.2.103:8080'
-      ];
-      // Permitir con una lista blanca o para cualquier origen en modo desarrollo
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: ['https://www.colegioandeschile.cl', 'http://localhost', 'http://localhost:8200', 'http://localhost:8100', 'http://localhost:4200', '*'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept, Authorization',
+    allowedHeaders: 'Content-Type, Accept',
     credentials: true,
   });
-
 
   const config = new DocumentBuilder()
     .setTitle('API COLEGIO')
@@ -41,6 +26,7 @@ async function bootstrap() {
     .addTag('Estudiantes')
     .addTag('Profesores')
     .addTag('Cursos')
+    .addTag('Administrador')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
