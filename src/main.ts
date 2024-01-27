@@ -10,11 +10,26 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
   app.enableCors({
-    origin: ['https://www.colegioandeschile.cl', 'http://localhost', 'http://localhost:8200', 'http://localhost:8100', 'http://localhost:4200', 'http://192.168.2.103:8100', '*'],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'https://www.colegioandeschile.cl',
+        'http://localhost:8200',
+        'http://localhost:8100',
+        'http://localhost:4200',
+        'http://192.168.2.103:8100'
+      ];
+      // Permitir con una lista blanca o para cualquier origen en modo desarrollo
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
     credentials: true,
   });
+
 
   const config = new DocumentBuilder()
     .setTitle('API COLEGIO')
