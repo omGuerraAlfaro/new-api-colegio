@@ -16,6 +16,9 @@ export class AdministradorService {
     return await this.administradorRepository.find();
   }
 
+  async findOne(rut: string) {
+    return await this.administradorRepository.findOne({ where: { rut: rut } });
+  }
 
   async createAdministrador(createAdminDto: CreateAdminDto): Promise<Administrador> {
     try {

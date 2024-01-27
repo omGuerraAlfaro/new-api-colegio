@@ -27,6 +27,13 @@ export class AdministradorController {
     return await this.administradorService.findAll();
   }
 
+  @Get(':rut')
+  async getAdministrador(@Param('rut') rut: string) {
+    const administrador = await this.administradorService.findOne(rut);
+    if (!administrador) throw new BadRequestException('Administrador no encontrado');
+    return administrador;
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createAdminDto: CreateAdminDto) {
