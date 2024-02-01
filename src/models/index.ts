@@ -16,10 +16,11 @@ import { Transacciones } from './Transacciones.entity';
 import { EstadoTransaccion } from './EstadoTransaccion.entity';
 import { EstadoBoleta } from './EstadoBoleta.entity';
 import { Administrador } from './Administrador.entity';
+import { InfoPae } from './InfoPae.entity';
 
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
-                        Estudiante, Profesor, Curso, EstudianteCurso, Usuarios, Administrador,
+                        Estudiante, InfoPae, Profesor, Curso, EstudianteCurso, Usuarios, Administrador,
                         Boleta, EstadoBoleta, Transacciones, EstadoTransaccion,
                         Direccion, Ciudad, Region, NoticiasColegio, NoticiasImages
                         ];

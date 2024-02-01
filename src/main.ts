@@ -10,10 +10,19 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
   app.enableCors({
-    origin: ['https://www.colegioandeschile.cl', 'http://localhost', 'http://localhost:8200', 'http://localhost:8100', 'http://localhost:4200', '*'],
+    origin: [
+      'https://www.colegioandeschile.cl',
+      'http://localhost:8200',
+      'http://localhost:8100',
+      'http://localhost:4200',
+      'http://192.168.2.103'
+      // Asegúrate de que estos sean todos los dominios desde donde tu cliente accederá a la API
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept',
-    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204, // 204 es típicamente usado para respuestas preflight exitosas
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+    credentials: true, // si necesitas enviar/recibir cookies o autenticación basada en encabezados
   });
 
   const config = new DocumentBuilder()

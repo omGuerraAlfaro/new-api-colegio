@@ -7,6 +7,9 @@ export class EstadoBoleta {
     id: number;
 
     @Column()
+    valor: number;
+
+    @Column()
     descripcion: string;
 
     @OneToMany(() => Boleta, boleta => boleta.estadoBoleta)

@@ -15,7 +15,7 @@ export class EstudianteService {
 
  
   async findAll() {
-    return await this.estudianteRepository.find();
+    return await this.estudianteRepository.find({ relations: ["infoPae"] });
   }
 
   async findByRut(rut: string) {

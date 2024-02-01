@@ -56,7 +56,7 @@ export class BoletaService {
   }
   
 
-  async createAnnualBoletasForApoderadoRut(rut: string) {
+  async createAnnualBoletasForApoderadoRut(rut: string) { //malo
     // Obtén los estudiantes asociados al apoderado
     const apoderado = await this.apoderadoService.findStudentsWithApoderadoId(rut);
 
@@ -67,6 +67,7 @@ export class BoletaService {
     const meses = ['matricula', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
     const boletas = [];
+    const boletasPae = [];
 
     for (const estudiante of apoderado.estudiantes) {
       for (const mes of meses) {
@@ -87,6 +88,26 @@ export class BoletaService {
         const savedBoleta = await this.boletaRepository.save(boleta);
         boletas.push(savedBoleta);
       }
+      if (estudiante.infoPae) {
+        for (const mes of meses) {
+          const boletaPae = this.boletaRepository.create({
+            apoderado_id: apoderado.id,
+            // pago_id: , // Dejar como NULL o establecer si es necesario
+            estado_id: 1, // Suponiendo que 1 es un estado válido, por ejemplo 'Pendiente'
+            detalle: `Boleta de PAE de ${mes}`,
+            subtotal: 100, // Establece tu lógica para el subtotal
+            iva: 19, // Establece tu lógica para el IVA
+            total: 119, // Total incluyendo el IVA, ajusta según tu lógica
+            descuento: 0, // Aplica descuento si es necesario
+            nota: `Generada automáticamente para el mes de ${mes}`,
+            fecha_vencimiento: new Date(), // Fecha actual, puedes ajustarla para que coincida con el mes de la boleta si es necesario
+          });
+  
+          // Guarda la boleta en la base de datos
+          const savedBoletaPae = await this.boletaRepository.save(boletaPae);
+          boletasPae.push(savedBoletaPae);
+        }
+      }
     }
 
     // Retorna las boletas creadas
@@ -99,6 +120,8 @@ export class BoletaService {
 
     const meses = ['matricula', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     const boletas = [];
+    const mesesPae = ['marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const boletasPae = [];
 
     for (const rut of arrayRuts) {
       const apoderado = await this.apoderadoService.findStudentsWithApoderadoId(rut.rut);
@@ -151,12 +174,44 @@ export class BoletaService {
           // Guarda la boleta en la base de datos
           const savedBoleta = await this.boletaRepository.save(boleta);
           boletas.push(savedBoleta);
+
+        }
+        if (estudiante.infoPae) {
+          for (const mesPae of mesesPae) {
+            const fechaActual = new Date();
+            let anio = fechaActual.getFullYear() + 1;
+            let mesIndex = mesesPae.indexOf(mesPae);
+            const { valor, descripcion } = estudiante.infoPae;
+            let subtotal = valor;
+            let total = subtotal;
+  
+            const fechaVencimiento = new Date(anio, mesIndex, 5);
+  
+            const boletaPae = this.boletaRepository.create({
+              apoderado: apoderado,
+              rut_estudiante: rutEstudiante,
+              rut_apoderado: rutApoderado,
+              // pago_id: , // ESTE CAMPO SE MODIFICA AL MOMENTO DE PAGAR
+              estado_id: 1, // 1 es 'Pendiente'
+              detalle: `Boleta de PAE de ${mesPae}, descripcion: ${descripcion}`,
+              subtotal: subtotal, // lógica para el subtotal
+              iva: 19, // lógica para el IVA
+              total: total, // Total incluyendo el IVA, ajustar lógica
+              descuento: 0, // Aplica descuento. CASE para mensualidades.
+              nota: `Generada automáticamente para el mes de ${mesPae}`,
+              fecha_vencimiento: fechaVencimiento,
+            });
+  
+            // Guarda la boleta en la base de datos
+            const savedBoletaPae = await this.boletaRepository.save(boletaPae);
+            boletasPae.push(savedBoletaPae);
+          }
         }
       }
     }
 
     // Retorna las boletas creadas
-    return boletas;
+    return {boletas, boletasPae};
   }
 
   async repactarBoleta(boletaId: number, meses: number): Promise<Boleta[]> {
