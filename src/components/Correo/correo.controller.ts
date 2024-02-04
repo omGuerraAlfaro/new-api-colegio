@@ -1,28 +1,38 @@
-import { Controller, Post, Body, UsePipes, ValidationPipe, Inject } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes, ValidationPipe, Inject, Get, InternalServerErrorException } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { ConfigService } from '@nestjs/config';
+import { CorreoService } from './correo.service';
 
 @Controller('correo')
 export class CorreoController {
 
-  constructor(@Inject(ConfigService) private configService: ConfigService) { }
+  constructor(private readonly correoSmtp: CorreoService) { }
+
+  @Get('/smtp-info')
+  async getInfoSmtp() {
+    try {
+      const smtpInfo = await this.correoSmtp.getCorreoSmtp();
+      return smtpInfo;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
 
   @Post('/enviar')
   @UsePipes(new ValidationPipe())
   async enviarCorreo(@Body() formData: any): Promise<any> {
     try {
-      // Obteniendo credenciales de las variables de entorno
-      const emailUser = this.configService.get<string>('EMAIL_USER');
-      const emailPass = this.configService.get<string>('EMAIL_PASS');
+      const smtpInfo = await this.correoSmtp.getCorreoSmtp();
+      const { host_smtp, port_smtp, user_smtp, pass_smtp } = smtpInfo[0];
 
       // Configuración del transporte de correo usando Nodemailer
       const transporter = nodemailer.createTransport({
-        host: 'mail.colegioandeschile.cl',
-        port: 465,
+        host: host_smtp,
+        port: port_smtp,
         secure: true,
         auth: {
-          user: emailUser,
-          pass: emailPass
+          user: user_smtp,
+          pass: pass_smtp
         }
       });
 
@@ -40,7 +50,7 @@ export class CorreoController {
 
       // Opciones del correo
       const mailOptions = {
-        from: emailUser,
+        from: user_smtp,
         to: 'omar.guerra@outlook.cl',
         subject: 'Postulación Colegio Andes de Chile',
         html: correoHtml,
@@ -60,18 +70,17 @@ export class CorreoController {
   @UsePipes(new ValidationPipe())
   async enviarCorreoVerano(@Body() formData: any): Promise<any> {
     try {
-      // Obteniendo credenciales de las variables de entorno
-      const emailUser = this.configService.get<string>('EMAIL_USER');
-      const emailPass = this.configService.get<string>('EMAIL_PASS');
+      const smtpInfo = await this.correoSmtp.getCorreoSmtp();
+      const { host_smtp, port_smtp, user_smtp, pass_smtp } = smtpInfo[0];
 
       // Configuración del transporte de correo usando Nodemailer
       const transporter = nodemailer.createTransport({
-        host: 'mail.colegioandeschile.cl',
-        port: 465,
+        host: host_smtp,
+        port: port_smtp,
         secure: true,
         auth: {
-          user: emailUser,
-          pass: emailPass
+          user: user_smtp,
+          pass: pass_smtp
         }
       });
 
@@ -88,7 +97,7 @@ export class CorreoController {
 
       // Opciones del correo
       const mailOptions = {
-        from: emailUser,
+        from: user_smtp,
         to: 'omar.guerra@outlook.cl',
         subject: 'Postulación Escuela de Verano Colegio Andes de Chile',
         html: correoHtml,

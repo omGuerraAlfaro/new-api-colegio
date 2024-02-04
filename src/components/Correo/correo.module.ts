@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
 import { CorreoController } from './correo.controller';
 import { ConfigModule } from '@nestjs/config';
+import { CorreoService } from './correo.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Correo } from 'src/models/Correo.entity';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, TypeOrmModule.forFeature([Correo])],
   controllers: [CorreoController],
-  providers: [],
+  providers: [CorreoService],
+  
 })
 
 export class CorreoModule { }
