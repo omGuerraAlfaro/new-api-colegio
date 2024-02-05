@@ -29,7 +29,18 @@ export class BoletaService {
     let estudianteCounter = 1;
 
     estudianteRuts.forEach(rutEstudiante => {
-      groupedBoletas[`estudiante${estudianteCounter}`] = boletas.filter(boleta => boleta.rut_estudiante === rutEstudiante);
+      const boletasEstudiante = boletas.filter(boleta => boleta.rut_estudiante === rutEstudiante);
+      
+      // Separar las boletas en boletasColegiatura y boletasPae
+      const boletasColegiatura = boletasEstudiante.filter(boleta => !boleta.detalle.startsWith("Boleta de PAE"));
+      const boletasPae = boletasEstudiante.filter(boleta => boleta.detalle.startsWith("Boleta de PAE"));
+      
+      // Agregar las boletas separadas al objeto agrupado
+      groupedBoletas[`estudiante${estudianteCounter}`] = {
+        boletasColegiatura,
+        boletasPae
+      };
+      
       estudianteCounter++;
     });
 
