@@ -150,22 +150,22 @@ export class BoletaService {
 
         for (const mes of meses) {
           const fechaActual = new Date();
-          let anio = fechaActual.getFullYear() + 1;
+          let anio = fechaActual.getFullYear();
           let mesIndex = meses.indexOf(mes);
           let subtotal = 190000;
           let total = 0;
 
           if (mes === 'matricula') {
-            mesIndex = fechaActual.getMonth();
-            subtotal = 1000000;
+            mesIndex = 0;
+            subtotal = 220000;
             total = subtotal;
           } else {
-            mesIndex += 2;
+            mesIndex += 1;
             subtotal = 190000;  
             total = subtotal - (subtotal * descuentoApoderdado) / 100;
           }
 
-          const fechaVencimiento = new Date(anio, mesIndex, 5);
+          const fechaVencimiento = new Date(anio, mesIndex, 1);
 
           const boleta = this.boletaRepository.create({
             apoderado: apoderado,
@@ -190,13 +190,13 @@ export class BoletaService {
         if (estudiante.infoPae) {
           for (const mesPae of mesesPae) {
             const fechaActual = new Date();
-            let anio = fechaActual.getFullYear() + 1;
-            let mesIndex = mesesPae.indexOf(mesPae);
+            let anio = fechaActual.getFullYear();
+            let mesIndex = mesesPae.indexOf(mesPae) + 2;
             const { valor, descripcion } = estudiante.infoPae;
             let subtotal = valor;
             let total = subtotal;
   
-            const fechaVencimiento = new Date(anio, mesIndex, 5);
+            const fechaVencimiento = new Date(anio, mesIndex, 1);
   
             const boletaPae = this.boletaRepository.create({
               apoderado: apoderado,
