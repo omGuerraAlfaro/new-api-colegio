@@ -2,8 +2,9 @@ import { Controller, Post, Body, Get, Param, UseInterceptors, UploadedFile, Http
 import { NoticiasService } from './noticias.service';
 import { CreateFullNoticiaDto } from '../../../src/dto/noticia.dto';
 import { NoticiasColegio } from 'src/models/Noticias.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('Noticias')
 @Controller('noticias')
 export class NoticiasController {
     constructor(private readonly noticiasService: NoticiasService) { }

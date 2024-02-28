@@ -22,7 +22,7 @@ import { Correo } from './Correo.entity';
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
                         Estudiante, InfoPae, Profesor, Curso, EstudianteCurso, Usuarios, Administrador,
-                        Boleta, EstadoBoleta, Transacciones, EstadoTransaccion,
+                        Boleta, EstadoBoleta, Transacciones, EstadoTransaccion, TransactionEntity,
                         Direccion, Ciudad, Region, NoticiasColegio, NoticiasImages, Correo
                         ];
 

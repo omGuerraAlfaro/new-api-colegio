@@ -1,5 +1,5 @@
 // payment.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { WebpayPlus, Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes  } from 'transbank-sdk';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -27,11 +27,12 @@ export class PaymentService {
                 sessionId: sessionId,
                 amount: amount,
                 token: response.token,
-                status: 'pending',
+                status: 'pendiente',
             });
 
             return response;
         } catch (error) {
+            throw new InternalServerErrorException(error.message);
             throw new Error(`Error while creating a transaction: ${error}`);
         }
     }
@@ -48,7 +49,15 @@ export class PaymentService {
 
             return response;
         } catch (error) {
+            throw new InternalServerErrorException(error.message);
             throw new Error(`Error while confirming the transaction: ${error}`);
         }
     }
+
+    /* 
+    para ver el estado es lo mismo debo utilizar status() -> const response = await tx.status(token);
+    
+    Reversar o Anular un pago -> const response = await tx.refund(token, amount);
+
+    */
 }

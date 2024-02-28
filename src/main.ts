@@ -21,7 +21,8 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     preflightContinue: false,
     optionsSuccessStatus: 204, // 204 es típicamente usado para respuestas preflight exitosas
-    allowedHeaders: 'Content-Type, Accept, Authorization',
+    // allowedHeaders: 'Content-Type, Accept, Authorization',
+    allowedHeaders: ['Content-Type', 'Tbk-Api-Key-Id', 'Tbk-Api-Key-Secret'],
     credentials: true, // si necesitas enviar/recibir cookies o autenticación basada en encabezados
   });
 
@@ -36,6 +37,9 @@ async function bootstrap() {
     .addTag('Profesores')
     .addTag('Cursos')
     .addTag('Administrador')
+    .addTag('Noticias')
+    .addTag('Correos')
+    .addTag('WebPay')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

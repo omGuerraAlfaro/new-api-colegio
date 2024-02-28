@@ -17,6 +17,9 @@ export class TransactionEntity {
   @Column()
   token: string;
 
-  @Column({ default: 'pending' })
+  @Column({ default: 'pendiente' })
   status: string;
+
+  // @Column()
+  // rutApoderado: string;
 }
