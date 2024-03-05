@@ -21,9 +21,9 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
       type: 'mysql',
       host: '44.207.168.60',
       port: 3306,
-      username: 'colegioa_omarignacio2',
+      username: 'colegioa_omarignacio',
       password: 'E(@dS&^r61YM',
-      database: 'colegioa_colegioandeschile2',
+      database: 'colegioa_colegioandeschile',
       entities,
       synchronize: true
     }),
