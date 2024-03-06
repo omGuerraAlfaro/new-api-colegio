@@ -15,8 +15,10 @@ import { Boleta } from './Boleta.entity';
 import { Transacciones } from './Transacciones.entity';
 import { EstadoTransaccion } from './EstadoTransaccion.entity';
 import { EstadoBoleta } from './EstadoBoleta.entity';
+
 import { Administrador } from './Administrador.entity';
 import { InfoPae } from './InfoPae.entity';
+
 import { Correo } from './Correo.entity';
 
 
