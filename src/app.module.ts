@@ -21,11 +21,11 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
     PaymentModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: '44.207.168.60',
       port: 3306,
-      username: 'root',
-      password: '',
-      database: 'colegios_colegioandeschile',
+      username: 'colegioa_omarignacio',
+      password: '068gJOWTJ@@k',
+      database: 'colegioa_colegio2',
       entities,
       synchronize: true
     }),
