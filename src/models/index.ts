@@ -15,12 +15,16 @@ import { Boleta } from './Boleta.entity';
 import { Transacciones } from './Transacciones.entity';
 import { EstadoTransaccion } from './EstadoTransaccion.entity';
 import { EstadoBoleta } from './EstadoBoleta.entity';
+
+import { Administrador } from './Administrador.entity';
+import { InfoPae } from './InfoPae.entity';
+
 import { Correo } from './Correo.entity';
 
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
-                        Estudiante, Profesor, Curso, EstudianteCurso, Usuarios, 
-                        Boleta, EstadoBoleta, Transacciones, EstadoTransaccion,
+                        Estudiante, InfoPae, Profesor, Curso, EstudianteCurso, Usuarios, Administrador,
+                        Boleta, EstadoBoleta, Transacciones, EstadoTransaccion, TransactionEntity,
                         Direccion, Ciudad, Region, NoticiasColegio, NoticiasImages, Correo
                         ];
 

@@ -19,7 +19,7 @@ export class Boleta {
     @Column({ nullable: true })
     pago_id: number;
 
-    @Column()
+    @Column({ nullable: true })
     estado_id: number;
 
     @Column({ nullable: true })

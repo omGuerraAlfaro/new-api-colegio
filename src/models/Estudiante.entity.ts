@@ -3,9 +3,13 @@ import {
     PrimaryGeneratedColumn,
     Column,
     OneToMany,
+    ManyToOne,
+    JoinColumn,
+    OneToOne,
 } from 'typeorm';
 import { ApoderadoEstudiante } from './ApoderadoEstudiante.entity';
 import { EstudianteCurso } from './CursoEstudiante.entity';
+import { InfoPae } from './InfoPae.entity';
 
 @Entity()
 export class Estudiante {
@@ -47,10 +51,18 @@ export class Estudiante {
 
     @Column({ type: 'varchar', length: 100, nullable: true })
     enfermedad_cronica: string;
+    
+    // @Column()
+    // pae_id: number;
 
     @OneToMany(() => ApoderadoEstudiante, apoderadoEstudiante => apoderadoEstudiante.estudiante)
     apoderadosConnection: ApoderadoEstudiante[];
 
     @OneToMany(() => EstudianteCurso, cursoEstudiante => cursoEstudiante.estudiante)
     cursoConnection: EstudianteCurso[];
+
+    @ManyToOne(() => InfoPae, infoPae => infoPae.id)
+    @JoinColumn({ name: 'pae_id' }) 
+    infoPae: InfoPae;
+    
 }

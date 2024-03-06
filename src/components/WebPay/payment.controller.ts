@@ -3,7 +3,9 @@ import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreateTransactionDto } from '../../dto/create-transaction.dto';
 import { ConfirmTransactionDto } from '../../dto/confirm-transaction.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('WebPay')
 @Controller('payment')
 export class PaymentController {
     constructor(private paymentService: PaymentService) {}

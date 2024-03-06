@@ -21,6 +21,11 @@ export class CreateTransactionDto {
     @IsUrl()
     @IsNotEmpty()
     returnUrl: string;
+
+    // @ApiProperty()
+    // @IsUrl()
+    // @IsNotEmpty()
+    // rutApoderado: string;
 }
 
 
