@@ -1,0 +1,59 @@
+"descuento_asignado": 0, //195.000
+
+"descuento_asignado": 2.564102564, //190.000
+
+"descuento_asignado": 5.128205128, //185.000
+
+"descuento_asignado": 7.692307692, //180.000
+
+"descuento_asignado": 10.25641026, //175.000
+
+"descuento_asignado": 12.82051282, //170.000
+
+"descuento_asignado": 15.38461538, //165.000
+
+"descuento_asignado": 17.94871795, //160.000
+
+"descuento_asignado": 20.51282051, //155.000
+
+"descuento_asignado": 23.07692308, //150.000
+
+"descuento_asignado": 25.64102564, //145.000
+
+"descuento_asignado": 28.20512821, //140.000
+
+"descuento_asignado": 38.46153846, //120.000
+
+"descuento_asignado": 50, //97.500
+
+null -> 0
+
+50.000 -> 1
+
+100.000 -> 2
+
+120.000 -> 3
+
+160.000 -> 4
+
+pre -> 1
+
+kind -> 2
+
+prim -> 3
+
+segun -> 4
+
+terc -> 5
+
+cuar -> 6
+
+quin -> 7
+
+sext -> 8
+
+sept -> 9
+
+octA -> 10
+
+octB -> 11
