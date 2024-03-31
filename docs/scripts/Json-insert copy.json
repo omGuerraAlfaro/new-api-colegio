@@ -26,6 +26,8 @@
 
 "descuento_asignado": 50, //97.500
 
+"descuento_asignado": 0,
+
 null -> 0
 
 50.000 -> 1
@@ -35,6 +37,12 @@ null -> 0
 120.000 -> 3
 
 160.000 -> 4
+
+100.000 -> 5
+
+90.000 -> 6
+
+60.000 -> 7
 
 pre -> 1
 
@@ -57,3 +65,39 @@ sept -> 9
 octA -> 10
 
 octB -> 11
+
+
+{
+    "primer_nombre": "",
+    "segundo_nombre": "",
+    "primer_apellido": "",
+    "segundo_apellido": "",
+    "fecha_nacimiento": "2012-04-25",
+    "rut": "",
+    "dv": "",
+    "telefono": "",
+    "correo_electronico": "",
+    "estado_civil": "sin datos",
+    "nacionalidad": "Chilena",
+    "actividad": "sin datos",
+    "escolaridad": "sin datos",
+    "descuento_asignado": 0,
+    "estudiantes": [
+      {
+        "primer_nombre": "",
+        "segundo_nombre": "",
+        "primer_apellido": "",
+        "segundo_apellido": "",
+        "fecha_nacimiento": "2016-12-16",
+        "rut": "",
+        "dv": "",
+        "telefono_contacto": "",
+        "genero": "F",
+        "alergico": "Ninguno",
+        "vive_con": "Padres",
+        "enfermedad_cronica": "",
+        "cursoId": 6,
+        "pae_id": null
+      }
+    ]
+},
