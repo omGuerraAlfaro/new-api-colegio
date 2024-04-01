@@ -152,17 +152,18 @@ export class BoletaService {
           const fechaActual = new Date();
           let anio = fechaActual.getFullYear();
           let mesIndex = meses.indexOf(mes);
-          let subtotal = 190000;
+          let valorMatricula = 220000;
+          let subTotal = 0;
           let total = 0;
 
           if (mes === 'matricula') {
             mesIndex = 0;
-            subtotal = 220000;
-            total = subtotal;
+            total = valorMatricula;
+            subTotal = total
           } else {
-            mesIndex += 1;
-            subtotal = 190000;  
-            total = subtotal - (subtotal * descuentoApoderdado) / 100;
+            mesIndex += 1; 
+            total =  descuentoApoderdado;
+            subTotal = total
           }
 
           const fechaVencimiento = new Date(anio, mesIndex, 1);
@@ -174,11 +175,11 @@ export class BoletaService {
             // pago_id: , // ESTE CAMPO SE MODIFICA AL MOMENTO DE PAGAR
             estado_id: 1, // 1 es 'Pendiente'
             detalle: `Boleta de ${mes}`,
-            subtotal: subtotal, // lógica para el subtotal
+            subtotal: subTotal, // lógica para el subtotal
             iva: 19, // lógica para el IVA
             total: total, // Total incluyendo el IVA, ajustar lógica
             descuento: descuentoApoderdado, // Aplica descuento. CASE para mensualidades.
-            nota: `Generada automáticamente para el mes de ${mes}`,
+            nota: `Boleta mes de ${mes}`,
             fecha_vencimiento: fechaVencimiento,
           });
 
