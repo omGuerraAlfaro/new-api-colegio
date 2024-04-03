@@ -23,7 +23,7 @@
               "segundo_nombre": "Elsa",
               "primer_apellido": "Herrrera",
               "segundo_apellido": "Palacios",
-              "fecha_nacimiento": "2019-08274",
+              "fecha_nacimiento": "2019-08-27",
               "rut": "26982726",
               "dv": "2",
               "telefono_contacto": "982143891",
@@ -739,7 +739,7 @@
               "segundo_nombre": "Ignacio",
               "primer_apellido": "Lagos",
               "segundo_apellido": "Lagos",
-              "fecha_nacimiento": "",
+              "fecha_nacimiento": "2017-06-22",
               "rut": "25812519",
               "dv": "3",
               "telefono_contacto": "932290318",
@@ -832,7 +832,6 @@
               "vive_con": "Padres",
               "enfermedad_cronica": "",
               "cursoId": 11,
-              "pae_id": null,
               "pae_id": null
             }
           ]
@@ -1169,7 +1168,6 @@
               "vive_con": "Padres",
               "enfermedad_cronica": "",
               "cursoId": 8,
-              "pae_id": null,
               "pae_id": null
             }
           ]

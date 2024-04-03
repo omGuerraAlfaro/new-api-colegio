@@ -33,9 +33,24 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
 })
 export class AppModule { }
 
-//       type: 'mysql',
-//       host: '44.207.168.60',
-//       port: 3306,
-//       username: 'colegioa_omarignacio',
-//       password: '068gJOWTJ@@k',
-//       database: 'colegioa_colegioandeschile',
+// TypeOrmModule.forRoot({
+//   type: 'mysql',
+//   host: '44.207.168.60',
+//   port: 3306,
+//   username: 'colegioa_omarignacio',
+//   password: '068gJOWTJ@@k',
+//   database: 'colegioa_colegio2',
+//   entities,
+//   synchronize: true
+// }),
+
+// TypeOrmModule.forRoot({
+//   type: 'mysql',
+//   host: 'localhost',
+//   port: 3306,
+//   username: 'root',
+//   password: '',
+//   database: 'colegio2',
+//   entities,
+//   synchronize: true
+// }),
