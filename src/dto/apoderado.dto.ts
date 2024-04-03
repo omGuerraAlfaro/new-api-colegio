@@ -58,6 +58,10 @@ class EstudianteDTO {
     @ApiProperty()
     @IsNotEmpty()
     cursoId: number;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    pae_id: number;
 }
 
 export class ApoderadoDTO {

@@ -25,7 +25,7 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
       port: 3306,
       username: 'root',
       password: '',
-      database: 'colegios_colegioandeschile',
+      database: 'colegio2',
       entities,
       synchronize: true
     }),
