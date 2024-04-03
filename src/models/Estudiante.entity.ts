@@ -52,8 +52,9 @@ export class Estudiante {
     @Column({ type: 'varchar', length: 100, nullable: true })
     enfermedad_cronica: string;
 
-    @Column({ nullable: true })
+    @Column({ type: 'int', nullable: true })
     pae_id: number | null;
+
 
     @OneToMany(() => ApoderadoEstudiante, apoderadoEstudiante => apoderadoEstudiante.estudiante)
     apoderadosConnection: ApoderadoEstudiante[];
