@@ -62,7 +62,7 @@ export class Estudiante {
     @OneToMany(() => EstudianteCurso, cursoEstudiante => cursoEstudiante.estudiante)
     cursoConnection: EstudianteCurso[];
 
-    @ManyToOne(() => InfoPae)
+    @ManyToOne(() => InfoPae, infoPae => infoPae.estudiantesPae, { nullable: true })
     @JoinColumn({ name: 'pae_id' })
     infoPae: InfoPae;
 }
