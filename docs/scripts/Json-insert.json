@@ -2159,7 +2159,7 @@
           "nacionalidad": "Chilena",
           "actividad": "sin datos",
           "escolaridad": "sin datos",
-          "descuento_asignado": 28.20512821,
+          "descuento_asignado": 140000,
           "estudiantes": [
             {
               "primer_nombre": "Florencia",
@@ -2209,7 +2209,7 @@
           "nacionalidad": "Chilena",
           "actividad": "sin datos",
           "escolaridad": "sin datos",
-          "descuento_asignado": 28.20512821,
+          "descuento_asignado": 140000,
           "estudiantes": [
             {
               "primer_nombre": "Vicente",
@@ -2243,7 +2243,7 @@
           "nacionalidad": "Chilena",
           "actividad": "sin datos",
           "escolaridad": "sin datos",
-          "descuento_asignado": 25.64102564,
+          "descuento_asignado": 145000,
           "estudiantes": [
             {
               "primer_nombre": "Leonor",
@@ -2608,7 +2608,7 @@
               "segundo_nombre": "Liliana",
               "primer_apellido": "Anjarí",
               "segundo_apellido": "Silva",
-              "fecha_nacimiento": "20164-07-25",
+              "fecha_nacimiento": "2016-07-25",
               "rut": "24694475",
               "dv": "k",
               "telefono_contacto": "982875947",
@@ -4504,7 +4504,7 @@
               "alergico": "Ninguno",
               "vive_con": "Padres",
               "enfermedad_cronica": "",
-              "cursoId": 12,
+              "cursoId": 11,
               "pae_id": null
             }
           ]

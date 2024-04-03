@@ -30,17 +30,17 @@ export class BoletaService {
 
     estudianteRuts.forEach(rutEstudiante => {
       const boletasEstudiante = boletas.filter(boleta => boleta.rut_estudiante === rutEstudiante);
-      
+
       // Separar las boletas en boletasColegiatura y boletasPae
       const boletasColegiatura = boletasEstudiante.filter(boleta => !boleta.detalle.startsWith("Boleta de PAE"));
       const boletasPae = boletasEstudiante.filter(boleta => boleta.detalle.startsWith("Boleta de PAE"));
-      
+
       // Agregar las boletas separadas al objeto agrupado
       groupedBoletas[`estudiante${estudianteCounter}`] = {
         boletasColegiatura,
         boletasPae
       };
-      
+
       estudianteCounter++;
     });
 
@@ -54,18 +54,18 @@ export class BoletaService {
 
   async findAllBoletasApoderado() {
     const boletas = await this.boletaRepository.find();
-  
+
     const boletasConApoderado = await Promise.all(boletas.map(async (boleta) => {
       const apoderado = await this.apoderadoRepository.findOne({
         where: { rut: boleta.rut_apoderado }
       });
-  
+
       return { ...boleta, apoderado };
     }));
-  
+
     return boletasConApoderado;
   }
-  
+
 
   async createAnnualBoletasForApoderadoRut(rut: string) { //malo
     // Obtén los estudiantes asociados al apoderado
@@ -113,7 +113,7 @@ export class BoletaService {
             nota: `Generada automáticamente para el mes de ${mes}`,
             fecha_vencimiento: new Date(), // Fecha actual, puedes ajustarla para que coincida con el mes de la boleta si es necesario
           });
-  
+
           // Guarda la boleta en la base de datos
           const savedBoletaPae = await this.boletaRepository.save(boletaPae);
           boletasPae.push(savedBoletaPae);
@@ -126,120 +126,125 @@ export class BoletaService {
   }
 
   async createAnnualBoletasForMultipleApoderados() {
-    // Obtén un arreglo de todos los RUTs de apoderados
-    const arrayRuts = await this.apoderadoService.findAllRut();
+    try {
+      // Tu código asíncrono aquí
+      // Obtén un arreglo de todos los RUTs de apoderados
+      const arrayRuts = await this.apoderadoService.findAllRut();
 
-    const meses = ['matricula', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-    const boletas = [];
-    const mesesPae = ['marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-    const boletasPae = [];
+      const meses = ['matricula', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const boletas = [];
+      const mesesPae = ['marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const boletasPae = [];
 
-    for (const rut of arrayRuts) {
-      const apoderado = await this.apoderadoService.findStudentsWithApoderadoId(rut.rut);
+      for (const rut of arrayRuts) {
+        const apoderado = await this.apoderadoService.findStudentsWithApoderadoId(rut.rut);
 
-      if (!apoderado.estudiantes || apoderado.estudiantes.length === 0) {
-        continue; // Si no hay estudiantes, continúa con el siguiente RUT
-      }
-
-      const rutApoderado = apoderado.rut;
-      const descuentoApoderdado = apoderado.descuento_asignado;
-      //trae de apoderado un descuento y este despues se calcula el subtotal con el descuento => total.
-
-      for (const estudiante of apoderado.estudiantes) {
-        const rutEstudiante = estudiante.rut;
-
-        for (const mes of meses) {
-          const fechaActual = new Date();
-          let anio = fechaActual.getFullYear();
-          let mesIndex = meses.indexOf(mes);
-          let valorMatricula = 220000;
-          let subTotal = 0;
-          let total = 0;
-
-          if (mes === 'matricula') {
-            mesIndex = 0;
-            total = valorMatricula;
-            subTotal = total
-          } else {
-            mesIndex += 1; 
-            total =  descuentoApoderdado;
-            subTotal = total
-          }
-
-          const fechaVencimiento = new Date(anio, mesIndex, 1);
-
-          const boleta = this.boletaRepository.create({
-            apoderado: apoderado,
-            rut_estudiante: rutEstudiante,
-            rut_apoderado: rutApoderado,
-            // pago_id: , // ESTE CAMPO SE MODIFICA AL MOMENTO DE PAGAR
-            estado_id: 1, // 1 es 'Pendiente'
-            detalle: `Boleta de ${mes}`,
-            subtotal: subTotal, // lógica para el subtotal
-            iva: 19, // lógica para el IVA
-            total: total, // Total incluyendo el IVA, ajustar lógica
-            descuento: descuentoApoderdado, // Aplica descuento. CASE para mensualidades.
-            nota: `Boleta mes de ${mes}`,
-            fecha_vencimiento: fechaVencimiento,
-          });
-
-          // Guarda la boleta en la base de datos
-          const savedBoleta = await this.boletaRepository.save(boleta);
-          boletas.push(savedBoleta);
-
+        if (!apoderado.estudiantes || apoderado.estudiantes.length === 0) {
+          continue; // Si no hay estudiantes, continúa con el siguiente RUT
         }
-        if (estudiante.infoPae) {
-          for (const mesPae of mesesPae) {
+
+        const rutApoderado = apoderado.rut;
+        const descuentoApoderdado = apoderado.descuento_asignado;
+        //trae de apoderado un descuento y este despues se calcula el subtotal con el descuento => total.
+
+        for (const estudiante of apoderado.estudiantes) {
+          const rutEstudiante = estudiante.rut;
+
+          for (const mes of meses) {
             const fechaActual = new Date();
             let anio = fechaActual.getFullYear();
-            let mesIndex = mesesPae.indexOf(mesPae) + 2;
-            const { valor, descripcion } = estudiante.infoPae;
-            let subtotal = valor;
-            let total = subtotal;
-  
+            let mesIndex = meses.indexOf(mes);
+            let valorMatricula = 220000;
+            let subTotal = 0;
+            let total = 0;
+
+            if (mes === 'matricula') {
+              mesIndex = 0;
+              total = valorMatricula;
+              subTotal = total
+            } else {
+              mesIndex += 1;
+              total = descuentoApoderdado;
+              subTotal = total
+            }
+
             const fechaVencimiento = new Date(anio, mesIndex, 1);
-  
-            const boletaPae = this.boletaRepository.create({
+
+            const boleta = this.boletaRepository.create({
               apoderado: apoderado,
               rut_estudiante: rutEstudiante,
               rut_apoderado: rutApoderado,
               // pago_id: , // ESTE CAMPO SE MODIFICA AL MOMENTO DE PAGAR
               estado_id: 1, // 1 es 'Pendiente'
-              detalle: `Boleta de PAE de ${mesPae}, descripcion: ${descripcion}`,
-              subtotal: subtotal, // lógica para el subtotal
+              detalle: `Boleta de ${mes}`,
+              subtotal: subTotal, // lógica para el subtotal
               iva: 19, // lógica para el IVA
               total: total, // Total incluyendo el IVA, ajustar lógica
-              descuento: 0, // Aplica descuento. CASE para mensualidades.
-              nota: `Generada automáticamente para el mes de ${mesPae}`,
+              descuento: descuentoApoderdado, // Aplica descuento. CASE para mensualidades.
+              nota: `Boleta mes de ${mes}`,
               fecha_vencimiento: fechaVencimiento,
             });
-  
+
             // Guarda la boleta en la base de datos
-            const savedBoletaPae = await this.boletaRepository.save(boletaPae);
-            boletasPae.push(savedBoletaPae);
+            const savedBoleta = await this.boletaRepository.save(boleta);
+            boletas.push(savedBoleta);
+
+          }
+          if (estudiante.infoPae) {
+            for (const mesPae of mesesPae) {
+              const fechaActual = new Date();
+              let anio = fechaActual.getFullYear();
+              let mesIndex = mesesPae.indexOf(mesPae) + 2;
+              const { valor, descripcion } = estudiante.infoPae;
+              let subtotal = valor;
+              let total = subtotal;
+
+              const fechaVencimiento = new Date(anio, mesIndex, 1);
+
+              const boletaPae = this.boletaRepository.create({
+                apoderado: apoderado,
+                rut_estudiante: rutEstudiante,
+                rut_apoderado: rutApoderado,
+                // pago_id: , // ESTE CAMPO SE MODIFICA AL MOMENTO DE PAGAR
+                estado_id: 1, // 1 es 'Pendiente'
+                detalle: `Boleta de PAE de ${mesPae}, descripcion: ${descripcion}`,
+                subtotal: subtotal,
+                iva: 19,
+                total: total,
+                descuento: 0,
+                nota: `Boleta PAE mes de ${mesPae}`,
+                fecha_vencimiento: fechaVencimiento,
+              });
+
+              // Guarda la boleta en la base de datos
+              const savedBoletaPae = await this.boletaRepository.save(boletaPae);
+              boletasPae.push(savedBoletaPae);
+            }
           }
         }
+        return { boletas, boletasPae };
       }
+    } catch (error) {
+      console.error("Se ha producido un error:", error);
     }
-
-    // Retorna las boletas creadas
-    return {boletas, boletasPae};
   }
+
+
 
   async repactarBoleta(boletaId: number, meses: number): Promise<Boleta[]> {
     if (meses < 1 || meses > 2) {
       throw new Error('La repactación puede ser solo de 1 o 2 meses después del actual.');
     }
-  
+
     const boletaActual = await this.boletaRepository.findOne({ where: { id: boletaId } });
     if (!boletaActual) {
       throw new Error('Boleta no encontrada.');
     }
-  
+
     if (boletaActual.estado_id !== 1) { // Asumiendo que 1 es 'Pendiente'
       throw new Error('Solo se pueden repactar boletas que estén pendientes.');
     }
-  
+
     // Encuentra las boletas de los meses siguientes
     const fechaVencimientoOriginal = boletaActual.fecha_vencimiento;
     const boletasFuturas = await this.boletaRepository.find({
@@ -252,30 +257,30 @@ export class BoletaService {
       },
       take: meses
     });
-  
+
     if (boletasFuturas.length < meses) {
       throw new Error('No hay suficientes boletas futuras para repactar.');
     }
-  
+
     const montoPorMes = boletaActual.subtotal / meses;
-  
+
     for (const [index, boletaFutura] of boletasFuturas.entries()) {
       const subtotalActualizado = Number(boletaFutura.subtotal) + montoPorMes;
-    
+
       boletaFutura.subtotal = subtotalActualizado;
       const subSubtotal = subtotalActualizado - (subtotalActualizado * boletaActual.descuento) / 100;
       boletaFutura.total = subSubtotal;
       boletaFutura.nota += ` Incluye repactación de la boleta actual - Cuota ${index + 1}.`;
       await this.boletaRepository.save(boletaFutura);
     }
-  
+
     // Cambiar estado de la boleta actual a 'Repactada'
     boletaActual.estado_id = 4; // Asumiendo que 4 es 'Repactada'
     await this.boletaRepository.save(boletaActual);
-  
+
     return boletasFuturas;
   }
-  
+
 
 
 }
