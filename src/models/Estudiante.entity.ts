@@ -51,9 +51,9 @@ export class Estudiante {
 
     @Column({ type: 'varchar', length: 100, nullable: true })
     enfermedad_cronica: string;
-    
-    // @Column()
-    // pae_id: number;
+
+    @Column({ nullable: true })
+    pae_id: number | null;
 
     @OneToMany(() => ApoderadoEstudiante, apoderadoEstudiante => apoderadoEstudiante.estudiante)
     apoderadosConnection: ApoderadoEstudiante[];
@@ -61,8 +61,7 @@ export class Estudiante {
     @OneToMany(() => EstudianteCurso, cursoEstudiante => cursoEstudiante.estudiante)
     cursoConnection: EstudianteCurso[];
 
-    @ManyToOne(() => InfoPae, infoPae => infoPae.id)
-    @JoinColumn({ name: 'pae_id' }) 
+    @ManyToOne(() => InfoPae)
+    @JoinColumn({ name: 'pae_id' })
     infoPae: InfoPae;
-    
 }
