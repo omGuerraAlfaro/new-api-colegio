@@ -17,7 +17,7 @@ export class Boleta {
     rut_apoderado: string;
 
     @Column({ nullable: true })
-    pago_id: number;
+    pago_id: string;
 
     @Column({ nullable: true })
     estado_id: number;

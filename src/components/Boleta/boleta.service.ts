@@ -7,7 +7,6 @@ import { ApoderadoService } from '../Apoderado/apoderado.service';
 
 @Injectable()
 export class BoletaService {
-
   constructor(
     @InjectRepository(Boleta)
     private readonly boletaRepository: Repository<Boleta>,
@@ -279,6 +278,10 @@ export class BoletaService {
     await this.boletaRepository.save(boletaActual);
 
     return boletasFuturas;
+  }
+
+  async updateBoletaStatus(idBoleta: number, nuevoEstado: number, idPago: string): Promise<void> {
+    await this.boletaRepository.update(idBoleta, { estado_id: nuevoEstado, pago_id : idPago });
   }
 
 

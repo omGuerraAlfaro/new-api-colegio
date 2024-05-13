@@ -6,8 +6,6 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { ConfigService, ConfigModule } from '@nestjs/config';
-import { Apoderado } from '../../models/Apoderado.entity';
-import { Profesor } from 'src/models/Profesor.entity';
 import { Usuarios } from 'src/models/User.entity';
 
 

@@ -10,9 +10,11 @@ import {
     Param,
     Patch,
     Post,
+    Put,
 } from '@nestjs/common';
 import { BoletaService } from './boleta.service';
 import { ApiTags } from '@nestjs/swagger';
+import { UpdateBoletaDto } from 'src/dto/updateBoleta.dto';
 
 @ApiTags('Boletas')
 @Controller('boleta')
@@ -62,6 +64,13 @@ export class BoletaController {
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Put('updateBoleta')
+    async updateBoleta(@Body() updateBoletaDto: UpdateBoletaDto) {
+        const { idBoleta, estado, idPago } = updateBoletaDto;
+        const result = await this.boletaService.updateBoletaStatus(idBoleta, estado, idPago);
+        return result;
     }
 
 }
