@@ -16,7 +16,7 @@ import { ApoderadoModule } from '../Apoderado/apoderado.module';
       Boleta, Apoderado
     ]),
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, BoletaService],
   controllers: [BoletaController],
   providers: [BoletaService],
 })
