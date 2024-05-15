@@ -1,5 +1,5 @@
 // payment.service.ts
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { WebpayPlus, Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } from 'transbank-sdk';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -45,7 +45,6 @@ export class PaymentService {
             return response;
         } catch (error) {
             throw new InternalServerErrorException(error.message);
-            throw new Error(`Error while creating a transaction: ${error}`);
         }
     }
 
@@ -55,19 +54,29 @@ export class PaymentService {
             const response = await tx.commit(token);
 
             const { buy_order } = response;
-            await this.transactionRepository.update(buy_order, { status: 'aprobado' })
 
             const parts = buy_order.split('-');
             const rawId = parts.pop();
             const idBoleta = parseInt(rawId, 10);
 
             await this.boletaService.updateBoletaStatus(idBoleta, 2, buy_order);
+            await this.updateTransactionStatus(token, 'aprobado');
 
             return response;
         } catch (error) {
             throw new InternalServerErrorException(error.message);
-            throw new Error(`Error while confirming the transaction: ${error}`);
         }
+    }
+
+    private async updateTransactionStatus(token: string, status: string) {
+        const transaction = await this.transactionRepository.findOne({ where: { token } });
+
+        if (!transaction) {
+            throw new NotFoundException('Transaction not found');
+        }
+
+        transaction.status = status;
+        await this.transactionRepository.save(transaction);
     }
 
     /* 
