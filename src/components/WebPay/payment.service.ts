@@ -9,20 +9,27 @@ import { BoletaService } from '../Boleta/boleta.service';
 
 @Injectable()
 export class PaymentService {
+    private commerceCode: string;
+    private apiKey: string;
+
     constructor(
         @InjectRepository(TransactionEntity)
         private transactionRepository: Repository<TransactionEntity>,
         private readonly boletaService: BoletaService,
     ) {
-        //WebpayPlus.configureForTesting();
-        const commerceCode = process.env.COMMERCE_CODE;
-        const apiKey = process.env.API_KEY;
-        WebpayPlus.configureForProduction(commerceCode, apiKey);
+        this.commerceCode = process.env.COMMERCE_CODE;
+        this.apiKey = process.env.API_KEY;
+
+        if (!this.commerceCode || !this.apiKey) {
+            throw new Error('COMMERCE_CODE and API_KEY must be defined in environment variables');
+        }
+
+        WebpayPlus.configureForProduction(this.commerceCode, this.apiKey);
     }
 
 
     async createTransaction(buyOrder: string, sessionId: string, amount: number, returnUrl: string) {
-        const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Production));
+        const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
         try {
             const response = await tx.create(buyOrder, sessionId, amount, returnUrl);
 
@@ -43,7 +50,7 @@ export class PaymentService {
     }
 
     async confirmTransaction(token: string) {
-        const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Production));
+        const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
         try {
             const response = await tx.commit(token);
 
