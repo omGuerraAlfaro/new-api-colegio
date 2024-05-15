@@ -14,8 +14,10 @@ export class PaymentService {
         private transactionRepository: Repository<TransactionEntity>,
         private readonly boletaService: BoletaService,
     ) {
-        // Configure Transbank SDK with your keys
-        WebpayPlus.configureForTesting();
+        //WebpayPlus.configureForTesting();
+        const commerceCode = process.env.COMMERCE_CODE;
+        const apiKey = process.env.API_KEY;
+        WebpayPlus.configureForProduction(commerceCode, apiKey);
     }
 
 
