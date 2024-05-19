@@ -51,18 +51,8 @@ export class BoletaService {
     return await this.boletaRepository.find();
   }
 
-  async findAllBoletasApoderado() {
-    const boletas = await this.boletaRepository.find();
-
-    const boletasConApoderado = await Promise.all(boletas.map(async (boleta) => {
-      const apoderado = await this.apoderadoRepository.findOne({
-        where: { rut: boleta.rut_apoderado }
-      });
-
-      return { ...boleta, apoderado };
-    }));
-
-    return boletasConApoderado;
+  async findAllBoletasConApoderado(): Promise<Boleta[]> {
+    return this.boletaRepository.find({ relations: ['apoderado'] });
   }
 
 

@@ -28,7 +28,7 @@ export class BoletaController {
 
     @Get('con-apoderado')
     async getBoletaApoderado() {
-        return await this.boletaService.findAllBoletasApoderado();
+        return await this.boletaService.findAllBoletasConApoderado();
     }
 
     @Get(':rut')
