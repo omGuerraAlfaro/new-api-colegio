@@ -55,6 +55,17 @@ export class BoletaService {
     return this.boletaRepository.find({ relations: ['apoderado'] });
   }
 
+  async reenumerateBoletas(): Promise<void> {
+    const boletas = await this.boletaRepository.find({ order: { id: 'ASC' } });
+
+    let newId = 1;
+    for (const boleta of boletas) {
+      await this.boletaRepository.update(boleta.id, { id: newId });
+      newId++;
+    }
+
+    await this.boletaRepository.query(`ALTER TABLE boletas AUTO_INCREMENT = ${newId}`);
+  }
 
   async createAnnualBoletasForApoderadoRut(rut: string) { //malo
     // Obtén los estudiantes asociados al apoderado

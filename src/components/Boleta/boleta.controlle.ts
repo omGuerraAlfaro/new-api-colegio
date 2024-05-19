@@ -31,6 +31,11 @@ export class BoletaController {
         return await this.boletaService.findAllBoletasConApoderado();
     }
 
+    @Post('reenumerate')
+    async reenumerateBoletas(): Promise<void> {
+        await this.boletaService.reenumerateBoletas();
+    }
+
     @Get(':rut')
     async getBoleta(@Param('rut') rut: string) {
         return await this.boletaService.findBoletas(rut);
