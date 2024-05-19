@@ -29,7 +29,8 @@ export class PaymentService {
 
 
     async createTransaction(buyOrder: string, sessionId: string, amount: number, returnUrl: string) {
-        const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
+        // const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
+        const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         try {
             const response = await tx.create(buyOrder, sessionId, amount, returnUrl);
 
@@ -49,7 +50,8 @@ export class PaymentService {
     }
 
     async confirmTransaction(token: string) {
-        const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
+        // const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
+        const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         try {
             const response = await tx.commit(token);
     
