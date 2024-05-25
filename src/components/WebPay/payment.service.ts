@@ -54,24 +54,24 @@ export class PaymentService {
         //const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         try {
             const response = await tx.commit(token);
-    
+
             const { buy_order } = response;
             const parts = buy_order.split('-');
-            const rawIds = parts.slice(-2);
+            const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
             const idsBoletas = rawIds.map((rawId: string) => parseInt(rawId, 10));
-    
+
             for (const idBoleta of idsBoletas) {
                 await this.boletaService.updateBoletaStatus(idBoleta, 2, buy_order);
             }
-    
+
             await this.updateTransactionStatus(token, 'aprobado');
-    
+
             return response;
         } catch (error) {
             throw new InternalServerErrorException(error.message);
         }
     }
-    
+
 
     private async updateTransactionStatus(token: string, status: string) {
         const transaction = await this.transactionRepository.findOne({ where: { token } });
