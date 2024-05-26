@@ -9,6 +9,7 @@ import { Correo } from 'src/models/Correo.entity';
   imports: [ConfigModule, TypeOrmModule.forFeature([Correo])],
   controllers: [CorreoController],
   providers: [CorreoService],
+  exports: [CorreoService]
   
 })
 
