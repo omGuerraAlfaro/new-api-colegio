@@ -1,4 +1,4 @@
-import { Get, Injectable, Param } from '@nestjs/common';
+import { Get, Injectable, InternalServerErrorException, NotFoundException, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Boleta } from 'src/models/Boleta.entity';
 import { MoreThan, Repository } from 'typeorm';
@@ -282,15 +282,19 @@ export class BoletaService {
   }
 
   async updateBoletaStatus(idBoleta: number, nuevoEstado: number, idPago: string): Promise<void> {
-    await this.boletaRepository.update(idBoleta, { estado_id: nuevoEstado, pago_id : idPago });
+    await this.boletaRepository.update(idBoleta, { estado_id: nuevoEstado, pago_id: idPago });
   }
 
 
-
+  async findBoletaById(id: number): Promise<Boleta> {
+    try {
+      const boleta = await this.boletaRepository.findOne({ where: { id } });
+      if (!boleta) {
+        throw new NotFoundException('Boleta no encontrada');
+      }
+      return boleta;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al buscar la boleta');
+    }
+  }
 }
-
-
-
-
-
-

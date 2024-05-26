@@ -49,12 +49,24 @@ export class ApoderadoService {
     };
   }
 
+  async findApoderadoByRut(rut: string): Promise<Apoderado> {
+    try {
+      const apoderado = await this.apoderadoRepository.findOne({ where: { rut } });
+      if (!apoderado) {
+        throw new InternalServerErrorException('Apoderado no encontrado');
+      }
+      return apoderado;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al buscar el apoderado');
+    }
+  }
+  
   async findAll() {
     return await this.apoderadoRepository.find();
   }
 
   async findAllRut() {
-    return await this.apoderadoRepository.find({select: ['rut']});
+    return await this.apoderadoRepository.find({ select: ['rut'] });
   }
 
   async findOne(id: number) {

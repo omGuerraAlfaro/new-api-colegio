@@ -8,6 +8,7 @@ import {
   HttpException,
   HttpStatus,
   InternalServerErrorException,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -61,6 +62,18 @@ export class ApoderadoController {
     return await this.apoderadoService.findAddressWithApoderadoId(id);
   }
 
+  @Get('rut/:rut')
+  async getApoderadoByRut(@Param('rut') rut: string) {
+    try {
+      const apoderado = await this.apoderadoService.findApoderadoByRut(rut);
+      if (!apoderado) {
+        throw new NotFoundException('Apoderado no encontrado');
+      }
+      return apoderado;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al buscar el apoderado');
+    }
+  }
 
 }
 

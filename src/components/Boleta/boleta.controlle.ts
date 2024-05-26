@@ -7,6 +7,7 @@ import {
     HttpException,
     HttpStatus,
     InternalServerErrorException,
+    NotFoundException,
     Param,
     Patch,
     Post,
@@ -77,5 +78,18 @@ export class BoletaController {
         const result = await this.boletaService.updateBoletaStatus(idBoleta, estado, idPago);
         return result;
     }
+
+    @Get('id/:id')
+  async getBoletaById(@Param('id') id: number) {
+    try {
+      const boleta = await this.boletaService.findBoletaById(id);
+      if (!boleta) {
+        throw new NotFoundException('Boleta no encontrada');
+      }
+      return boleta;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al buscar la boleta');
+    }
+  }
 
 }
