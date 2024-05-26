@@ -1,4 +1,4 @@
-import { IsInt, IsString, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString, Min } from 'class-validator';
 
 export class UpdateBoletaDto {
     @IsInt()
@@ -9,5 +9,6 @@ export class UpdateBoletaDto {
     estado: number;
 
     @IsString()
+    @IsOptional()
     idPago: string;
 }
