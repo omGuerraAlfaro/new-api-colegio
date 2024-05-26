@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { TransactionEntity } from '../../models/transaction.entity';
 import { Boleta } from 'src/models/Boleta.entity';
 import { BoletaService } from '../Boleta/boleta.service';
+import { CorreoService } from '../Correo/correo.service';
 
 @Injectable()
 export class PaymentService {
@@ -16,6 +17,7 @@ export class PaymentService {
         @InjectRepository(TransactionEntity)
         private transactionRepository: Repository<TransactionEntity>,
         private readonly boletaService: BoletaService,
+        private readonly correoService: CorreoService,
     ) {
         this.commerceCode = process.env.COMMERCE_CODE;
         this.apiKey = process.env.API_KEY;
@@ -90,4 +92,39 @@ export class PaymentService {
     Reversar o Anular un pago -> const response = await tx.refund(token, amount);
 
     */
+
+    async comprobarTransferencia(buy_order: string, correo: string) {
+        const ordenCompra = buy_order + "-T"
+        const parts = buy_order.split('-');
+        const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
+        const idsBoletas = rawIds.map((rawId: string) => parseInt(rawId, 10));
+
+        for (const idBoleta of idsBoletas) {
+            await this.boletaService.updateBoletaStatus(idBoleta, 5, ordenCompra);
+        }
+        const correoHtml = `
+      <h4><strong>Confirmación de Transferencia</strong></h4>
+      <p>Estimado usuario,</p>
+      <p>Su orden de compra <strong>${ordenCompra}</strong> está en proceso de verificación.</p>
+      <p>Será confirmada dentro de las próximas 24 horas.</p>
+      <p>Gracias por su paciencia.</p>
+      <h3>Colegio Andes Chile - Educando con Amor</h3>
+    `;
+
+        const mailOptions = {
+            from: 'contacto@colegioandeschile.cl',
+            to: correo,
+            subject: 'Confirmación de Transferencia',
+            html: correoHtml,
+        };
+
+        try {
+            await this.correoService.enviarCorreo(mailOptions);
+            console.log('Correo enviado con éxito');
+        } catch (error) {
+            console.error('Error al enviar el correo:', error);
+        }
+    }
+
 }
+

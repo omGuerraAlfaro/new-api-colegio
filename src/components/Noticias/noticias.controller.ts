@@ -4,7 +4,6 @@ import { CreateFullNoticiaDto } from '../../../src/dto/noticia.dto';
 import { NoticiasColegio } from 'src/models/Noticias.entity';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Noticias')
 @Controller('noticias')
 export class NoticiasController {
     constructor(private readonly noticiasService: NoticiasService) { }
