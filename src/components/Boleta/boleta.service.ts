@@ -350,13 +350,11 @@ export class BoletaService {
         .getRawMany();
 
       const apoderadosMorosos = await Promise.all(result.map(async row => {
-        const boletasPendientes = await this.boletaRepository.find({
-          where: {
-            apoderado_id: row.apoderado_id,
-            estado_id: 1,
-            fecha_vencimiento: LessThan(currentDate)
-          }
-        });
+        const boletasPendientes = await this.boletaRepository.createQueryBuilder('boleta')
+          .where('boleta.apoderado_id = :apoderadoId', { apoderadoId: row.apoderado_id })
+          .andWhere('boleta.estado_id = :estadoId', { estadoId: 1 })
+          .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
+          .getMany();
 
         const nombreCompleto = [
           row.primer_nombre,
@@ -375,7 +373,7 @@ export class BoletaService {
           cantidad_morosos: row.cantidad_morosos,
           apoderado: {
             id: row['apoderado_id'],
-            nombreCompleto,           
+            nombreCompleto,
             rut: rutCompleto,
             telefono: row['telefono'],
             correo_electronico: row['correo_electronico'],
