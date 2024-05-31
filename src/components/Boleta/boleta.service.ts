@@ -324,5 +324,37 @@ export class BoletaService {
       throw new InternalServerErrorException('Error al obtener el total pendiente vencido');
     }
   }
+  
+  async getApoderadosMorosos() {
+    try {
+      const result = await this.boletaRepository.createQueryBuilder('boleta')
+        .select('boleta.apoderado_id', 'apoderado_id')
+        .addSelect('COUNT(*)', 'cantidad_morosos')
+        .leftJoinAndSelect('boleta.apoderado', 'apoderado')
+        .where('boleta.estado_id = :estadoId', { estadoId: 1 })
+        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate: new Date() })
+        .groupBy('boleta.apoderado_id')
+        .addGroupBy('apoderado.id')
+        .getRawMany();
+
+      const apoderadosMorosos = result.map(row => ({
+        apoderado_id: row.apoderado_id,
+        cantidad_morosos: row.cantidad_morosos,
+        apoderado: {
+          id: row['apoderado_id'],
+          nombre: row['apoderado_nombre'],
+        },
+      }));
+
+      const totalApoderadosMorosos = apoderadosMorosos.length;
+
+      return {
+        total: totalApoderadosMorosos,
+        apoderados: apoderadosMorosos,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener los apoderados morosos');
+    }
+  }
 }
 

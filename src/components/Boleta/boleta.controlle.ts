@@ -93,15 +93,19 @@ export class BoletaController {
     }
 
 
-    @Post('pendientes-vencidas')
-    async getPendientesVencidas(@Body('fecha') fecha: string) {
+    @Get('pendientes-vencidas/:fecha')
+    async getPendientesVencidas(@Param('fecha') fecha: string) {
         return await this.boletaService.getPendientesVencidas(fecha);
     }
 
-    @Post('total-pendiente-vencido')
-    async getTotalPendienteVencido(@Body('fecha') fecha: string) {
+    @Get('total-pendiente-vencido/:fecha')
+    async getTotalPendienteVencido(@Param('fecha') fecha: string) {
         return await this.boletaService.getTotalPendienteVencido(fecha);
     }
 
+    @Get('apoderados-morosos')
+    async getApoderadosMorosos() {
+        return await this.boletaService.getApoderadosMorosos();
+    }
 
 }
