@@ -325,7 +325,7 @@ export class BoletaService {
     }
   }
 
-  async getApoderadosMorosos(fecha: string) {
+  async getApoderadosMorosos(fecha: string, estadoId: number) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
       const result = await this.boletaRepository.createQueryBuilder('boleta')
@@ -343,7 +343,7 @@ export class BoletaService {
           'apoderado.correo_electronico'
         ])
         .leftJoin('boleta.apoderado', 'apoderado')
-        .where('boleta.estado_id = :estadoId', { estadoId: 1 })
+        .where('boleta.estado_id = :estadoId', { estadoId })
         .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .groupBy('boleta.apoderado_id')
         .addGroupBy('apoderado.id')
@@ -352,7 +352,7 @@ export class BoletaService {
       const apoderadosMorosos = await Promise.all(result.map(async row => {
         const boletasPendientes = await this.boletaRepository.createQueryBuilder('boleta')
           .where('boleta.apoderado_id = :apoderadoId', { apoderadoId: row.apoderado_id })
-          .andWhere('boleta.estado_id = :estadoId', { estadoId: 1 })
+          .andWhere('boleta.estado_id = :estadoId', { estadoId })
           .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
           .getMany();
 
@@ -393,4 +393,3 @@ export class BoletaService {
     }
   }
 }
-
