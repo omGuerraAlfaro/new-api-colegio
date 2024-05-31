@@ -103,9 +103,9 @@ export class BoletaController {
         return await this.boletaService.getTotalPendienteVencido(fecha);
     }
 
-    @Get('apoderados-morosos')
-    async getApoderadosMorosos() {
-        return await this.boletaService.getApoderadosMorosos();
+    @Get('apoderados-morosos/:fecha')
+    async getApoderadosMorosos(@Param('fecha') fecha: string) {
+        return await this.boletaService.getApoderadosMorosos(fecha);
     }
 
 }

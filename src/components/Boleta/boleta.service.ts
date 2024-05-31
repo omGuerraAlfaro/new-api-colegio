@@ -324,15 +324,16 @@ export class BoletaService {
       throw new InternalServerErrorException('Error al obtener el total pendiente vencido');
     }
   }
-  
-  async getApoderadosMorosos() {
+
+  async getApoderadosMorosos(fecha: string) {
     try {
+      const currentDate = fecha ? new Date(fecha) : new Date();
       const result = await this.boletaRepository.createQueryBuilder('boleta')
         .select('boleta.apoderado_id', 'apoderado_id')
         .addSelect('COUNT(*)', 'cantidad_morosos')
         .leftJoinAndSelect('boleta.apoderado', 'apoderado')
         .where('boleta.estado_id = :estadoId', { estadoId: 1 })
-        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate: new Date() })
+        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .groupBy('boleta.apoderado_id')
         .addGroupBy('apoderado.id')
         .getRawMany();
@@ -342,7 +343,8 @@ export class BoletaService {
         cantidad_morosos: row.cantidad_morosos,
         apoderado: {
           id: row['apoderado_id'],
-          nombre: row['apoderado_nombre'],
+          nombre: row['apoderado_nombre'],  // Asegúrate de ajustar estos campos según la estructura de tu entidad Apoderado
+          // Agrega más campos necesarios de la entidad Apoderado
         },
       }));
 
