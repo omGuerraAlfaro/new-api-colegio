@@ -301,12 +301,10 @@ export class BoletaService {
   async getPendientesVencidas(fecha: string) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
-      const boletas = await this.boletaRepository.find({
-        where: {
-          estado_id: 1,
-          fecha_vencimiento: LessThan(currentDate),
-        },
-      });
+      const boletas = await this.boletaRepository.createQueryBuilder('boleta')
+        .where('boleta.estado_id = :estadoId', { estadoId: 1 })
+        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
+        .getMany();
       return { boletas };
     } catch (error) {
       throw new InternalServerErrorException('Error al obtener las boletas pendientes y vencidas');
