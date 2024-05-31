@@ -328,10 +328,12 @@ export class BoletaService {
   async getApoderadosMorosos(fecha: string, estadoId: number) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
+
+      // Consulta principal para obtener los apoderados morosos y contar las boletas
       const result = await this.boletaRepository.createQueryBuilder('boleta')
         .select([
           'boleta.apoderado_id',
-          'COUNT(*) as cantidad_morosos',
+          'COUNT(boleta.id) as cantidad_morosos',
           'apoderado.primer_nombre',
           'apoderado.segundo_nombre',
           'apoderado.primer_apellido',
@@ -349,12 +351,15 @@ export class BoletaService {
         .addGroupBy('apoderado.id')
         .getRawMany();
 
+      // Obtener las boletas morosas para cada apoderado
       const apoderadosMorosos = await Promise.all(result.map(async row => {
-        const boletasPendientes = await this.boletaRepository.createQueryBuilder('boleta')
-          .where('boleta.apoderado_id = :apoderadoId', { apoderadoId: row.apoderado_id })
-          .andWhere('boleta.estado_id = :estadoId', { estadoId })
-          .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
-          .getMany();
+        const boletasPendientes = await this.boletaRepository.find({
+          where: {
+            apoderado_id: row.apoderado_id,
+            estado_id: estadoId,
+            fecha_vencimiento: LessThan(currentDate)
+          }
+        });
 
         const nombreCompleto = [
           row.primer_nombre,
@@ -389,7 +394,10 @@ export class BoletaService {
         apoderados: apoderadosMorosos,
       };
     } catch (error) {
+      console.error('Error al obtener los apoderados morosos:', error);
       throw new InternalServerErrorException('Error al obtener los apoderados morosos');
     }
   }
+
+
 }
