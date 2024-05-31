@@ -298,9 +298,9 @@ export class BoletaService {
     }
   }
 
-  async getPendientesVencidas() {
+  async getPendientesVencidas(fecha: string) {
     try {
-      const currentDate = new Date();
+      const currentDate = fecha ? new Date(fecha) : new Date();
       const boletas = await this.boletaRepository.find({
         where: {
           estado_id: 1,
@@ -313,12 +313,13 @@ export class BoletaService {
     }
   }
 
-  async getTotalPendienteVencido() {
+  async getTotalPendienteVencido(fecha: string) {
     try {
+      const currentDate = fecha ? new Date(fecha) : new Date();
       const result = await this.boletaRepository.createQueryBuilder('boleta')
         .select('SUM(boleta.total)', 'total_pendiente_vencido')
         .where('boleta.estado_id = :estadoId', { estadoId: 1 })
-        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate: new Date() })
+        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .getRawOne();
       return result.total_pendiente_vencido ? { total_pendiente_vencido: result.total_pendiente_vencido } : { total_pendiente_vencido: 0 };
     } catch (error) {

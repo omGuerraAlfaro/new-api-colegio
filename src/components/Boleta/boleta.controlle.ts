@@ -92,14 +92,15 @@ export class BoletaController {
         }
     }
 
-    @Get('pendientes-vencidas')
-    async getPendientesVencidas() {
-        return await this.boletaService.getPendientesVencidas();
+
+    @Post('pendientes-vencidas')
+    async getPendientesVencidas(@Body('fecha') fecha: string) {
+        return await this.boletaService.getPendientesVencidas(fecha);
     }
 
-    @Get('total-pendiente-vencido')
-    async getTotalPendienteVencido() {
-        return await this.boletaService.getTotalPendienteVencido();
+    @Post('total-pendiente-vencido')
+    async getTotalPendienteVencido(@Body('fecha') fecha: string) {
+        return await this.boletaService.getTotalPendienteVencido(fecha);
     }
 
 
