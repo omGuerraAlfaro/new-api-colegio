@@ -331,22 +331,48 @@ export class BoletaService {
       const result = await this.boletaRepository.createQueryBuilder('boleta')
         .select('boleta.apoderado_id', 'apoderado_id')
         .addSelect('COUNT(*)', 'cantidad_morosos')
-        .leftJoinAndSelect('boleta.apoderado', 'apoderado')
+        .addSelect('apoderado.primer_nombre', 'primer_nombre')
+        .addSelect('apoderado.segundo_nombre', 'segundo_nombre')
+        .addSelect('apoderado.primer_apellido', 'primer_apellido')
+        .addSelect('apoderado.segundo_apellido', 'segundo_apellido')
+        .addSelect('apoderado.fecha_nacimiento', 'fecha_nacimiento')
+        .addSelect('apoderado.rut', 'rut')
+        .addSelect('apoderado.dv', 'dv')
+        .addSelect('apoderado.telefono', 'telefono')
+        .addSelect('apoderado.correo_electronico', 'correo_electronico')
+        .leftJoin('boleta.apoderado', 'apoderado')
         .where('boleta.estado_id = :estadoId', { estadoId: 1 })
         .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .groupBy('boleta.apoderado_id')
         .addGroupBy('apoderado.id')
         .getRawMany();
 
-      const apoderadosMorosos = result.map(row => ({
-        apoderado_id: row.apoderado_id,
-        cantidad_morosos: row.cantidad_morosos,
-        apoderado: {
-          id: row['apoderado_id'],
-          nombre: row['apoderado_nombre'],  // Asegúrate de ajustar estos campos según la estructura de tu entidad Apoderado
-          // Agrega más campos necesarios de la entidad Apoderado
-        },
-      }));
+      const apoderadosMorosos = result.map(row => {
+        const nombreCompleto = [
+          row.primer_nombre,
+          row.segundo_nombre,
+          row.primer_apellido,
+          row.segundo_apellido,
+        ].filter(Boolean).join(' ');
+
+        return {
+          apoderado_id: row.apoderado_id,
+          cantidad_morosos: row.cantidad_morosos,
+          apoderado: {
+            id: row['apoderado_id'],
+            nombreCompleto,
+            primer_nombre: row['primer_nombre'],
+            segundo_nombre: row['segundo_nombre'],
+            primer_apellido: row['primer_apellido'],
+            segundo_apellido: row['segundo_apellido'],
+            fecha_nacimiento: row['fecha_nacimiento'],
+            rut: row['rut'],
+            dv: row['dv'],
+            telefono: row['telefono'],
+            correo_electronico: row['correo_electronico'],
+          },
+        };
+      });
 
       const totalApoderadosMorosos = apoderadosMorosos.length;
 
