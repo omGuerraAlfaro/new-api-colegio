@@ -329,17 +329,19 @@ export class BoletaService {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
       const result = await this.boletaRepository.createQueryBuilder('boleta')
-        .select('boleta.apoderado_id', 'apoderado_id')
-        .addSelect('COUNT(*)', 'cantidad_morosos')
-        .addSelect('apoderado.primer_nombre', 'primer_nombre')
-        .addSelect('apoderado.segundo_nombre', 'segundo_nombre')
-        .addSelect('apoderado.primer_apellido', 'primer_apellido')
-        .addSelect('apoderado.segundo_apellido', 'segundo_apellido')
-        .addSelect('apoderado.fecha_nacimiento', 'fecha_nacimiento')
-        .addSelect('apoderado.rut', 'rut')
-        .addSelect('apoderado.dv', 'dv')
-        .addSelect('apoderado.telefono', 'telefono')
-        .addSelect('apoderado.correo_electronico', 'correo_electronico')
+        .select([
+          'boleta.apoderado_id',
+          'COUNT(*) as cantidad_morosos',
+          'apoderado.primer_nombre',
+          'apoderado.segundo_nombre',
+          'apoderado.primer_apellido',
+          'apoderado.segundo_apellido',
+          'apoderado.fecha_nacimiento',
+          'apoderado.rut',
+          'apoderado.dv',
+          'apoderado.telefono',
+          'apoderado.correo_electronico'
+        ])
         .leftJoin('boleta.apoderado', 'apoderado')
         .where('boleta.estado_id = :estadoId', { estadoId: 1 })
         .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
@@ -347,7 +349,15 @@ export class BoletaService {
         .addGroupBy('apoderado.id')
         .getRawMany();
 
-      const apoderadosMorosos = result.map(row => {
+      const apoderadosMorosos = await Promise.all(result.map(async row => {
+        const boletasPendientes = await this.boletaRepository.find({
+          where: {
+            apoderado_id: row.apoderado_id,
+            estado_id: 1,
+            fecha_vencimiento: LessThan(currentDate)
+          }
+        });
+
         const nombreCompleto = [
           row.primer_nombre,
           row.segundo_nombre,
@@ -355,24 +365,24 @@ export class BoletaService {
           row.segundo_apellido,
         ].filter(Boolean).join(' ');
 
+        const rutCompleto = [
+          row.rut,
+          row.dv,
+        ].filter(Boolean).join('-');
+
         return {
           apoderado_id: row.apoderado_id,
           cantidad_morosos: row.cantidad_morosos,
           apoderado: {
             id: row['apoderado_id'],
-            nombreCompleto,
-            primer_nombre: row['primer_nombre'],
-            segundo_nombre: row['segundo_nombre'],
-            primer_apellido: row['primer_apellido'],
-            segundo_apellido: row['segundo_apellido'],
-            fecha_nacimiento: row['fecha_nacimiento'],
-            rut: row['rut'],
-            dv: row['dv'],
+            nombreCompleto,           
+            rut: rutCompleto,
             telefono: row['telefono'],
             correo_electronico: row['correo_electronico'],
           },
+          boletasPendientes,
         };
-      });
+      }));
 
       const totalApoderadosMorosos = apoderadosMorosos.length;
 
