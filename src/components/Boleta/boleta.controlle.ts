@@ -80,16 +80,27 @@ export class BoletaController {
     }
 
     @Get('id/:id')
-  async getBoletaById(@Param('id') id: number) {
-    try {
-      const boleta = await this.boletaService.findBoletaById(id);
-      if (!boleta) {
-        throw new NotFoundException('Boleta no encontrada');
-      }
-      return boleta;
-    } catch (error) {
-      throw new InternalServerErrorException('Error al buscar la boleta');
+    async getBoletaById(@Param('id') id: number) {
+        try {
+            const boleta = await this.boletaService.findBoletaById(id);
+            if (!boleta) {
+                throw new NotFoundException('Boleta no encontrada');
+            }
+            return boleta;
+        } catch (error) {
+            throw new InternalServerErrorException('Error al buscar la boleta');
+        }
     }
-  }
+
+    @Get('pendientes-vencidas')
+    async getPendientesVencidas() {
+        return await this.boletaService.getPendientesVencidas();
+    }
+
+    @Get('total-pendiente-vencido')
+    async getTotalPendienteVencido() {
+        return await this.boletaService.getTotalPendienteVencido();
+    }
+
 
 }

@@ -1,7 +1,7 @@
 import { Get, Injectable, InternalServerErrorException, NotFoundException, Param } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Boleta } from 'src/models/Boleta.entity';
-import { MoreThan, Repository } from 'typeorm';
+import { LessThan, MoreThan, Repository } from 'typeorm';
 import { Apoderado } from 'src/models/Apoderado.entity';
 import { ApoderadoService } from '../Apoderado/apoderado.service';
 
@@ -297,4 +297,32 @@ export class BoletaService {
       throw new InternalServerErrorException('Error al buscar la boleta');
     }
   }
+
+  async getPendientesVencidas() {
+    try {
+      const boletas = await this.boletaRepository.find({
+        where: {
+          estado_id: 1,
+          fecha_vencimiento: LessThan(new Date()),
+        },
+      });
+      return boletas;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener las boletas pendientes y vencidas');
+    }
+  }
+
+  async getTotalPendienteVencido() {
+    try {
+      const result = await this.boletaRepository.createQueryBuilder('boleta')
+        .select('SUM(boleta.total)', 'total_pendiente_vencido')
+        .where('boleta.estado_id = :estadoId', { estadoId: 1 })
+        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate: new Date() })
+        .getRawOne();
+      return result;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener el total pendiente vencido');
+    }
+  }
 }
+
