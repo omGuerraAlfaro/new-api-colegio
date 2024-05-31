@@ -300,13 +300,14 @@ export class BoletaService {
 
   async getPendientesVencidas() {
     try {
+      const currentDate = new Date();
       const boletas = await this.boletaRepository.find({
         where: {
           estado_id: 1,
-          fecha_vencimiento: LessThan(new Date()),
+          fecha_vencimiento: LessThan(currentDate),
         },
       });
-      return boletas;
+      return { boletas };
     } catch (error) {
       throw new InternalServerErrorException('Error al obtener las boletas pendientes y vencidas');
     }
@@ -319,7 +320,7 @@ export class BoletaService {
         .where('boleta.estado_id = :estadoId', { estadoId: 1 })
         .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate: new Date() })
         .getRawOne();
-      return result;
+      return result.total_pendiente_vencido ? { total_pendiente_vencido: result.total_pendiente_vencido } : { total_pendiente_vencido: 0 };
     } catch (error) {
       throw new InternalServerErrorException('Error al obtener el total pendiente vencido');
     }
