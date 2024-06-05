@@ -329,75 +329,48 @@ export class BoletaService {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
 
-      // Consulta principal para obtener los apoderados morosos y contar las boletas
-      const result = await this.boletaRepository.createQueryBuilder('boleta')
-        .select([
-          'boleta.apoderado_id',
-          'COUNT(boleta.id) as cantidad_morosos',
-          'apoderado.primer_nombre',
-          'apoderado.segundo_nombre',
-          'apoderado.primer_apellido',
-          'apoderado.segundo_apellido',
-          'apoderado.fecha_nacimiento',
-          'apoderado.rut',
-          'apoderado.dv',
-          'apoderado.telefono',
-          'apoderado.correo_electronico'
-        ])
-        .leftJoin('boleta.apoderado', 'apoderado_id')
-        .where('boleta.estado_id = :estadoId', { estadoId })
-        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
-        .groupBy('boleta.apoderado_id')
-        .addGroupBy('apoderado.id')
-        .getRawMany();
+      const boletas = await this.boletaRepository.createQueryBuilder('boleta')
+      .leftJoinAndSelect('boleta.apoderado', 'apoderado')
+      .where('boleta.estado_id = :estadoId', { estadoId })
+      .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
+      .getMany();
 
-      // Obtener las boletas morosas para cada apoderado
-      const apoderadosMorosos = await Promise.all(result.map(async row => {
-        const boletasPendientes = await this.boletaRepository.find({
-          where: {
-            apoderado_id: row.apoderado_id,
-            estado_id: estadoId,
-            fecha_vencimiento: LessThan(currentDate)
-          }
-        });
-
-        const nombreCompleto = [
-          row.primer_nombre,
-          row.segundo_nombre,
-          row.primer_apellido,
-          row.segundo_apellido,
-        ].filter(Boolean).join(' ');
-
-        const rutCompleto = [
-          row.rut,
-          row.dv,
-        ].filter(Boolean).join('-');
-
-        return {
-          apoderado_id: row.apoderado_id,
-          cantidad_morosos: row.cantidad_morosos,
+    // Agrupar boletas por RUT de apoderado
+    const apoderadosMap = boletas.reduce((acc, boleta) => {
+      const rutApoderado = `${boleta.rut_apoderado}-${boleta.apoderado.dv}`;
+      if (!acc[rutApoderado]) {
+        acc[rutApoderado] = {
           apoderado: {
-            id: row['apoderado_id'],
-            nombreCompleto: nombreCompleto,
-            rut: rutCompleto,
-            telefono: row['telefono'],
-            correo_electronico: row['correo_electronico'],
+            id: boleta.apoderado.id,
+            nombreCompleto: [
+              boleta.apoderado.primer_nombre,
+              boleta.apoderado.segundo_nombre,
+              boleta.apoderado.primer_apellido,
+              boleta.apoderado.segundo_apellido
+            ].filter(Boolean).join(' '),
+            rut: rutApoderado,
+            telefono: boleta.apoderado.telefono,
+            correo_electronico: boleta.apoderado.correo_electronico,
           },
-          boletasPendientes,
+          boletasPendientes: []
         };
-      }));
+      }
+      acc[rutApoderado].boletasPendientes.push(boleta);
+      return acc;
+    }, {});
 
-      const totalApoderadosMorosos = apoderadosMorosos.length;
+    const apoderadosMorosos = Object.values(apoderadosMap);
+    const totalApoderadosMorosos = apoderadosMorosos.length;
 
-      return {
-        total: totalApoderadosMorosos,
-        apoderados: apoderadosMorosos,
-      };
-    } catch (error) {
-      console.error('Error al obtener los apoderados morosos:', error);
-      throw new InternalServerErrorException('Error al obtener los apoderados morosos');
-    }
+    return {
+      total: totalApoderadosMorosos,
+      apoderados: apoderadosMorosos,
+    };
+  } catch (error) {
+    console.error('Error al obtener los apoderados morosos:', error);
+    throw new InternalServerErrorException('Error al obtener los apoderados morosos');
   }
+}
 
 
 }
