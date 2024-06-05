@@ -344,7 +344,7 @@ export class BoletaService {
           'apoderado.telefono',
           'apoderado.correo_electronico'
         ])
-        .leftJoin('boleta.apoderado', 'apoderado')
+        .leftJoin('boleta.apoderado', 'apoderado_id')
         .where('boleta.estado_id = :estadoId', { estadoId })
         .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .groupBy('boleta.apoderado_id')
@@ -378,7 +378,7 @@ export class BoletaService {
           cantidad_morosos: row.cantidad_morosos,
           apoderado: {
             id: row['apoderado_id'],
-            nombreCompleto,
+            nombreCompleto: nombreCompleto,
             rut: rutCompleto,
             telefono: row['telefono'],
             correo_electronico: row['correo_electronico'],
