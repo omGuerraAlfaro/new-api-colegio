@@ -324,16 +324,20 @@ export class BoletaService {
   async getTotalPagado(fecha: string) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
+      const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  
       const result = await this.boletaRepository.createQueryBuilder('boleta')
         .select('SUM(boleta.total)', 'total_pagado')
         .where('boleta.estado_id = :estadoId', { estadoId: 2 })
-        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
+        .andWhere('boleta.fecha_vencimiento BETWEEN :startDate AND :currentDate', { startDate, currentDate })
         .getRawOne();
+  
       return result.total_pagado ? { total_pagado: result.total_pagado } : { total_pagado: 0 };
     } catch (error) {
-      throw new InternalServerErrorException('Error al obtener el total pendiente vencido');
+      throw new InternalServerErrorException('Error al obtener el total pagado');
     }
   }
+  
 
   async getApoderadosMorosos(fecha: string, estadoId: number) {
     try {
