@@ -98,6 +98,11 @@ export class BoletaController {
         return await this.boletaService.getPendientesVencidas(fecha);
     }
 
+    @Get('pagadas/:fecha')
+    async getPagadas(@Param('fecha') fecha: string) {
+        return await this.boletaService.getTotalPagado(fecha);
+    }
+
     @Get('total-pendiente-vencido/:fecha')
     async getTotalPendienteVencido(@Param('fecha') fecha: string) {
         return await this.boletaService.getTotalPendienteVencido(fecha);

@@ -46,7 +46,6 @@ export class BoletaService {
     return { boletas: groupedBoletas };
   }
 
-
   async findAll() {
     return await this.boletaRepository.find();
   }
@@ -229,8 +228,6 @@ export class BoletaService {
     }
   }
 
-
-
   async repactarBoleta(boletaId: number, meses: number): Promise<Boleta[]> {
     if (meses < 1 || meses > 2) {
       throw new Error('La repactación puede ser solo de 1 o 2 meses después del actual.');
@@ -285,7 +282,6 @@ export class BoletaService {
     await this.boletaRepository.update(idBoleta, { estado_id: nuevoEstado, pago_id: idPago });
   }
 
-
   async findBoletaById(id: number): Promise<Boleta> {
     try {
       const boleta = await this.boletaRepository.findOne({ where: { id } });
@@ -320,6 +316,20 @@ export class BoletaService {
         .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .getRawOne();
       return result.total_pendiente_vencido ? { total_pendiente_vencido: result.total_pendiente_vencido } : { total_pendiente_vencido: 0 };
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener el total pendiente vencido');
+    }
+  }
+
+  async getTotalPagado(fecha: string) {
+    try {
+      const currentDate = fecha ? new Date(fecha) : new Date();
+      const result = await this.boletaRepository.createQueryBuilder('boleta')
+        .select('SUM(boleta.total)', 'total_pagado')
+        .where('boleta.estado_id = :estadoId', { estadoId: 2 })
+        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
+        .getRawOne();
+      return result.total_pagado ? { total_pagado: result.total_pagado } : { total_pagado: 0 };
     } catch (error) {
       throw new InternalServerErrorException('Error al obtener el total pendiente vencido');
     }
