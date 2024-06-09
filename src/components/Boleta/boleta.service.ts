@@ -361,7 +361,7 @@ export class BoletaService {
       const result = await this.boletaRepository.query(`
         SELECT 
           DATE_FORMAT(boleta.fecha_vencimiento, '%Y-%m-01') AS mes,
-          SUM(boleta.total) AS total_pendiente_vencido
+          SUM(boleta.total) AS total_pagado
         FROM 
           boleta
         WHERE 
