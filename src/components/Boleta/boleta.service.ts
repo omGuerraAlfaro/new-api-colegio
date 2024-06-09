@@ -310,10 +310,12 @@ export class BoletaService {
   async getTotalPendienteVencido(fecha: string) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
+      const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
       const result = await this.boletaRepository.createQueryBuilder('boleta')
         .select('SUM(boleta.total)', 'total_pendiente_vencido')
         .where('boleta.estado_id = :estadoId', { estadoId: 1 })
-        .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
+        .andWhere('boleta.fecha_vencimiento BETWEEN :startDate AND :currentDate', { startDate, currentDate })
+        //.andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .getRawOne();
       return result.total_pendiente_vencido ? { total_pendiente_vencido: result.total_pendiente_vencido } : { total_pendiente_vencido: 0 };
     } catch (error) {
