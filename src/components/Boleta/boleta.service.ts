@@ -376,10 +376,10 @@ export class BoletaService {
 
       return result.map(row => ({
         mes: row.mes,
-        total_pendiente_vencido: row.total_pendiente_vencido || 0,
+        total_pagado: row.total_pagado || 0,
       }));
     } catch (error) {
-      throw new InternalServerErrorException('Error al obtener el total pendiente vencido por mes');
+      throw new InternalServerErrorException('Error al obtener el total pagado por mes');
     }
   }
 
