@@ -122,6 +122,6 @@ export class BoletaController {
     }
     @Get('total-pagado-por-mes/:fecha')
     async getTotalPagadoPorMes(@Param('fecha') fecha: string) {
-        return this.boletaService.getTotalPendientePorMes(fecha);
+        return this.boletaService.getTotalPagadoPorMes(fecha);
     }
 }
