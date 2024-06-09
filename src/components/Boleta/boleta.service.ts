@@ -326,7 +326,7 @@ export class BoletaService {
   async getTotalPendientePorMes(fecha: string) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
-      const startDate = new Date(currentDate.getFullYear(), 0, 1);
+      const startDate = new Date(currentDate.getFullYear(), 2, 1);
 
       const result = await this.boletaRepository.query(`
         SELECT 
@@ -356,7 +356,7 @@ export class BoletaService {
   async getTotalPagadoPorMes(fecha: string) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
-      const startDate = new Date(currentDate.getFullYear(), 0, 1);
+      const startDate = new Date(currentDate.getFullYear(), 2, 1);
 
       const result = await this.boletaRepository.query(`
         SELECT 
