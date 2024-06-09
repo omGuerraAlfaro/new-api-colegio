@@ -15,6 +15,7 @@ async function bootstrap() {
     origin: [
       'https://www.colegioandeschile.cl',
       'https://www.intranet.colegioandeschile.cl',
+      'https://intranet.colegioandeschile.cl',
       'http://localhost',
       'http://localhost:8200',
       'http://localhost:8100',
