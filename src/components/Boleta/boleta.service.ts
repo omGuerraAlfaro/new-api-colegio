@@ -323,6 +323,66 @@ export class BoletaService {
     }
   }
 
+  async getTotalPendientePorMes(fecha: string) {
+    try {
+      const currentDate = fecha ? new Date(fecha) : new Date();
+      const startDate = new Date(currentDate.getFullYear(), 0, 1);
+
+      const result = await this.boletaRepository.query(`
+        SELECT 
+          DATE_FORMAT(boleta.fecha_vencimiento, '%Y-%m-01') AS mes,
+          SUM(boleta.total) AS total_pendiente_vencido
+        FROM 
+          boleta
+        WHERE 
+          boleta.estado_id = 1
+          AND boleta.fecha_vencimiento BETWEEN ? AND ?
+        GROUP BY 
+          DATE_FORMAT(boleta.fecha_vencimiento, '%Y-%m')
+        ORDER BY 
+          DATE_FORMAT(boleta.fecha_vencimiento, '%Y-%m') ASC
+        LIMIT 25;
+      `, [startDate.toISOString().slice(0, 10), currentDate.toISOString().slice(0, 10)]);
+
+      return result.map(row => ({
+        mes: row.mes,
+        total_pendiente_vencido: row.total_pendiente_vencido || 0,
+      }));
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener el total pendiente vencido por mes');
+    }
+  }
+
+  async getTotalPagadoPorMes(fecha: string) {
+    try {
+      const currentDate = fecha ? new Date(fecha) : new Date();
+      const startDate = new Date(currentDate.getFullYear(), 0, 1);
+
+      const result = await this.boletaRepository.query(`
+        SELECT 
+          DATE_FORMAT(boleta.fecha_vencimiento, '%Y-%m-01') AS mes,
+          SUM(boleta.total) AS total_pendiente_vencido
+        FROM 
+          boleta
+        WHERE 
+          boleta.estado_id = 2
+          AND boleta.fecha_vencimiento BETWEEN ? AND ?
+        GROUP BY 
+          DATE_FORMAT(boleta.fecha_vencimiento, '%Y-%m')
+        ORDER BY 
+          DATE_FORMAT(boleta.fecha_vencimiento, '%Y-%m') ASC
+        LIMIT 25;
+      `, [startDate.toISOString().slice(0, 10), currentDate.toISOString().slice(0, 10)]);
+
+      return result.map(row => ({
+        mes: row.mes,
+        total_pendiente_vencido: row.total_pendiente_vencido || 0,
+      }));
+    } catch (error) {
+      throw new InternalServerErrorException('Error al obtener el total pendiente vencido por mes');
+    }
+  }
+
   async getTotalPagado(fecha: string) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();

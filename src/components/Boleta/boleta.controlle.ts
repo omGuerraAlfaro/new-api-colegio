@@ -116,4 +116,12 @@ export class BoletaController {
         return await this.boletaService.getApoderadosMorosos(fecha, estadoId);
     }
 
+    @Get('total-pendiente-por-mes/:fecha')
+    async getTotalPendientePorMes(@Param('fecha') fecha: string) {
+        return this.boletaService.getTotalPendientePorMes(fecha);
+    }
+    @Get('total-pagado-por-mes/:fecha')
+    async getTotalPagadoPorMes(@Param('fecha') fecha: string) {
+        return this.boletaService.getTotalPendientePorMes(fecha);
+    }
 }
