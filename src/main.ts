@@ -14,6 +14,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'https://www.colegioandeschile.cl',
+      'https://colegioandeschile.cl',
       'https://www.intranet.colegioandeschile.cl',
       'https://intranet.colegioandeschile.cl',
       'http://localhost',
