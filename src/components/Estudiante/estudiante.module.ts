@@ -15,5 +15,6 @@ import { CursoModule } from '../Curso/curso.module';
   ],
   controllers: [EstudianteController],
   providers: [EstudianteService],
+  exports: [TypeOrmModule, EstudianteService],
 })
 export class EstudianteModule {}
