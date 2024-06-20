@@ -1,11 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Apoderado } from 'src/models/Apoderado.entity';
 import { Profesor } from 'src/models/Profesor.entity';
 import { Usuarios } from 'src/models/User.entity';
 import { Repository } from 'typeorm';
-import { hash } from "bcrypt";
 import { Administrador } from 'src/models/Administrador.entity';
+import { hash, compare } from 'bcrypt';
 
 @Injectable()
 export class UsuarioService {
@@ -26,6 +26,10 @@ export class UsuarioService {
 
   async findOne(id: number): Promise<Usuarios[]> {
     return this.usuarioRepository.find({where: {id: id}});
+  }
+
+  async findOneByRut(rut: string): Promise<Usuarios[]> {
+    return this.usuarioRepository.find({where: {rut: rut}});
   }
 
   async findUserWithApoderadoAndAlumnos(userId: number): Promise<Usuarios> {
@@ -166,4 +170,21 @@ export class UsuarioService {
     return baseUsername;
   }
 
+  async changePassword(userId: number, oldPassword: string, newPassword: string): Promise<void> {
+    const user = await this.usuarioRepository.findOne({ where: { id: userId } });
+
+    if (!user) {
+      throw new HttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND);
+    }
+
+    const isPasswordMatching = await compare(oldPassword, user.password);
+    if (!isPasswordMatching) {
+      throw new HttpException('OLD_PASSWORD_INCORRECT', HttpStatus.BAD_REQUEST);
+    }
+
+    const hashedPassword = await hash(newPassword, 10);
+    user.password = hashedPassword;
+
+    await this.usuarioRepository.save(user);
+  }
 }

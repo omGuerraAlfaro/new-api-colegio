@@ -127,3 +127,42 @@ export class ApoderadoDTO {
     @Type(() => EstudianteDTO)
     estudiantes: EstudianteDTO[];
 }
+
+
+export class ApoderadoAloneDTO {
+    @ApiProperty()
+    @IsOptional()
+    segundo_nombre?: string | null;
+
+    @ApiProperty()
+    @IsOptional()
+    segundo_apellido?: string | null;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    fecha_nacimiento: Date;
+
+    @ApiProperty()
+    @IsOptional()
+    telefono?: string | null;
+
+    @ApiProperty()
+    @IsEmail()
+    correo_electronico: string;
+
+    @ApiProperty()
+    @IsOptional()
+    estado_civil?: string | null;
+
+    @ApiProperty()
+    @IsOptional()
+    nacionalidad?: string | null;
+
+    @ApiProperty()
+    @IsOptional()
+    actividad?: string | null;
+
+    @ApiProperty()
+    @IsOptional()
+    escolaridad?: string | null;
+}

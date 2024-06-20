@@ -1,6 +1,6 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ApoderadoDTO } from 'src/dto/apoderado.dto';
+import { ApoderadoAloneDTO, ApoderadoDTO } from 'src/dto/apoderado.dto';
 import { Apoderado } from 'src/models/Apoderado.entity';
 import { ApoderadoEstudiante } from 'src/models/ApoderadoEstudiante.entity';
 import { EstudianteCurso } from 'src/models/CursoEstudiante.entity';
@@ -159,5 +159,19 @@ export class ApoderadoService {
 
   /* ************************************************************ */
 
+
+  async updateApoderado(id: number, apoderadoData: ApoderadoAloneDTO): Promise<Apoderado> {
+    try {
+      const apoderado = await this.apoderadoRepository.findOne({ where: { id } });
+      if (!apoderado) {
+        throw new NotFoundException('Apoderado no encontrado');
+      }
+
+      Object.assign(apoderado, apoderadoData);
+      return await this.apoderadoRepository.save(apoderado);
+    } catch (error) {
+      throw new InternalServerErrorException('Error al actualizar el apoderado');
+    }
+  }
 }
 

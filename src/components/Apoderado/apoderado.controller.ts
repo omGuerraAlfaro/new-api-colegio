@@ -12,12 +12,14 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { ApoderadoService } from './apoderado.service';
-import { ApoderadoDTO } from 'src/dto/apoderado.dto';
+import { ApoderadoAloneDTO, ApoderadoDTO } from 'src/dto/apoderado.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../Auth/jwt-auth.guard';
+import { Apoderado } from 'src/models/Apoderado.entity';
 @ApiBearerAuth()
 @ApiTags('Apoderados')
 @Controller('apoderado')
@@ -72,6 +74,19 @@ export class ApoderadoController {
       return apoderado;
     } catch (error) {
       throw new InternalServerErrorException('Error al buscar el apoderado');
+    }
+  }
+
+  @Put(':id')
+  async updateApoderado(@Param('id') id: number, @Body() apoderadoData: ApoderadoAloneDTO): Promise<Apoderado> {
+    try {
+      const updatedApoderado = await this.apoderadoService.updateApoderado(id, apoderadoData);
+      if (!updatedApoderado) {
+        throw new NotFoundException('Apoderado no encontrado');
+      }
+      return updatedApoderado;
+    } catch (error) {
+      throw new InternalServerErrorException('Error al actualizar los datos del apoderado');
     }
   }
 

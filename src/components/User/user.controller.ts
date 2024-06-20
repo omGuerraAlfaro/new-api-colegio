@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Response, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Response, Param, Patch, HttpException, HttpStatus } from '@nestjs/common';
 import { UsuarioService } from './user.service';
 import { Usuarios } from 'src/models/User.entity';
 import { Apoderado } from 'src/models/Apoderado.entity';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Usuarios')
 @Controller('usuarios')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) { }
@@ -17,6 +16,11 @@ export class UsuarioController {
   @Get(':id')
   findOne(@Param('id') userId: number): Promise<Usuarios[]> {
     return this.usuarioService.findOne(userId);
+  }
+
+  @Get('rut/:rut')
+  findOneByRut(@Param('rut') userRut: string): Promise<Usuarios[]> {
+    return this.usuarioService.findOneByRut(userRut);
   }
 
   @Get(':id/apoderado-alumnos')
@@ -75,5 +79,21 @@ export class UsuarioController {
         error: error.message
       });
     }
+  }
+
+  @Patch('change/:id')
+  async changePassword(
+    @Param('id') id: number,
+    @Body('oldPassword') oldPassword: string,
+    @Body('newPassword') newPassword: string,
+    @Body('confirmPassword') confirmPassword: string
+  ): Promise<void> {
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      throw new HttpException('All password fields are required.', HttpStatus.BAD_REQUEST);
+    }
+    if (newPassword !== confirmPassword) {
+      throw new HttpException('New passwords do not match.', HttpStatus.BAD_REQUEST);
+    }
+    await this.usuarioService.changePassword(id, oldPassword, newPassword);
   }
 }
