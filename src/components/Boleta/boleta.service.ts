@@ -15,7 +15,11 @@ export class BoletaService {
     private readonly apoderadoService: ApoderadoService,
   ) { }
 
-  async findBoletas(rut_apoderado: string) {
+  async findBoletasByRutEstudiante(rut_estudiante: string): Promise<Boleta[]> {
+    return await this.boletaRepository.find({ where: { rut_estudiante } });
+  }
+  
+  async findBoletasByRutApoderado(rut_apoderado: string) {
     const boletas = await this.boletaRepository.find({ where: { rut_apoderado: rut_apoderado } });
 
     // Objeto para agrupar las boletas por estudiante
@@ -387,30 +391,30 @@ export class BoletaService {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
       const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-  
+
       const result = await this.boletaRepository.createQueryBuilder('boleta')
         .select('SUM(boleta.total)', 'total_pagado')
         .where('boleta.estado_id = :estadoId', { estadoId: 2 })
         .andWhere('boleta.fecha_vencimiento BETWEEN :startDate AND :currentDate', { startDate, currentDate })
         .getRawOne();
-  
+
       return result.total_pagado ? { total_pagado: result.total_pagado } : { total_pagado: 0 };
     } catch (error) {
       throw new InternalServerErrorException('Error al obtener el total pagado');
     }
   }
-  
+
 
   async getApoderadosMorosos(fecha: string, estadoId: number) {
     try {
       const currentDate = fecha ? new Date(fecha) : new Date();
-  
+
       const boletas = await this.boletaRepository.createQueryBuilder('boleta')
         .leftJoinAndSelect('boleta.apoderado', 'apoderado')
         .where('boleta.estado_id = :estadoId', { estadoId })
         .andWhere('boleta.fecha_vencimiento < :currentDate', { currentDate })
         .getMany();
-  
+
       // Agrupar boletas por RUT de apoderado
       const apoderadosMap = boletas.reduce((acc, boleta) => {
         const rutApoderado = `${boleta.rut_apoderado}-${boleta.apoderado.dv}`;
@@ -439,10 +443,10 @@ export class BoletaService {
         }
         return acc;
       }, {});
-  
+
       const apoderadosMorosos = Object.values(apoderadosMap);
       const totalApoderadosMorosos = apoderadosMorosos.length;
-  
+
       return {
         total: totalApoderadosMorosos,
         apoderados: apoderadosMorosos,
@@ -452,7 +456,7 @@ export class BoletaService {
       throw new InternalServerErrorException('Error al obtener los apoderados morosos');
     }
   }
-  
+
 
 
 }

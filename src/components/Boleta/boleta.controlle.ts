@@ -16,6 +16,7 @@ import {
 import { BoletaService } from './boleta.service';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateBoletaDto } from 'src/dto/updateBoleta.dto';
+import { Boleta } from 'src/models/Boleta.entity';
 
 @ApiTags('Boletas')
 @Controller('boleta')
@@ -37,9 +38,14 @@ export class BoletaController {
         await this.boletaService.reenumerateBoletas();
     }
 
+    @Get('estudiante/:rut')
+    async getBoletasByRutEstudiante(@Param('rut') rut: string): Promise<Boleta[]> {
+        return this.boletaService.findBoletasByRutEstudiante(rut);
+    }
+
     @Get(':rut')
     async getBoleta(@Param('rut') rut: string) {
-        return await this.boletaService.findBoletas(rut);
+        return await this.boletaService.findBoletasByRutApoderado(rut);
     }
 
     @Get('conteoEstudiante/:rut')
