@@ -25,6 +25,11 @@ export class CursoController {
     return await this.cursoService.findAllWithTeacher();
   }
 
+  @Get('all')
+  async getAllCursos() {
+    return await this.cursoService.findAll();
+  }
+
   @Get('estudiantes')
   async getCursosConEstudiantes() {
     return await this.cursoService.findAllCursosWithEstudiantes();

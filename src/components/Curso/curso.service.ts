@@ -15,6 +15,10 @@ export class CursoService {
     return await this.cursoRepository.findOne({ where: { id: id } });
   }
 
+  async findAll(){
+    return await this.cursoRepository.find()
+  }
+
   async findAllWithTeacher(): Promise<Curso[]> {
     return this.cursoRepository.find({ relations: ['profesorConnection'] });
   }
