@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 import { entities } from './models';
-import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, UsuarioModule, AdministradorModule, AuthModule, NoticiasModule, CorreoModule, BoletaModule, PaymentModule } from './components';
+import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, UsuarioModule, AdministradorModule, AuthModule, NoticiasModule, CorreoModule, BoletaModule, PaymentModule, AnotacionModule } from './components';
 
 @Module({
   imports: [
@@ -19,6 +19,7 @@ import { ApoderadoModule, EstudianteModule, ProfesorModule, CursoModule, Usuario
     CorreoModule,
     BoletaModule,
     PaymentModule,
+    AnotacionModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '44.207.168.60',
@@ -39,7 +40,7 @@ export class AppModule { }
 //   port: 3306,
 //   username: 'colegioa_omarignacio',
 //   password: '068gJOWTJ@@k',
-//   database: 'colegioa_colegio2',
+//   database: 'colegioa_colegio3',
 //   entities,
 //   synchronize: true
 // }),
@@ -50,7 +51,7 @@ export class AppModule { }
 //   port: 3306,
 //   username: 'root',
 //   password: '',
-//   database: 'colegio2',
+//   database: 'colegio4',
 //   entities,
 //   synchronize: true
 // }),

@@ -10,6 +10,7 @@ import {
 import { ApoderadoEstudiante } from './ApoderadoEstudiante.entity';
 import { EstudianteCurso } from './CursoEstudiante.entity';
 import { InfoPae } from './InfoPae.entity';
+import { AnotacionesEstudiante } from './AnotacionesEstudiantes.entity';
 
 @Entity()
 export class Estudiante {
@@ -55,6 +56,8 @@ export class Estudiante {
     // @Column({ type: 'int', nullable: true })
     // pae_id: number | null;
 
+    @OneToMany(() => AnotacionesEstudiante, anotacioneEstudiante => anotacioneEstudiante.estudiante)
+    anotacionesConnection: AnotacionesEstudiante[];
 
     @OneToMany(() => ApoderadoEstudiante, apoderadoEstudiante => apoderadoEstudiante.estudiante)
     apoderadosConnection: ApoderadoEstudiante[];
