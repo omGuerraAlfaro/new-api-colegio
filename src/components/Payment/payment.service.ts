@@ -10,6 +10,7 @@ import { CorreoService } from '../Correo/correo.service';
 import { ApoderadoService } from '../Apoderado/apoderado.service';
 import { json } from 'stream/consumers';
 import { EstudianteService } from '../Estudiante/estudiante.service';
+import { Transacciones } from 'src/models/Transacciones.entity';
 
 @Injectable()
 export class PaymentService {
@@ -19,6 +20,8 @@ export class PaymentService {
     constructor(
         @InjectRepository(TransactionEntity)
         private transactionRepository: Repository<TransactionEntity>,
+        @InjectRepository(Transacciones)
+        private transaccionRepository: Repository<Transacciones>,
         private readonly boletaService: BoletaService,
         private readonly correoService: CorreoService,
         private readonly apoderadoService: ApoderadoService,
@@ -50,6 +53,31 @@ export class PaymentService {
                 status: 'pendiente',
             });
 
+            const parts = buyOrder.split('-');
+            const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
+            const idsBoletas = rawIds.map((rawId: string) => parseInt(rawId, 10));
+
+
+            for (const idBoleta of idsBoletas) {
+                const boleta = await this.boletaService.findBoletaById(idBoleta);
+                const { rut_apoderado } = boleta;
+                const apoderado = await this.apoderadoService.findApoderadoByRut(rut_apoderado);
+
+                await this.transaccionRepository.save({
+                    boleta_id: idBoleta,
+                    apoderado_id: apoderado.id,
+                    estado_transaccion_id: 1,
+                    webpay_transaccion_id: response.token,
+                    monto: amount,
+                    fecha_creacion: new Date(),
+                    metodo_pago: null,
+                    descripcion: 'Pago de boletas pendiente',
+                    codigo_autorizacion: null,
+                    codigo_respuesta: null,
+                });
+
+            }
+
             return response;
         } catch (error) {
             throw new InternalServerErrorException(error.message);
@@ -62,9 +90,9 @@ export class PaymentService {
         try {
             const response = await tx.commit(token);
             console.log(token);
-            
 
-            const { buy_order } = response;
+
+            const { buy_order, amount, session_id, status, accounting_date, transaction_date, authorization_code, payment_type_code, response_code } = response;
             const parts = buy_order.split('-');
             const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
             const idsBoletas = rawIds.map((rawId: string) => parseInt(rawId, 10));
@@ -97,6 +125,19 @@ export class PaymentService {
                     estudiantes.set(boleta.rut_estudiante, estudiante);
                 }
             }
+
+            await this.transaccionRepository.save({
+                boleta_id: boletas.length > 0 ? boletas[0].id : null,
+                apoderado_id: boletas.length > 0 ? boletas[0].apoderado_id : null,
+                estado_transaccion_id: status === 'AUTHORIZED' ? 3 : 2, // 3 for Terminated, 2 for Rejected
+                webpay_transaccion_id: token,
+                monto: totalPago,
+                fecha_creacion: new Date(transaction_date),
+                metodo_pago: payment_type_code,
+                descripcion: 'Pago de boletas',
+                codigo_autorizacion: authorization_code,
+                codigo_respuesta: response_code,
+            });
 
             const apoderadosHtml = `
             <table border="1" cellpadding="5" cellspacing="0">

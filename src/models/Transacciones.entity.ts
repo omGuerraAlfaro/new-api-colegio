@@ -20,12 +20,12 @@ export class Transacciones {
 
     @Column({ nullable: true })
     webpay_transaccion_id: string;
-
-    @Column('decimal', { precision: 10, scale: 2 })
-    monto: number;
-
+    
+    @Column({ nullable: true })
+    transferencia_transaccion_id: string;
+    
     @Column()
-    moneda: string;
+    monto: number;
 
     @Column()
     fecha_creacion: Date;
@@ -45,7 +45,6 @@ export class Transacciones {
     @Column({ nullable: true })
     codigo_respuesta: number;
 
-    // Relationships
     @ManyToOne(() => Boleta, boleta => boleta.id)
     @JoinColumn({ name: 'boleta_id' })
     boleta: Boleta;
