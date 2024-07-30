@@ -92,7 +92,7 @@ export class PaymentService {
             console.log(token);
 
 
-            const { buy_order, amount, session_id, status, accounting_date, transaction_date, authorization_code, payment_type_code, response_code } = response;
+            const { vci, buy_order, amount, session_id, status, accounting_date, transaction_date, authorization_code, payment_type_code, response_code } = response;
             const parts = buy_order.split('-');
             const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
             const idsBoletas = rawIds.map((rawId: string) => parseInt(rawId, 10));
@@ -126,10 +126,22 @@ export class PaymentService {
                 }
             }
 
+            let estadoTransaccionId: number;
+            switch (vci) {
+                case 'TSY':
+                case 'TSYS':
+                case 'TSYF':
+                    estadoTransaccionId = 3; // Terminada
+                    break;
+                default:
+                    estadoTransaccionId = 2; // Rechazada
+                    break;
+            }
+
             await this.transaccionRepository.save({
                 boleta_id: boletas.length > 0 ? boletas[0].id : null,
                 apoderado_id: boletas.length > 0 ? boletas[0].apoderado_id : null,
-                estado_transaccion_id: status === 'AUTHORIZED' ? 3 : 2, // 3 for Terminated, 2 for Rejected
+                estado_transaccion_id: estadoTransaccionId,
                 webpay_transaccion_id: token,
                 monto: totalPago,
                 fecha_creacion: new Date(transaction_date),
