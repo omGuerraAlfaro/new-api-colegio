@@ -39,8 +39,8 @@ export class PaymentService {
 
 
     async createTransaction(buyOrder: string, sessionId: string, amount: number, returnUrl: string) {
-        //const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
-        const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
+        const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
+        // const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         try {
             const response = await tx.create(buyOrder, sessionId, amount, returnUrl);
 
@@ -85,16 +85,17 @@ export class PaymentService {
     }
 
     async confirmTransaction(token: string) {
-        const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
+        const tx = new WebpayPlus.Transaction(new Options(this.commerceCode, this.apiKey, Environment.Production));
+        // const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         try {
             const response = await tx.commit(token);
             console.log(token);
-    
+
             const { buy_order, amount, session_id, status, accounting_date, transaction_date, authorization_code, payment_type_code, response_code, vci } = response;
             const parts = buy_order.split('-');
             const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
             const idsBoletas = rawIds.map((rawId: string) => parseInt(rawId, 10));
-    
+
             // Determine transaction status based on VCI
             let estadoTransaccionId;
             switch (vci) {
@@ -107,37 +108,37 @@ export class PaymentService {
                     estadoTransaccionId = 2; // Rechazada
                     break;
             }
-    
+
             const boletas = [];
             const apoderados = new Map();
             const estudiantes = new Map();
             let totalPago = 0;
-    
+
             for (const idBoleta of idsBoletas) {
                 await this.boletaService.updateBoletaStatus(idBoleta, 2, buy_order);
                 const boleta = await this.boletaService.findBoletaById(idBoleta);
                 boletas.push(boleta);
-    
+
                 const total = typeof boleta.total === 'string' ? parseFloat(boleta.total) : boleta.total;
                 totalPago += total;
-    
+
                 if (!apoderados.has(boleta.rut_apoderado)) {
                     const apoderado = await this.apoderadoService.findApoderadoByRut(boleta.rut_apoderado);
                     apoderados.set(boleta.rut_apoderado, apoderado);
                 }
-    
+
                 if (!estudiantes.has(boleta.rut_estudiante)) {
                     const estudiante = await this.estudianteService.findByRut(boleta.rut_estudiante);
                     estudiantes.set(boleta.rut_estudiante, estudiante);
                 }
-    
+
                 // Buscar la transacción existente en la tabla Transacciones por boleta_id
                 const transaccionExistente = await this.transaccionRepository.findOne({ where: { boleta_id: idBoleta } });
-    
+
                 if (!transaccionExistente) {
                     throw new NotFoundException(`Transaction for boleta_id ${idBoleta} not found`);
                 }
-    
+
                 // Actualizar los campos necesarios en la transacción existente
                 transaccionExistente.estado_transaccion_id = estadoTransaccionId;
                 transaccionExistente.monto = totalPago;
@@ -146,11 +147,11 @@ export class PaymentService {
                 transaccionExistente.descripcion = 'Pago de boletas';
                 transaccionExistente.codigo_autorizacion = authorization_code;
                 transaccionExistente.codigo_respuesta = response_code;
-    
+
                 // Guardar los cambios en la base de datos
                 await this.transaccionRepository.save(transaccionExistente);
             }
-    
+
             const apoderadosHtml = `
             <table border="1" cellpadding="5" cellspacing="0">
                 <tr>
@@ -169,7 +170,7 @@ export class PaymentService {
                 `).join('')}
             </table>
         `;
-    
+
             const boletasHtml = `
             <table border="1" cellpadding="5" cellspacing="0">
                 <tr>
@@ -197,7 +198,7 @@ export class PaymentService {
                 </tr>
             </table>
         `;
-    
+
             const correoHtmlAdm = `
             <h4><strong>Confirmación de Transacción WebPay</strong></h4>
             <p>Estimado Administrador,</p>
@@ -208,27 +209,27 @@ export class PaymentService {
             <p>La orden de compra asignada para este pago es: <strong>${buy_order}</strong></p>
             <h3>Colegio Andes Chile – Educando con Amor</h3>
         `;
-    
+
             const mailOptionsAdm = {
                 from: 'contacto@colegioandeschile.cl',
                 to: 'adm.colegioandeschile@gmail.com',
                 subject: 'Confirmación de Pago WebPay',
                 html: correoHtmlAdm,
             };
-    
+
             try {
                 await this.correoService.enviarCorreo(mailOptionsAdm);
                 console.log('Correo enviado con éxito');
             } catch (error) {
                 console.error('Error al enviar el correo:', error);
             }
-    
+
             return response;
         } catch (error) {
             throw new InternalServerErrorException(error.message);
         }
     }
-    
+
     private async updateTransactionStatus(token: string, status: string) {
         const transaction = await this.transactionRepository.findOne({ where: { token } });
 
@@ -379,20 +380,20 @@ export class PaymentService {
 
 }
 
-  // const correoHtmlApoderado = `
-            //     <h4><strong>Confirmación de Transferencia</strong></h4>
-            //     <p>Estimado usuario,</p>
-            //     ${apoderadosHtml}
-            //     <p>Su orden de compra <strong>${buy_order}</strong> está en proceso de verificación.</p>
-            //     ${boletasHtml}
-            //     <p>Será confirmada dentro de las próximas 24 horas.</p>
-            //     <p>Gracias por su paciencia.</p>
-            //     <h3>Colegio Andes Chile – Educando con Amor</h3>
-            // `;
+// const correoHtmlApoderado = `
+//     <h4><strong>Confirmación de Transferencia</strong></h4>
+//     <p>Estimado usuario,</p>
+//     ${apoderadosHtml}
+//     <p>Su orden de compra <strong>${buy_order}</strong> está en proceso de verificación.</p>
+//     ${boletasHtml}
+//     <p>Será confirmada dentro de las próximas 24 horas.</p>
+//     <p>Gracias por su paciencia.</p>
+//     <h3>Colegio Andes Chile – Educando con Amor</h3>
+// `;
 
-            // const mailOptionsApoderado = {
-            //     from: 'contacto@colegioandeschile.cl',
-            //     to: correo,
-            //     subject: 'Confirmación de Transferencia',
-            //     html: correoHtmlApoderado,
-            // };
+// const mailOptionsApoderado = {
+//     from: 'contacto@colegioandeschile.cl',
+//     to: correo,
+//     subject: 'Confirmación de Transferencia',
+//     html: correoHtmlApoderado,
+// };
