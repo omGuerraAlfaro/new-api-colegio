@@ -92,7 +92,7 @@ export class PaymentService {
             console.log(token);
 
 
-            const { vci, buy_order, amount, session_id, status, accounting_date, transaction_date, authorization_code, payment_type_code, response_code } = response;
+            const { vci, buy_order, authorization_code, payment_type_code, response_code } = response;
             const parts = buy_order.split('-');
             const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
             const idsBoletas = rawIds.map((rawId: string) => parseInt(rawId, 10));
@@ -144,8 +144,8 @@ export class PaymentService {
                 estado_transaccion_id: estadoTransaccionId,
                 webpay_transaccion_id: token,
                 monto: totalPago,
-                fecha_creacion: new Date(transaction_date),
-                metodo_pago: payment_type_code,
+                fecha_actualizacion: new Date(),
+                metodo_pago: 'Tarjeta',
                 descripcion: 'Pago de boletas',
                 codigo_autorizacion: authorization_code,
                 codigo_respuesta: response_code,
