@@ -138,18 +138,26 @@ export class PaymentService {
                     break;
             }
 
-            await this.transaccionRepository.save({
-                boleta_id: boletas.length > 0 ? boletas[0].id : null,
-                apoderado_id: boletas.length > 0 ? boletas[0].apoderado_id : null,
-                estado_transaccion_id: estadoTransaccionId,
-                webpay_transaccion_id: token,
-                monto: totalPago,
-                fecha_actualizacion: new Date(),
-                metodo_pago: 'Tarjeta',
-                descripcion: 'Pago de boletas',
-                codigo_autorizacion: authorization_code,
-                codigo_respuesta: response_code,
-            });
+            // Buscar la transacción existente en la tabla Transacciones
+            const transaccionExistente = await this.transaccionRepository.findOne({ where: { webpay_transaccion_id: token } });
+
+            if (!transaccionExistente) {
+                throw new NotFoundException('Transaction not found');
+            }
+
+            // Actualizar los campos necesarios en la transacción existente
+            transaccionExistente.boleta_id = boletas.length > 0 ? boletas[0].id : null;
+            transaccionExistente.apoderado_id = boletas.length > 0 ? boletas[0].apoderado_id : null;
+            transaccionExistente.estado_transaccion_id = estadoTransaccionId;
+            transaccionExistente.monto = totalPago;
+            transaccionExistente.fecha_actualizacion = new Date();
+            transaccionExistente.metodo_pago = 'Tarjeta';
+            transaccionExistente.descripcion = 'Pago de boletas';
+            transaccionExistente.codigo_autorizacion = authorization_code;
+            transaccionExistente.codigo_respuesta = response_code;
+
+            // Guardar los cambios en la base de datos
+            await this.transaccionRepository.save(transaccionExistente);
 
             const apoderadosHtml = `
             <table border="1" cellpadding="5" cellspacing="0">

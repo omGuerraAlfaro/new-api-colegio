@@ -24,7 +24,7 @@ export class Transacciones {
     @Column({ nullable: true })
     transferencia_transaccion_id: string;
     
-    @Column()
+    @Column({ nullable: true })
     monto: number;
 
     @Column()
