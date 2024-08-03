@@ -123,10 +123,11 @@ export class UsuarioService {
       }
 
       const usuario = new Usuarios();
-      usuario.username = username;
+      usuario.username = username + '.profesor';
       usuario.password = hashedPassword;
-      usuario.correo_electronico = profesor.correo_electronico; // Asumiendo que el campo se llama correo_electronico en profesor
-      usuario.profesor_id = profesor.id; // Asumiendo que el campo se llama id en profesor
+      usuario.correo_electronico = profesor.correo_electronico;
+      usuario.profesor_id = profesor.id;
+      usuario.rut = profesor.rut;
 
       const savedUser = await this.usuarioRepository.save(usuario);
       createdUsers.push(savedUser);
