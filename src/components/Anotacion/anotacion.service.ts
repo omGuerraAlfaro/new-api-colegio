@@ -17,9 +17,10 @@ export class AnotacionService {
     async getAnotacionesByEstudianteId(estudianteId: number): Promise<AnotacionDto[]> {
         const anotacionesEstudiantes = await this.anotacionEstudianteRepository.find({
             where: { estudiante_id: estudianteId },
-            relations: ['anotacion'],
+            relations: ['anotacion', 'anotacion.asignatura'],
         });
-
+    
         return anotacionesEstudiantes.map(ae => ae.anotacion);
     }
+    
 }
