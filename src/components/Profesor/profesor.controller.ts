@@ -29,7 +29,7 @@ export class ProfesorController {
     return await this.profesorService.findOne(id);
   }
 
-  @Get(':rut')
+  @Get('rut/:rut')
   async getProfesorByRut(@Param('rut') rut: string) {
     return await this.profesorService.findOneByRut(rut);
   }
