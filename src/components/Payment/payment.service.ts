@@ -90,7 +90,7 @@ export class PaymentService {
         try {
             const response = await tx.commit(token);
             console.log(token);
-
+            
             const { buy_order, amount, session_id, status, accounting_date, transaction_date, authorization_code, payment_type_code, response_code, vci } = response;
             const parts = buy_order.split('-');
             const rawIds = parts.length === 4 ? parts.slice(-2) : parts.slice(-1);
@@ -102,6 +102,7 @@ export class PaymentService {
                 case 'TSY':
                 case 'TSYS':
                 case 'TSYF':
+                    await this.updateTransactionStatus(token, 'aprobado');
                     estadoTransaccionId = 3; // Terminada
                     break;
                 default:

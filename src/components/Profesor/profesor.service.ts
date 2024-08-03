@@ -19,6 +19,10 @@ export class ProfesorService {
     return await this.profesorRepository.findOne({ where: { id: id } });
   }
 
+  async findOneByRut(rut: string) {
+    return await this.profesorRepository.findOne({ where: { rut: rut } });
+  }
+
 }
 
 
