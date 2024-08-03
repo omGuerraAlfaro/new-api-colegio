@@ -22,11 +22,12 @@ import { InfoPae } from './InfoPae.entity';
 import { Correo } from './Correo.entity';
 import { Anotacion } from './Anotaciones.entity';
 import { AnotacionesEstudiante } from './AnotacionesEstudiantes.entity';
+import { Asignatura } from './Asignatura.entity';
 
 
 export const entities = [Apoderado, ApoderadoEstudiante, ApoderadoDireccion,
                         Estudiante, InfoPae, Profesor, Curso, EstudianteCurso, Anotacion, AnotacionesEstudiante, Usuarios, Administrador,
                         Boleta, EstadoBoleta, Transacciones, EstadoTransaccion, TransactionEntity,
-                        Direccion, Ciudad, Region, NoticiasColegio, NoticiasImages, Correo
+                        Direccion, Ciudad, Region, NoticiasColegio, NoticiasImages, Correo, Asignatura
                         ];
 

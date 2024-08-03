@@ -4,9 +4,11 @@ import {
     Column,
     OneToMany,
     CreateDateColumn,
+    ManyToOne,
+    JoinColumn,
 } from 'typeorm';
-import { Estudiante } from './Estudiante.entity';
 import { AnotacionesEstudiante } from './AnotacionesEstudiantes.entity';
+import { Asignatura } from './Asignatura.entity';
 
 @Entity()
 export class Anotacion {
@@ -31,8 +33,16 @@ export class Anotacion {
     @Column({ type: 'boolean', default: true })
     anotacion_estado: boolean;
 
+    @Column({ nullable: true })
+    asignatura_id: number;
+
+    @ManyToOne(() => Asignatura, asignatura => asignatura.id)
+    @JoinColumn({ name: 'asignatura_id' })
+    asignatura: Asignatura;
+
     @OneToMany(() => AnotacionesEstudiante, anotacionesEstudiante => anotacionesEstudiante.anotacion, {
         cascade: true,
     })
     estudiantesConnection: AnotacionesEstudiante[];
+
 }
