@@ -34,6 +34,13 @@ export class EstudianteService {
     }  
     return null;
   }
+
+  async getCountByGender(): Promise<{ masculinoCount: number; femeninoCount: number }> {
+    const maleCount = await this.estudianteRepository.count({ where: { genero: 'M' } });
+    const femaleCount = await this.estudianteRepository.count({ where: { genero: 'F' } });
+
+    return { masculinoCount: maleCount, femeninoCount: femaleCount };
+  }
   
 
 }

@@ -10,7 +10,8 @@ import { NoticiasModule } from "./Noticias/noticias.module";
 import { CorreoModule } from "./Correo/correo.module";
 import { BoletaModule } from "./Boleta/boleta.module";
 import { AnotacionModule } from "./Anotacion//anotacion.module";
+import { AsignaturaModule } from "./Asignatura/asignatura.module";
 
 export { ApoderadoModule, EstudianteModule, ProfesorModule,
      PaymentModule, CursoModule, UsuarioModule, AdministradorModule, AuthModule, NoticiasModule,
-     CorreoModule, BoletaModule, AnotacionModule };
+     CorreoModule, BoletaModule, AnotacionModule, AsignaturaModule };

@@ -28,5 +28,10 @@ export class EstudianteController {
   async getByRut(@Param('rut') rut: string) {
     return await this.estudianteService.findByRut(rut);
   }
+
+  @Get('count-by-genero')
+  async getCountByGender() {
+    return this.estudianteService.getCountByGender();
+  }
 }
 
