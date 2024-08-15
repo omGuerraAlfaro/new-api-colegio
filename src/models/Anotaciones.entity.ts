@@ -30,6 +30,9 @@ export class Anotacion {
     @Column({ type: 'boolean', default: false })
     es_negativa: boolean;
 
+    @Column({ type: 'boolean', default: false })
+    es_neutra: boolean;
+
     @Column({ type: 'boolean', default: true })
     anotacion_estado: boolean;
 
