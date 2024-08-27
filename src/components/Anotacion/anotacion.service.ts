@@ -36,7 +36,7 @@ export class AnotacionService {
         // Crear la anotación
         const newAnotacion = this.anotacionRepository.create({
             ...anotacionData,
-            asignatura: asignatura,
+            asignatura: asignatura ?? null,
         });
 
         const savedAnotacion = await this.anotacionRepository.save(newAnotacion);
