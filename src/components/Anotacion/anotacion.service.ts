@@ -22,21 +22,29 @@ export class AnotacionService {
             where: { estudiante_id: estudianteId },
             relations: ['anotacion', 'anotacion.asignatura'],
         });
-    
+
         return anotacionesEstudiantes.map(ae => ae.anotacion);
     }
 
-    async createAnotacionForStudent(estudianteId: number, anotacionData: Partial<Anotacion>, asignaturaId: number): Promise<Anotacion> {
-        // Buscar la asignatura por ID
-        const asignatura = await this.asignaturaRepository.findOne({ where: { id: asignaturaId } });
-        if (!asignatura) {
-            throw new Error('Asignatura not found');
+    async createAnotacionForStudent(
+        estudianteId: number,
+        anotacionData: Partial<Anotacion>,
+        asignaturaId: number | null
+    ): Promise<Anotacion> {
+        let asignatura: Asignatura | null = null;
+
+        // Si asignaturaId no es nulo, buscar la asignatura por ID
+        if (asignaturaId !== null && asignaturaId !== undefined) {
+            asignatura = await this.asignaturaRepository.findOne({ where: { id: asignaturaId } });
+            if (!asignatura) {
+                throw new NotFoundException('Asignatura not found');
+            }
         }
 
         // Crear la anotación
         const newAnotacion = this.anotacionRepository.create({
             ...anotacionData,
-            asignatura: asignatura ?? null,
+            asignatura: asignatura ?? null, // Asignar null si no hay asignatura
         });
 
         const savedAnotacion = await this.anotacionRepository.save(newAnotacion);
@@ -51,5 +59,6 @@ export class AnotacionService {
 
         return savedAnotacion;
     }
-    
+
+
 }
